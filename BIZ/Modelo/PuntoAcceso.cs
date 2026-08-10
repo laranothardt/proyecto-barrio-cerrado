@@ -9,8 +9,8 @@ namespace BIZ.Modelo
     public class PuntoAcceso
     {
         public int IdAcceso { get; set; }
-        public string Nombre { get; set; }
+        public string Ubicacion { get; set; }
         public string Tipo { get; set; }
-        public bool TieneCamaraFacial { get; set; }
+        public bool EsBiometrico { get; set; }
     }
 }
