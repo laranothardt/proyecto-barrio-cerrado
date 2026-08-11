@@ -13,5 +13,32 @@ namespace Grupo7_BarrioCerradoII
 
     public partial class Administradores
     {
+
+        /// <summary>
+        /// Control Bt_RegistrarIngreso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Bt_RegistrarIngreso;
+
+        /// <summary>
+        /// Control Bt_RegistrarEgreso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Bt_RegistrarEgreso;
+
+        /// <summary>
+        /// Control Bt_Reportes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Bt_Reportes;
     }
 }
