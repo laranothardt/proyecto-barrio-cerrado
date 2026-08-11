@@ -47,7 +47,6 @@
     <Compile Include="Modelo\Persona.cs" />
     <Compile Include="Modelo\PreAcreditacion.cs" />
     <Compile Include="Modelo\PuntoAcceso.cs" />
-    <Compile Include="Modelo\Residencia.cs" />
     <Compile Include="Modelo\RestriccionHoraria.cs" />
     <Compile Include="Modelo\UsuarioSistema.cs" />
     <Compile Include="Modelo\Vehiculo.cs" />
