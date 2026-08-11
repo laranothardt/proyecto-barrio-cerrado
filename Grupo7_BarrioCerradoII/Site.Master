@@ -14,7 +14,7 @@
 
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link rel="shortcut icon" href="~/Images/burro.jpg" type="image/jpeg" />
-<link rel="icon" href="~/Images/burro.jpgx" type="image/jpeg" />
+    <link rel="icon" href="~/Images/burro.jpg" type="image/jpeg" />
 
     <style>
         .navbar-brand {
@@ -65,7 +65,7 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Iniciar Sesion">Iniciar Sesion</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/IniciarSesion">Iniciar Sesion</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Autorizar">Autorizar</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Administradores">Administradores</a></li>
                     </ul>

@@ -41,6 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\CategoriaPersona.cs" />
+    <Compile Include="Data\Lote.cs" />
+    <Compile Include="Data\Movimiento.cs" />
+    <Compile Include="Data\PreAcreditacion.cs" />
+    <Compile Include="Data\PuntoAcceso.cs" />
+    <Compile Include="Data\Residencia.cs" />
+    <Compile Include="Data\RestriccionHoraria.cs" />
+    <Compile Include="Data\UsuarioSistema.cs" />
+    <Compile Include="Data\Vehiculo.cs" />
     <Compile Include="Modelo\CategoriaPersona.cs" />
     <Compile Include="Modelo\Lote.cs" />
     <Compile Include="Modelo\Movimiento.cs" />
@@ -52,8 +61,6 @@
     <Compile Include="Modelo\Vehiculo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
