@@ -15,7 +15,7 @@ namespace Grupo7_BarrioCerradoII
         }
         protected void btnIniciarSesion_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Iniciar Sesion.aspx");
+            Response.Redirect("IniciarSesion.aspx");
         }
 
         protected void btnAutorizar_Click(object sender, EventArgs e)

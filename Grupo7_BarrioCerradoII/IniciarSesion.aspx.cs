@@ -14,5 +14,9 @@ namespace Grupo7_BarrioCerradoII
 
         }
 
+        protected void bt_iniciar_sesion_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
