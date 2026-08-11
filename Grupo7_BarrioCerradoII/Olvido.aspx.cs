@@ -7,12 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace Grupo7_BarrioCerradoII
 {
-    public partial class Iniciar_Sesion : System.Web.UI.Page
+    public partial class Olvido : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
-
     }
 }

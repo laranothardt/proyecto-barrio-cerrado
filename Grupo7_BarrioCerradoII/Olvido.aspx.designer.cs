@@ -11,7 +11,7 @@ namespace Grupo7_BarrioCerradoII
 {
 
 
-    public partial class Iniciar_Sesion
+    public partial class Olvido
     {
 
         /// <summary>
@@ -24,6 +24,33 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.TextBox tx_email;
 
         /// <summary>
+        /// Control rfv_email.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_email;
+
+        /// <summary>
+        /// Control tx_email2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tx_email2;
+
+        /// <summary>
+        /// Control cv_emails.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator cv_emails;
+
+        /// <summary>
         /// Control tx_contraseña.
         /// </summary>
         /// <remarks>
@@ -33,39 +60,48 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.TextBox tx_contraseña;
 
         /// <summary>
-        /// Control chk_recuerdame.
+        /// Control rfv_pass.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk_recuerdame;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_pass;
 
         /// <summary>
-        /// Control lnk_olvido.
+        /// Control tx_contraseña2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnk_olvido;
+        protected global::System.Web.UI.WebControls.TextBox tx_contraseña2;
 
         /// <summary>
-        /// Control bt_iniciar_sesion.
+        /// Control cv_passwords.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bt_iniciar_sesion;
+        protected global::System.Web.UI.WebControls.CompareValidator cv_passwords;
 
         /// <summary>
-        /// Control lnk_registro.
+        /// Control bt_finalizar_registro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnk_registro;
+        protected global::System.Web.UI.WebControls.Button bt_finalizar_registro;
+
+        /// <summary>
+        /// Control lnk_login.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnk_login;
     }
 }
