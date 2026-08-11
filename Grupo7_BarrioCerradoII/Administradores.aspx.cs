@@ -11,7 +11,15 @@ namespace Grupo7_BarrioCerradoII
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (Session["Rol"] == null || Session["Rol"].ToString() != "Administrador")
+                {
+                    Response.Redirect("~/Default.aspx");
+                    return;
+                }
 
+            }
         }
     }
 }
