@@ -4,6 +4,11 @@
     <div class="login-container">
         <h2 class="login-title">Iniciar Sesión</h2>
 
+        <%-- Panel de Error --%>
+        <asp:Panel ID="pnlError" runat="server" Visible="false" CssClass="alert alert-danger" style="margin-bottom: 20px; font-size: 0.95rem; padding: 12px; border-radius: 8px; text-align: left;">
+            <asp:Literal ID="litError" runat="server"></asp:Literal>
+        </asp:Panel>
+
         <%--Email--%>
         <div class="form-group mb-4">
             <label class="form-label" for="email">Correo Electrónico</label>

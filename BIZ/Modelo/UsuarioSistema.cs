@@ -13,5 +13,7 @@ namespace BIZ.Modelo
         public string PasswordHash { get; set; }
         public string NombreCompleto { get; set; }
         public string Rol { get; set; }
+        public string Dni { get; set; }
+        public byte[] Foto { get; set; }
     }
 }

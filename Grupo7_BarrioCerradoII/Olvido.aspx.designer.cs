@@ -15,6 +15,24 @@ namespace Grupo7_BarrioCerradoII
     {
 
         /// <summary>
+        /// Control pnlMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlMensaje;
+
+        /// <summary>
+        /// Control litMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litMensaje;
+
+        /// <summary>
         /// Control tx_email.
         /// </summary>
         /// <remarks>
@@ -24,76 +42,31 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.TextBox tx_email;
 
         /// <summary>
-        /// Control rfv_email.
+        /// Control tx_nueva_contraseña.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_email;
+        protected global::System.Web.UI.WebControls.TextBox tx_nueva_contraseña;
 
         /// <summary>
-        /// Control tx_email2.
+        /// Control tx_confirmar_contraseña.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tx_email2;
+        protected global::System.Web.UI.WebControls.TextBox tx_confirmar_contraseña;
 
         /// <summary>
-        /// Control cv_emails.
+        /// Control bt_restablecer.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator cv_emails;
-
-        /// <summary>
-        /// Control tx_contraseña.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tx_contraseña;
-
-        /// <summary>
-        /// Control rfv_pass.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_pass;
-
-        /// <summary>
-        /// Control tx_contraseña2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tx_contraseña2;
-
-        /// <summary>
-        /// Control cv_passwords.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator cv_passwords;
-
-        /// <summary>
-        /// Control bt_finalizar_registro.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bt_finalizar_registro;
+        protected global::System.Web.UI.WebControls.Button bt_restablecer;
 
         /// <summary>
         /// Control lnk_login.
