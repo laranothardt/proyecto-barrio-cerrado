@@ -11,7 +11,22 @@ namespace Grupo7_BarrioCerradoII
         {
             if (!IsPostBack)
             {
+                if (Session["Rol"] == null)
+                {
+                    Response.Redirect("~/IniciarSesion.aspx");
+                    return;
+                }
 
+                string rol = Session["Rol"].ToString();
+
+                bool esResidente = rol == "1" || rol == "Residente";
+                bool esPropietario = rol == "2" || rol == "Propietario";
+
+                if (!esResidente && !esPropietario)
+                {
+                    Response.Redirect("~/Default.aspx");
+                    return;
+                }
             }
         }
 

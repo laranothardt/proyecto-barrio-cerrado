@@ -123,8 +123,10 @@
     <Content Include="Global.asax" />
     <Content Include="Images\burro.jpg" />
     <Content Include="IniciarSesion.aspx" />
+    <Content Include="Movimientos.aspx" />
     <Content Include="Olvido.aspx" />
     <Content Include="Registro.aspx" />
+    <Content Include="Reportes.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -220,6 +222,13 @@
     <Compile Include="IniciarSesion.aspx.designer.cs">
       <DependentUpon>IniciarSesion.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Movimientos.aspx.cs">
+      <DependentUpon>Movimientos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Movimientos.aspx.designer.cs">
+      <DependentUpon>Movimientos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Olvido.aspx.cs">
       <DependentUpon>Olvido.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -234,6 +243,13 @@
     </Compile>
     <Compile Include="Registro.aspx.designer.cs">
       <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes.aspx.cs">
+      <DependentUpon>Reportes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reportes.aspx.designer.cs">
+      <DependentUpon>Reportes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

@@ -1,11 +1,12 @@
 ﻿<%@ Page Title="Registrarse" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Registro.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Registro" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <main class="login-wrapper">
         <div class="login-container">
             <h2 class="login-title">Crear Cuenta</h2>
 
             <%-- Mensajes de estado --%>
-            <asp:Panel ID="pnlMensaje" runat="server" Visible="false" CssClass="alert" style="margin-bottom: 20px; font-size: 0.95rem; padding: 12px; border-radius: 8px; text-align: left;">
+            <asp:Panel ID="pnlMensaje" runat="server" Visible="false" CssClass="alert" Style="margin-bottom: 20px; font-size: 0.95rem; padding: 12px; border-radius: 8px; text-align: left;">
                 <asp:Literal ID="litMensaje" runat="server"></asp:Literal>
             </asp:Panel>
 
@@ -49,9 +50,9 @@
             <div class="form-group">
                 <label class="form-label" for="rol">Rol en el Barrio</label>
                 <asp:DropDownList ID="ddl_rol" runat="server" class="form-select">
-                    <asp:ListItem Value="Residente" Text="Residente"></asp:ListItem>
-                    <asp:ListItem Value="Propietario" Text="Propietario"></asp:ListItem>
-                    <asp:ListItem Value="Administrador" Text="Administrador"></asp:ListItem>
+                    <asp:ListItem Value="1" Text="Residente"></asp:ListItem>
+                    <asp:ListItem Value="2" Text="Propietario"></asp:ListItem>
+                    <asp:ListItem Value="3" Text="Administrador"></asp:ListItem>
                 </asp:DropDownList>
             </div>
 

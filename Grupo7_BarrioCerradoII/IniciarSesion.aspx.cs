@@ -44,16 +44,16 @@ namespace Grupo7_BarrioCerradoII
                         // Iniciar sesión
                         Session["Usuario"] = usuario.Username;
                         Session["NombreCompleto"] = usuario.NombreCompleto;
-                        Session["Rol"] = usuario.Rol;
+                        Session["Rol"] = usuario.FK_Rol;
 
                         // Redireccionar
-                        if (usuario.Rol == "Administrador")
+                        if (usuario.FK_Rol == "3" || usuario.FK_Rol == "Administrador")
                         {
                             Response.Redirect("~/Administradores.aspx");
                         }
                         else
                         {
-                            Response.Redirect("~/Default.aspx");
+                            Response.Redirect("~/Autorizar.aspx");
                         }
                     }
                     else

@@ -11,25 +11,16 @@ namespace Grupo7_BarrioCerradoII
 {
 
 
-    public partial class Administradores
+    public partial class Reportes
     {
 
         /// <summary>
-        /// Control Bt_Movimientos.
+        /// Control RpTablaUsuarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Bt_Movimientos;
-
-        /// <summary>
-        /// Control Bt_Reportes.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Bt_Reportes;
+        protected global::System.Web.UI.WebControls.Repeater RpTablaUsuarios;
     }
 }

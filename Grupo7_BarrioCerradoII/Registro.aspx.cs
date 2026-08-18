@@ -76,13 +76,15 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
-                // Crear el nuevo usuario
+                int FK_Rol = int.Parse(ddl_rol.SelectedValue);
+
                 var nuevoUsuario = new BIZ.Modelo.UsuarioSistema
                 {
                     Username = email,
                     PasswordHash = BIZ.Data.UsuarioSistema.HashPassword(password),
                     NombreCompleto = nombre,
-                    Rol = rol,
+                    FK_Rol = ddl_rol.SelectedValue,
+                    FK_Estado = "1",
                     Dni = dni,
                     Foto = fotoBytes
                 };
