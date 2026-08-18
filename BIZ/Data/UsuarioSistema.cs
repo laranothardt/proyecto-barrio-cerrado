@@ -32,11 +32,37 @@ namespace BIZ.Data
             }
         }
 
+        public bool CrearUsuario(BIZ.Modelo.UsuarioSistema usuario)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string query = "INSERT INTO UsuarioSistema (Username, PasswordHash, NombreCompleto, FK_Rol, FK_Estado, Dni, Foto) VALUES (@Username, @PasswordHash, @NombreCompleto, @FK_Rol, @FK_Estado, @Dni, @Foto)";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Username", usuario.Username);
+                    cmd.Parameters.AddWithValue("@PasswordHash", usuario.PasswordHash);
+                    cmd.Parameters.AddWithValue("@NombreCompleto", usuario.NombreCompleto);
+                    cmd.Parameters.AddWithValue("@FK_Rol", usuario.FK_Rol);
+                    cmd.Parameters.AddWithValue("@FK_Estado", 1); // Asigna Estado Activo (1)
+                    cmd.Parameters.AddWithValue("@Dni", (object)usuario.Dni ?? DBNull.Value);
+
+                    // Definir explícitamente el parámetro como VarBinary
+                    SqlParameter paramFoto = new SqlParameter("@Foto", SqlDbType.VarBinary, -1);
+                    paramFoto.Value = (object)usuario.Foto ?? DBNull.Value;
+                    cmd.Parameters.Add(paramFoto);
+
+                    conn.Open();
+                    int rows = cmd.ExecuteNonQuery();
+                    return rows > 0;
+                }
+            }
+        }
+
         public BIZ.Modelo.UsuarioSistema ObtenerUsuarioPorEmail(string email)
         {
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
-                string query = "SELECT IDUsuario, Username, PasswordHash, NombreCompleto, FK_Rol, Dni, Foto FROM UsuarioSistema WHERE Username = @Username";
+                string query = "SELECT IDUsuario, Username, PasswordHash, NombreCompleto, FK_Rol, FK_Estado, Dni, Foto FROM UsuarioSistema WHERE Username = @Username";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Username", email);
@@ -60,30 +86,6 @@ namespace BIZ.Data
                 }
             }
             return null;
-        }
-
-        public bool CrearUsuario(BIZ.Modelo.UsuarioSistema usuario)
-        {
-            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
-            {
-                string query = "INSERT INTO UsuarioSistema (Username, PasswordHash, NombreCompleto, FK_Rol, Dni, Foto) VALUES (@Username, @PasswordHash, @NombreCompleto, @FK_Rol, @Dni, @Foto)";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@Username", usuario.Username);
-                    cmd.Parameters.AddWithValue("@PasswordHash", usuario.PasswordHash);
-                    cmd.Parameters.AddWithValue("@NombreCompleto", usuario.NombreCompleto);
-                    cmd.Parameters.AddWithValue("@FK_Rol", usuario.FK_Rol);
-                    cmd.Parameters.AddWithValue("@Dni", (object)usuario.Dni ?? DBNull.Value);
-
-                    SqlParameter paramFoto = new SqlParameter("@Foto", SqlDbType.VarBinary);
-                    paramFoto.Value = (object)usuario.Foto ?? DBNull.Value;
-                    cmd.Parameters.Add(paramFoto);
-
-                    conn.Open();
-                    int rows = cmd.ExecuteNonQuery();
-                    return rows > 0;
-                }
-            }
         }
 
         public bool ActualizarPassword(string email, string passwordHash)

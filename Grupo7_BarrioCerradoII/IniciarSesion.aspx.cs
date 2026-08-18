@@ -53,7 +53,7 @@ namespace Grupo7_BarrioCerradoII
                         }
                         else
                         {
-                            Response.Redirect("~/Default.aspx");
+                            Response.Redirect("~/Autorizar.aspx");
                         }
                     }
                     else
