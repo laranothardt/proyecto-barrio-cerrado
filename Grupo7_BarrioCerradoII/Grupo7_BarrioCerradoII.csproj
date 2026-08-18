@@ -122,8 +122,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\burro.jpg" />
-    <Content Include="IngresoEgreso.aspx" />
     <Content Include="IniciarSesion.aspx" />
+    <Content Include="Movimientos.aspx" />
     <Content Include="Olvido.aspx" />
     <Content Include="Registro.aspx" />
     <Content Include="Reportes.aspx" />
@@ -215,19 +215,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IngresoEgreso.aspx.cs">
-      <DependentUpon>IngresoEgreso.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="IngresoEgreso.aspx.designer.cs">
-      <DependentUpon>IngresoEgreso.aspx</DependentUpon>
-    </Compile>
     <Compile Include="IniciarSesion.aspx.cs">
       <DependentUpon>IniciarSesion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="IniciarSesion.aspx.designer.cs">
       <DependentUpon>IniciarSesion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Movimientos.aspx.cs">
+      <DependentUpon>Movimientos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Movimientos.aspx.designer.cs">
+      <DependentUpon>Movimientos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Olvido.aspx.cs">
       <DependentUpon>Olvido.aspx</DependentUpon>

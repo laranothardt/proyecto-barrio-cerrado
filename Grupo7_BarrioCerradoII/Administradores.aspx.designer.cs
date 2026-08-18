@@ -15,13 +15,13 @@ namespace Grupo7_BarrioCerradoII
     {
 
         /// <summary>
-        /// Control Bt_Registrar_Ingreso_Egreso.
+        /// Control Bt_Movimientos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Bt_Registrar_Ingreso_Egreso;
+        protected global::System.Web.UI.WebControls.Button Bt_Movimientos;
 
         /// <summary>
         /// Control Bt_Reportes.

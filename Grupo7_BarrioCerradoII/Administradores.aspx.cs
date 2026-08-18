@@ -22,14 +22,14 @@ namespace Grupo7_BarrioCerradoII
             }
         }
 
-        protected void Bt_Registrar_Ingreso_Egreso_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("IngresoEgreso.aspx");
-        }
-
         protected void Bt_Reportes_Click(object sender, EventArgs e)
         {
             Response.Redirect("Reportes.aspx");
+        }
+
+        protected void Bt_Movimientos_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Movimientos.aspx");
         }
     }
 }

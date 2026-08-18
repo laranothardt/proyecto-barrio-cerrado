@@ -11,7 +11,7 @@ namespace Grupo7_BarrioCerradoII
 {
 
 
-    public partial class IngresoEgreso
+    public partial class Movimientos
     {
     }
 }
