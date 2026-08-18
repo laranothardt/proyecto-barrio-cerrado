@@ -10,9 +10,8 @@ namespace BIZ.Modelo
     {
         public int IdVehiculo { get; set; }
         public string Patente { get; set; }
-        public int? IdPersonaTitular { get; set; }
-        public Persona Titular { get; set; }
         public string Seguro { get; set; }
         public DateTime VencimientoSeguro { get; set; }
+        public List<Persona> Titulares { get; set; } = new List<Persona>();
     }
 }
