@@ -247,3 +247,68 @@ textarea {
         font-weight: 500;
         user-select: none;
     }
+
+/* ==========================================
+   MÓDULO: ADMINISTRADORES
+   ========================================== */
+
+.admin-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+.admin-wrapper {
+    /* Si quieres estilo tarjeta: */
+    background: #ffffff;
+    max-width: 650px;
+    margin: 40px auto;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+.admin-titulo {
+    color: #1a365d; /* Azul oscuro a juego con la pantalla de inicio de sesión */
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.admin-accion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Clases de los botones */
+.btn-custom {
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary-custom {
+    background-color: #00b4d8; /* Celeste exacto de tu diseño */
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(0, 180, 216, 0.25);
+}
+
+    .btn-primary-custom:hover {
+        background-color: #0096c7;
+        color: #ffffff !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px rgba(0, 180, 216, 0.35);
+    }
+
+    .btn-primary-custom:active {
+        transform: translateY(0);
+    }

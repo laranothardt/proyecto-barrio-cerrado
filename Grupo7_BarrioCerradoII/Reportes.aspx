@@ -3,6 +3,7 @@
 
     <h1>Reportes de Movimientos</h1>
 
+     <%-- Tabla de Reportes --%>
     <div class="row fw-bold border-bottom pb-2">
         <div class="col-md-2">Movimiento</div>
         <div class="col-md-1">Fecha</div>
