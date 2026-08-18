@@ -13,5 +13,16 @@ namespace Grupo7_BarrioCerradoII
         {
 
         }
+
+
+        protected void Bt_BuscarDNI_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Bt_RegistrarMovimiento_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
