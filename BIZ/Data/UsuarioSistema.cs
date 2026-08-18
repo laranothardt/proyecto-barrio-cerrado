@@ -36,7 +36,7 @@ namespace BIZ.Data
         {
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
-                string query = "SELECT IdUsuario, Username, PasswordHash, NombreCompleto, Rol, Dni, Foto FROM UsuarioSistema WHERE Username = @Username";
+                string query = "SELECT IDUsuario, Username, PasswordHash, NombreCompleto, FK_Rol, Dni, Foto FROM UsuarioSistema WHERE Username = @Username";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Username", email);
@@ -51,7 +51,7 @@ namespace BIZ.Data
                                 Username = reader["Username"].ToString(),
                                 PasswordHash = reader["PasswordHash"].ToString(),
                                 NombreCompleto = reader["NombreCompleto"].ToString(),
-                                Rol = reader["Rol"].ToString(),
+                                FK_Rol = reader["FK_Rol"].ToString(),
                                 Dni = reader["Dni"] != DBNull.Value ? reader["Dni"].ToString() : null,
                                 Foto = reader["Foto"] != DBNull.Value ? (byte[])reader["Foto"] : null
                             };
@@ -66,13 +66,13 @@ namespace BIZ.Data
         {
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
-                string query = "INSERT INTO UsuarioSistema (Username, PasswordHash, NombreCompleto, Rol, Dni, Foto) VALUES (@Username, @PasswordHash, @NombreCompleto, @Rol, @Dni, @Foto)";
+                string query = "INSERT INTO UsuarioSistema (Username, PasswordHash, NombreCompleto, FK_Rol, Dni, Foto) VALUES (@Username, @PasswordHash, @NombreCompleto, @FK_Rol, @Dni, @Foto)";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Username", usuario.Username);
                     cmd.Parameters.AddWithValue("@PasswordHash", usuario.PasswordHash);
                     cmd.Parameters.AddWithValue("@NombreCompleto", usuario.NombreCompleto);
-                    cmd.Parameters.AddWithValue("@Rol", usuario.Rol);
+                    cmd.Parameters.AddWithValue("@FK_Rol", usuario.FK_Rol);
                     cmd.Parameters.AddWithValue("@Dni", (object)usuario.Dni ?? DBNull.Value);
 
                     SqlParameter paramFoto = new SqlParameter("@Foto", SqlDbType.VarBinary);
