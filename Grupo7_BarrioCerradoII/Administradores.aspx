@@ -7,7 +7,7 @@
     <asp:Button ID="Bt_Registrar_Ingreso_Egreso" runat="server" Text="Registro Egresos/Egresos" CssClass="btn-primary-custom" OnClick="Bt_Registrar_Ingreso_Egreso_Click"/>
     <asp:Button ID="Bt_Reportes" runat="server" Text="Reportes" OnClick="Bt_Reportes_Click" />
 
-    <div class="row fw-bold border-bottom pb-2">
+<%--    <div class="row fw-bold border-bottom pb-2">
         <div class="col-md-2">Movimiento</div>
         <div class="col-md-1">Fecha</div>
         <div class="col-md-1">Hora</div>
@@ -47,5 +47,5 @@
                 </div>
             </div>
         </ItemTemplate>
-    </asp:Repeater>
+    </asp:Repeater>--%>
 </asp:Content>
