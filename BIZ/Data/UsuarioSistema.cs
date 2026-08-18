@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
-using System.Data.SqlClient;
+using System.Configuration;
 using BIZ.Modelo;
 
 namespace BIZ.Data
@@ -12,13 +13,8 @@ namespace BIZ.Data
     public class UsuarioSistema
     {
         private static string GetConnectionString()
-        {
-            var connSetting = System.Configuration.ConfigurationManager.ConnectionStrings["MyDB"];
-            if (connSetting != null && !string.IsNullOrEmpty(connSetting.ConnectionString))
-            {
-                return connSetting.ConnectionString;
-            }
-            return @"Data Source=localhost\SQLEXPRESS;Initial Catalog=BarrioCerrado;Integrated Security=True";
+        {        
+            return ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
         }
 
         public static string HashPassword(string password)
