@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="Autorizaciones y preautorizaciones" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Autorizar.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Autorizar" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    <div id="pg-autorizar">
         <h1>Preacreditacion de visitas</h1>
     <p class="text-muted">Carga los datos de la persona que va a ingresar al barrio para dejarla autorizada de antemano.</p>
 
@@ -97,5 +99,6 @@
             </Columns>
         </asp:GridView>
     </div>
+        </div>
 
 </asp:Content>
