@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Movimientos.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Movimientos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container my-5">
+    <div id="pg-movimientos" class="container my-5">
         <h2 class="mb-4 text-primary">Registrar Ingreso / Egreso</h2>
         
         <div class="card shadow-sm">
