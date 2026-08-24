@@ -22,7 +22,6 @@
                     <div class="col-md-4">
                         <label class="form-label fw-bold">Tipo de Movimiento</label>
                         <asp:DropDownList ID="DDLTipoMovimiento" runat="server" CssClass="form-select">
-                            <asp:ListItem Text="--Seleccione--" Value="" />
                             <asp:ListItem Text="Ingreso" Value="Ingreso" />
                             <asp:ListItem Text="Egreso" Value="Egreso" />
                         </asp:DropDownList>
@@ -41,11 +40,8 @@
                     <%-- Lote Destino --%>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">Lote Destino (Opcional)</label>
-                        <asp:DropDownList ID="DDLLoteDestino" runat="server" CssClass="form-select">
-                            <asp:ListItem Text="-- Ninguno / Egreso --" Value="0" />
-                            <%-- Ejemplos estáticos por ahora --%>
-                            <asp:ListItem Text="Lote 10 Ejemplo" Value="1" />
-                            <asp:ListItem Text="Lote 25 Ejemplo" Value="2" />
+                        <asp:DropDownList ID="DDLLoteDestino" runat="server" CssClass="form-select">                          
+                            <asp:ListItem Text="(Cargar Lotes)" Value="1" />
                         </asp:DropDownList>
                     </div>
 
