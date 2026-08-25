@@ -45,6 +45,7 @@
     <Compile Include="Data\CategoriaPersona.cs" />
     <Compile Include="Data\Lote.cs" />
     <Compile Include="Data\Movimiento.cs" />
+    <Compile Include="Data\Persona.cs" />
     <Compile Include="Data\PreAcreditacion.cs" />
     <Compile Include="Data\PuntoAcceso.cs" />
     <Compile Include="Data\Residencia.cs" />

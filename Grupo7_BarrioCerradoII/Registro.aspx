@@ -54,7 +54,6 @@
                 <asp:DropDownList ID="ddl_rol" runat="server" class="form-select">
                     <asp:ListItem Value="1" Text="Residente"></asp:ListItem>
                     <asp:ListItem Value="2" Text="Propietario"></asp:ListItem>
-                    <asp:ListItem Value="3" Text="Administrador"></asp:ListItem>
                 </asp:DropDownList>
             </div>
                 </div>
