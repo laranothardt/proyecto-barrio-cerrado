@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-
     <div id="pg-movimientos" class="container my-5">
         <h2 class="mb-4 fw-bold text-center movimiento-titulo-registro">Registrar Movimientos</h2>
 
