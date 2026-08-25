@@ -33,13 +33,13 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.Button Bt_BuscarDNI;
 
         /// <summary>
-        /// Control Lb_NombrePersona.
+        /// Control LbNombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lb_NombrePersona;
+        protected global::System.Web.UI.WebControls.Label LbNombre;
 
         /// <summary>
         /// Control DDLTipoMovimiento.
@@ -60,13 +60,13 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.DropDownList DDLPuntoAcceso;
 
         /// <summary>
-        /// Control DDLLoteDestino.
+        /// Control TxLote.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDLLoteDestino;
+        protected global::System.Web.UI.WebControls.TextBox TxLote;
 
         /// <summary>
         /// Control txtPatente.
@@ -78,15 +78,6 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.TextBox txtPatente;
 
         /// <summary>
-        /// Control chkAutorizado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAutorizado;
-
-        /// <summary>
         /// Control txtDetalle.
         /// </summary>
         /// <remarks>
@@ -94,6 +85,15 @@ namespace Grupo7_BarrioCerradoII
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDetalle;
+
+        /// <summary>
+        /// Control chkAutorizado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkAutorizado;
 
         /// <summary>
         /// Control LbMensaje.

@@ -310,3 +310,19 @@ textarea {
     .btn-primary-custom:active {
         transform: translateY(0);
     }
+
+.action-footer-right {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center; 
+    width: 100%;
+    margin-top: 25px;
+}
+
+.mensaje-estado {
+    margin-right: 20px;
+}
+
+.movimiento-titulo-registro {
+    color: #00b4d8;
+}
