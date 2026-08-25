@@ -58,6 +58,21 @@ namespace BIZ.Data
             }
         }
 
+        public int ObtenerIdUsuarioPorDni(string dni)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string query = "SELECT IDUsuario FROM UsuarioSistema WHERE Dni = @Dni";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Dni", dni);
+                    conn.Open();
+                    object result = cmd.ExecuteScalar();
+                    return result != null ? Convert.ToInt32(result) : 0;
+                }
+            }
+        }
+
         public BIZ.Modelo.UsuarioSistema ObtenerUsuarioPorEmail(string email)
         {
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
