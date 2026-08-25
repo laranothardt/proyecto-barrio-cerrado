@@ -35,14 +35,15 @@
                     <label for="<%= ddlCategoria.ClientID %>" class="form-label">Categoria <span class="text-muted">(opcional)</span></label>
                     <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" AppendDataBoundItems="true">
                         <asp:ListItem Text="Sin categoria especifica" Value="" />
+                        <asp:ListItem Text="Visita" Value="0" />
+                        <asp:ListItem Text="Trabajador" Value="1" />
                     </asp:DropDownList>
                 </div>
                 <div class="col-md-3">
-                    <label for="<%= ddlLote.ClientID %>" class="form-label">Lote destino</label>
-                    <asp:DropDownList ID="ddlLote" runat="server" CssClass="form-select" AppendDataBoundItems="true">
-                        <asp:ListItem Text="Selecciona un lote..." Value="" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="rfvLote" runat="server" ControlToValidate="ddlLote" InitialValue="" ErrorMessage="Elegi el lote destino." CssClass="text-danger" Display="Dynamic" />
+                    <label for="<%= txtLote.ClientID %>" class="form-label">Lote destino</label>
+                    <asp:TextBox ID="txtLote" runat="server" CssClass="form-select" AppendDataBoundItems="true">
+                    </asp:TextBox>
+                    <asp:RequiredFieldValidator ID="rfvLote" runat="server" ControlToValidate="txtLote" InitialValue="" ErrorMessage="Elegi el lote destino." CssClass="text-danger" Display="Dynamic" />
                 </div>
                 <div class="col-md-5">
                     <label for="<%= txtResidenteAutoriza.ClientID %>" class="form-label">DNI del residente que autoriza</label>
