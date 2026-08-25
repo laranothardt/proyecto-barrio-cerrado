@@ -16,6 +16,12 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
+                // Si en Session guardas el DNI del usuario logueado, lo precargamos
+                if (Session["Dni"] != null)
+                {
+                    txtResidenteAutoriza.Text = Session["Dni"].ToString();
+                }
+
                 CargarPreAcreditaciones();
             }
         }
@@ -26,9 +32,7 @@ namespace Grupo7_BarrioCerradoII
 
             try
             {
-                // 1. Obtener IDPersona del residente mediante su DNI
                 BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
-                // Obtiene el IDPersona existente o crea uno nuevo si venía de UsuarioSistema
                 int idResidente = dataPersona.ObtenerOCrearPersonaResidente(txtResidenteAutoriza.Text.Trim(), "Residente " + txtResidenteAutoriza.Text.Trim());
 
                 if (idResidente == 0)
@@ -37,7 +41,6 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
-                // 2. Obtener IDLote mediante el número de lote
                 BIZ.Data.Lote dataLote = new BIZ.Data.Lote();
                 int idLote = dataLote.ObtenerIdLotePorNumero(txtLote.Text.Trim());
 
@@ -47,15 +50,14 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
-                // 3. Crear el objeto asignando las claves primarias (IDs)
                 var nuevaPreAcreditacion = new BIZ.Modelo.PreAcreditacion
                 {
                     Dni = txtDni.Text.Trim(),
                     Apellido = txtApellido.Text.Trim(),
                     Nombre = txtNombre.Text.Trim(),
-                    IdCategoria = string.IsNullOrEmpty(ddlCategoria.SelectedValue) ? 0 : int.Parse(ddlCategoria.SelectedValue),
+                    IdCategoria = string.IsNullOrEmpty(ddlCategoria.SelectedValue) ? -1 : int.Parse(ddlCategoria.SelectedValue),
                     IdLoteDestino = idLote,
-                    IdResidenteAutoriza = idResidente, // IDPersona numérico
+                    IdResidenteAutoriza = idResidente,
                     FechaDesde = DateTime.Parse(txtFechaDesde.Text),
                     FechaHasta = DateTime.Parse(txtFechaHasta.Text),
                     Motivo = txtMotivo.Text.Trim(),
@@ -88,8 +90,25 @@ namespace Grupo7_BarrioCerradoII
         {
             try
             {
+                // 1. Intentamos obtener el DNI de la Session o del TextBox
+                string dniResidente = Session["Dni"] != null ? Session["Dni"].ToString() : txtResidenteAutoriza.Text.Trim();
+
                 BIZ.Data.PreAcreditacion data = new BIZ.Data.PreAcreditacion();
-                gvPreacreditaciones.DataSource = data.ObtenerPreAcreditaciones();
+
+                if (!string.IsNullOrEmpty(dniResidente))
+                {
+                    BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
+                    int idResidente = dataPersona.ObtenerOCrearPersonaResidente(dniResidente, "Residente " + dniResidente);
+
+                    // Carga solo las del residente logueado
+                    gvPreacreditaciones.DataSource = data.ObtenerVigentesPorResidente(idResidente);
+                }
+                else
+                {
+                    // Si no hay DNI en sesión aún, obtiene todas las vigentes para no dejar la grilla vacía
+                    gvPreacreditaciones.DataSource = data.ObtenerTodasVigentes();
+                }
+
                 gvPreacreditaciones.DataBind();
             }
             catch
@@ -104,7 +123,12 @@ namespace Grupo7_BarrioCerradoII
             txtNombre.Text = string.Empty;
             ddlCategoria.SelectedIndex = 0;
             txtLote.Text = string.Empty;
-            txtResidenteAutoriza.Text = string.Empty;
+
+            if (Session["Dni"] != null)
+                txtResidenteAutoriza.Text = Session["Dni"].ToString();
+            else
+                txtResidenteAutoriza.Text = string.Empty;
+
             txtFechaDesde.Text = string.Empty;
             txtFechaHasta.Text = string.Empty;
             txtMotivo.Text = string.Empty;
