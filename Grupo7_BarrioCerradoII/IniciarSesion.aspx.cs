@@ -45,6 +45,7 @@ namespace Grupo7_BarrioCerradoII
                         Session["Usuario"] = usuario.Username;
                         Session["NombreCompleto"] = usuario.NombreCompleto;
                         Session["Rol"] = usuario.FK_Rol;
+                        Session["Dni"] = usuario.Dni;
 
                         // Redireccionar
                         if (usuario.FK_Rol == "3" || usuario.FK_Rol == "Administrador")

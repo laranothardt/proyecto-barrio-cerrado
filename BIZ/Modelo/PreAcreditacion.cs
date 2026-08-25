@@ -22,5 +22,8 @@ namespace BIZ.Modelo
         public DateTime FechaHasta { get; set; }
         public string Motivo { get; set; }
         public string Estado { get; set; }
+        public string NombreCategoria { get; set; }
+        public string NumeroLote { get; set; }
+        public string NombreResidenteAutoriza { get; set; }
     }
 }
