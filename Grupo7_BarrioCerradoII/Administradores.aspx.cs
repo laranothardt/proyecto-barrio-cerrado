@@ -11,22 +11,22 @@ namespace Grupo7_BarrioCerradoII
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //{
-            //    if (Session["Rol"] == null)
-            //    {
-            //        Response.Redirect("~/IniciarSesion.aspx");
-            //        return;
-            //    }
+            if (!IsPostBack)
+            {
+                if (Session["Rol"] == null)
+                {
+                    Response.Redirect("~/IniciarSesion.aspx");
+                    return;
+                }
 
-            //    string rol = Session["Rol"].ToString();
+                string rol = Session["Rol"].ToString();
 
-            //    if (rol != "3" && rol != "Administrador")
-            //    {
-            //        Response.Redirect("~/Default.aspx");
-            //        return;
-            //    }
-            //}
+                if (rol != "3" && rol != "Administrador")
+                {
+                    Response.Redirect("~/Default.aspx");
+                    return;
+                }
+            }
         }
 
         protected void Bt_Reportes_Click(object sender, EventArgs e)
