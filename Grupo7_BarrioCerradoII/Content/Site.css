@@ -1,4 +1,4 @@
-﻿/* =========================================================
+/* =========================================================
    SITE.CSS — Barrio Cerrado El Burro
    Organizado por página. Cada página tiene un <div>/<main>
    raíz con un id único (ej: #pg-login). Todo lo específico
@@ -415,6 +415,25 @@ textarea {
 /* Agregá acá más reglas para #pg-registro */
 
 
+    .btn-primary-custom:active {
+        transform: translateY(0);
+    }
+
+.action-footer-right {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center; 
+    width: 100%;
+    margin-top: 25px;
+}
+
+.mensaje-estado {
+    margin-right: 20px;
+}
+
+.movimiento-titulo-registro {
+    color: #00b4d8;
+}
 /* =========================================================
    11) #pg-reportes — Reportes
    OJO: el aspx que mandaste para "Reportes" es una copia de

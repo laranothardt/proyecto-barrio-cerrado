@@ -1,37 +1,38 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Movimientos.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Movimientos" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <div id="pg-movimientos" class="container my-5">
-        <h2 class="mb-4 text-primary">Registrar Ingreso / Egreso</h2>
-        
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div class="row g-3">
-                    
-                    <%-- DNI Usuario --%>
+        <h2 class="mb-4 fw-bold text-center movimiento-titulo-registro">Registrar Movimientos</h2>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <div class="row g-4">
+
+                    <%-- Panel DNI  --%>
+
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">DNI del Usuario</label>
+                        <label class="form-label fw-bold text-secondary">DNI del Usuario</label>
                         <div class="input-group">
                             <asp:TextBox ID="Tx_Dni" runat="server" CssClass="form-control" placeholder="40123456"></asp:TextBox>
-                            <asp:Button ID="Bt_BuscarDNI" runat="server" Text="Buscar" CssClass="btn btn-secondary" OnClick="Bt_BuscarDNI_Click"/>
+                            <asp:Button ID="Bt_BuscarDNI" runat="server" Text="Buscar" CssClass="btn btn-custom btn-primary-custom" OnClick="Bt_BuscarDNI_Click" />
                         </div>
-                        <asp:Label ID="Lb_NombrePersona" runat="server" CssClass="text-success small mt-1"></asp:Label>
+                        <asp:Label ID="LbNombre" runat="server" CssClass="text-success small mt-1"></asp:Label>
                     </div>
 
                     <%-- Tipo de Movimiento --%>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Tipo de Movimiento</label>
+                        <label class="form-label fw-bold text-secondary">Tipo de Movimiento</label>
                         <asp:DropDownList ID="DDLTipoMovimiento" runat="server" CssClass="form-select">
                             <asp:ListItem Text="Ingreso" Value="Ingreso" />
                             <asp:ListItem Text="Egreso" Value="Egreso" />
                         </asp:DropDownList>
                     </div>
 
-                    <%-- Punto de Acceso --%>
+                    <%-- Panel Punto de Acceso --%>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Punto de Acceso</label>
+                        <label class="form-label fw-bold text-secondary">Punto de Acceso</label>
                         <asp:DropDownList ID="DDLPuntoAcceso" runat="server" CssClass="form-select">
-                            <%-- Esto luego se carga desde la BDD--%>
                             <asp:ListItem Text="Guardia Principal" Value="1" />
                             <asp:ListItem Text="Acceso Proveedores" Value="2" />
                         </asp:DropDownList>
@@ -39,38 +40,32 @@
 
                     <%-- Lote Destino --%>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Lote Destino (Opcional)</label>
-                        <asp:DropDownList ID="DDLLoteDestino" runat="server" CssClass="form-select">                          
-                            <asp:ListItem Text="(Cargar Lotes)" Value="1" />
-                        </asp:DropDownList>
+                        <label class="form-label fw-bold text-secondary">Lote Destino (Opcional)</label>
+                        <asp:TextBox ID="TxLote" runat="server" CssClass="form-control" placeholder="Lote 180"></asp:TextBox>
                     </div>
 
-                    <%-- Vehículo (Patente) --%>
+                    <%-- Patente --%>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Patente (Opcional)</label>
-                        <asp:TextBox ID="txtPatente" runat="server" CssClass="form-control" placeholder="Ej: AB123CD"></asp:TextBox>
+                        <label class="form-label fw-bold text-secondary">Patente (Opcional)</label>
+                        <asp:TextBox ID="txtPatente" runat="server" CssClass="form-control" placeholder="AA691BD"></asp:TextBox>
+                    </div>
+
+                    <%-- Detalles u Observaciones --%>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold text-secondary">Detalles/Observaciones</label>
+                        <asp:TextBox ID="txtDetalle" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="2" placeholder="Ingresa con material de construcción..."></asp:TextBox>
                     </div>
 
                     <%-- Estado de Autorización --%>
-                    <div class="col-md-4 d-flex align-items-end">
-                        <div class="form-check form-switch mb-2">
-                            <asp:CheckBox ID="chkAutorizado" runat="server" CssClass="form-check-input" Checked="true" />
-                            <label class="form-check-label fw-bold">Acceso Autorizado</label>
-                        </div>
+                    <div class="col-12 d-flex align-items-center mt-2">
+                        <asp:CheckBox ID="chkAutorizado" runat="server" Checked="true" Text="Acceso Autorizado" CssClass="custom-checkbox fw-bold text-dark ms-2" />
                     </div>
-
-                    <%-- Detalles / Observaciones --%>
-                    <div class="col-12">
-                        <label class="form-label fw-bold">Detalles/Observaciones</label>
-                        <asp:TextBox ID="txtDetalle" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="2" placeholder="Ej: Ingresa con material de construcción..."></asp:TextBox>
-                    </div>
-
-                </div>
-
-                <div class="mt-4 text-end">
-                    <asp:Label ID="LbMensaje" runat="server" CssClass="me-3 fw-bold"></asp:Label>
-                    <asp:Button ID="Bt_RegistrarMovimiento" runat="server" Text="Guardar Movimiento" CssClass="btn btn-primary btn-lg" OnClick="Bt_RegistrarMovimiento_Click" />
-                </div>
+                </div> 
+            </div> 
+            
+            <div class="action-footer-right">
+                <asp:Label ID="LbMensaje" runat="server" CssClass="me-3 fw-bold"></asp:Label>
+                <asp:Button ID="Bt_RegistrarMovimiento" runat="server" Text="Guardar Movimiento" CssClass="btn btn-custom btn-primary-custom btn-lg px-5" OnClick="Bt_RegistrarMovimiento_Click" />
             </div>
         </div>
     </div>
