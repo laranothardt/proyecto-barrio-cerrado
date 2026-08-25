@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="admin-wrapper">
+    <div id="pg-admin" class="admin-wrapper">
         <h1 class="admin-titulo">Bienvenido al apartado de Administrador!</h1>
         <div class="admin-accion">
 

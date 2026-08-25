@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Recuperar Contraseña" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Olvido.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Olvido" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <main class="login-wrapper">
+
+    <main id="pg-recuperar" class="auth-card">
         <div class="login-container">
             <h2 class="login-title">Recuperar Contraseña</h2>
             <p class="text-muted text-center" style="font-size: 0.9rem; margin-bottom: 25px;">

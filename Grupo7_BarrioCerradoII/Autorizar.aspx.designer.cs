@@ -114,13 +114,13 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.DropDownList ddlCategoria;
 
         /// <summary>
-        /// ddlLote control.
+        /// txtLote control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLote;
+        protected global::System.Web.UI.WebControls.TextBox txtLote;
 
         /// <summary>
         /// rfvLote control.

@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <main>
+    <main id="pg-inicio">
         <section class="hero-banner">
             <%--Titulo--%> 
             <h1 class="hero-title">Bienvenido a Barrio Cerrado El Burro</h1>
