@@ -22,12 +22,12 @@
                 </div>
                 <div class="col-md-4">
                     <label for="<%= txtApellido.ClientID %>" class="form-label">Apellido</label>
-                    <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" MaxLength="100" />
+                    <asp:TextBox ID="txtApellido" runat="server" placeholder="Ej: Gómez" CssClass="form-control" MaxLength="100" />
                     <asp:RequiredFieldValidator ID="rfvApellido" runat="server" ControlToValidate="txtApellido" ErrorMessage="El apellido es obligatorio." CssClass="text-danger" Display="Dynamic" />
                 </div>
                 <div class="col-md-5">
                     <label for="<%= txtNombre.ClientID %>" class="form-label">Nombre</label>
-                    <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" MaxLength="100" />
+                    <asp:TextBox ID="txtNombre" runat="server" placeholder="Ej: Juan" CssClass="form-control" MaxLength="100" />
                     <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ControlToValidate="txtNombre" ErrorMessage="El nombre es obligatorio." CssClass="text-danger" Display="Dynamic" />
                 </div>
 
@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="<%= txtLote.ClientID %>" class="form-label">Lote destino</label>
-                    <asp:TextBox ID="txtLote" runat="server" CssClass="form-select" AppendDataBoundItems="true">
+                    <asp:TextBox ID="txtLote" runat="server" placeholder="Ej: 40" CssClass="form-select" AppendDataBoundItems="true">
                     </asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvLote" runat="server" ControlToValidate="txtLote" InitialValue="" ErrorMessage="Elegi el lote destino." CssClass="text-danger" Display="Dynamic" />
                 </div>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="<%= txtMotivo.ClientID %>" class="form-label">Motivo de la visita</label>
-                    <asp:TextBox ID="txtMotivo" runat="server" CssClass="form-control" MaxLength="250" />
+                    <asp:TextBox ID="txtMotivo" runat="server" placeholder="Ej: Delivery" CssClass="form-control" MaxLength="250" />
                     <asp:RequiredFieldValidator ID="rfvMotivo" runat="server" ControlToValidate="txtMotivo" ErrorMessage="Indica el motivo de la visita." CssClass="text-danger" Display="Dynamic" />
                 </div>
             </div>
