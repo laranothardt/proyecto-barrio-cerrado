@@ -17,16 +17,16 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
-                string rol = Session["Rol"].ToString();
+                //string rol = Session["Rol"].ToString();
 
-                bool esResidente = rol == "1" || rol == "Residente";
-                bool esPropietario = rol == "2" || rol == "Propietario";
+                //bool esResidente = rol == "1" || rol == "Residente";
+                //bool esPropietario = rol == "2" || rol == "Propietario";
 
-                if (!esResidente && !esPropietario)
-                {
-                    Response.Redirect("~/Default.aspx");
-                    return;
-                }
+                //if (!esResidente && !esPropietario)
+                //{
+                //    Response.Redirect("~/Default.aspx");
+                //    return;
+                //}
             }
         }
 
@@ -45,7 +45,7 @@ namespace Grupo7_BarrioCerradoII
             txtApellido.Text = string.Empty;
             txtNombre.Text = string.Empty;
             ddlCategoria.SelectedIndex = 0;
-            ddlLote.SelectedIndex = 0;
+            txtLote.Text = string.Empty;
             txtResidenteAutoriza.Text = string.Empty;
             txtFechaDesde.Text = string.Empty;
             txtFechaHasta.Text = string.Empty;

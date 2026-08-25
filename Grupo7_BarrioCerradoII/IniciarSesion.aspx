@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="Iniciar Sesion" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IniciarSesion.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Iniciar_Sesion" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <main class="login-wrapper">
-    <div class="login-container">
+
+    <main id="pg-login" class="auth-card">
+    <div class="login-container" href="Site.css">
         <h2 class="login-title">Iniciar Sesión</h2>
 
         <%-- Panel de Error --%>

@@ -2,14 +2,16 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container my-5">
+
+    <div id="pg-movimientos" class="container my-5">
         <h2 class="mb-4 fw-bold text-center movimiento-titulo-registro">Registrar Movimientos</h2>
 
         <div class="card shadow-sm border-0">
             <div class="card-body p-4">
-                <div class="row g-4"> 
+                <div class="row g-4">
 
                     <%-- Panel DNI  --%>
+
                     <div class="col-md-4">
                         <label class="form-label fw-bold text-secondary">DNI del Usuario</label>
                         <div class="input-group">
