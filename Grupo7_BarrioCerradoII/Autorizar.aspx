@@ -85,13 +85,13 @@
                     <ItemTemplate><%# Eval("Apellido") %>, <%# Eval("Nombre") %></ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Categoria">
-                    <ItemTemplate></ItemTemplate>
+                    <ItemTemplate><%# Eval("IdCategoria") %></ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Lote">
-                    <ItemTemplate></ItemTemplate>
+                    <ItemTemplate><%# Eval("IdLoteDestino") %></ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Autoriza">
-                    <ItemTemplate></ItemTemplate>
+                    <ItemTemplate><%# Eval("IdResidenteAutoriza") %></ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="FechaDesde" HeaderText="Desde" DataFormatString="{0:dd/MM/yyyy}" />
                 <asp:BoundField DataField="FechaHasta" HeaderText="Hasta" DataFormatString="{0:dd/MM/yyyy}" />
