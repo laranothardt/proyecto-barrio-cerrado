@@ -35,8 +35,9 @@
                     <label for="<%= ddlCategoria.ClientID %>" class="form-label">Categoria <span class="text-muted">(opcional)</span></label>
                     <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" AppendDataBoundItems="true">
                         <asp:ListItem Text="Sin categoria especifica" Value="" />
-                        <asp:ListItem Text="Visita" Value="0" />
-                        <asp:ListItem Text="Trabajador" Value="1" />
+                        <asp:ListItem Text="Propietario / Inquilino" Value="2" />
+                        <asp:ListItem Text="Visita" Value="3" />
+                        <asp:ListItem Text="Proveedor / Empleado" Value="4" />
                     </asp:DropDownList>
                 </div>
                 <div class="col-md-3">
@@ -84,15 +85,9 @@
                 <asp:TemplateField HeaderText="Apellido y nombre">
                     <ItemTemplate><%# Eval("Apellido") %>, <%# Eval("Nombre") %></ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Categoria">
-                    <ItemTemplate><%# Eval("IdCategoria") %></ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Lote">
-                    <ItemTemplate><%# Eval("IdLoteDestino") %></ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Autoriza">
-                    <ItemTemplate><%# Eval("IdResidenteAutoriza") %></ItemTemplate>
-                </asp:TemplateField>
+                <asp:BoundField DataField="NombreCategoria" HeaderText="Categoria" />
+                <asp:BoundField DataField="NumeroLote" HeaderText="Lote" />
+                <asp:BoundField DataField="NombreResidenteAutoriza" HeaderText="Autoriza" />
                 <asp:BoundField DataField="FechaDesde" HeaderText="Desde" DataFormatString="{0:dd/MM/yyyy}" />
                 <asp:BoundField DataField="FechaHasta" HeaderText="Hasta" DataFormatString="{0:dd/MM/yyyy}" />
                 <asp:BoundField DataField="Motivo" HeaderText="Motivo" />
@@ -100,6 +95,5 @@
             </Columns>
         </asp:GridView>
     </div>
-        </div>
 
 </asp:Content>
