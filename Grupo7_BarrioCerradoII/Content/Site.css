@@ -415,14 +415,14 @@ textarea {
 /* Agregá acá más reglas para #pg-registro */
 
 
-    .btn-primary-custom:active {
-        transform: translateY(0);
-    }
+.btn-primary-custom:active {
+    transform: translateY(0);
+}
 
 .action-footer-right {
     display: flex;
-    justify-content: flex-end; 
-    align-items: center; 
+    justify-content: flex-end;
+    align-items: center;
     width: 100%;
     margin-top: 25px;
 }
@@ -441,3 +441,112 @@ textarea {
    completá este bloque.
    ========================================================= */
 /* Agregá acá nuevas reglas para #pg-reportes */
+
+
+
+/* =========================================================
+   12) #pg-vehiculos — Registro de Vehículos
+   ========================================================= */
+#pg-vehiculos {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 15px;
+}
+
+    #pg-vehiculos .vehiculos-titulo {
+        color: var(--color-primario);
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    #pg-vehiculos .vehiculos-subtitulo {
+        color: var(--color-primario);
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 25px 0 15px 0;
+    }
+
+    #pg-vehiculos .vehiculos-acciones {
+        margin-bottom: 10px;
+    }
+
+    /* Paneles que se muestran/ocultan según el botón elegido */
+    #pg-vehiculos .vehiculos-panel {
+        display: block;
+        background: #ffffff;
+        padding: 30px;
+        margin-top: 20px;
+        border-radius: var(--radio-grande);
+        box-shadow: var(--sombra-tarjeta);
+        border: 1px solid rgba(30, 60, 114, 0.06);
+    }
+
+    #pg-vehiculos .form-group {
+        text-align: left;
+    }
+
+    #pg-vehiculos .form-label {
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 8px;
+        display: block;
+        font-size: 0.95rem;
+    }
+
+    #pg-vehiculos input.form-control {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 12px 16px;
+        border-radius: var(--radio-mediano);
+        border: 1px solid var(--color-borde);
+        background-color: var(--color-fondo-input);
+        transition: all 0.25s ease;
+    }
+
+        #pg-vehiculos input.form-control:focus {
+            background-color: #ffffff;
+            border-color: var(--color-acento);
+            box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.15);
+            outline: none;
+        }
+
+    /* Tabla de listado de vehículos */
+    #pg-vehiculos .vehiculos-tabla-header {
+        font-weight: 700;
+        color: var(--color-primario);
+        padding: 10px 0;
+        border-bottom: 2px solid var(--color-borde);
+    }
+
+    #pg-vehiculos .vehiculos-tabla-fila {
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f5f9;
+        color: var(--color-texto);
+    }
+
+        #pg-vehiculos .vehiculos-tabla-fila:hover {
+            background-color: var(--color-fondo-input);
+        }
+
+    /* Botones de acción principales */
+    #pg-vehiculos .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--color-acento);
+        color: #ffffff;
+        border: none;
+        border-radius: var(--radio-mediano);
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transicion);
+        box-shadow: 0 4px 12px rgba(0, 180, 216, 0.15);
+    }
+
+        #pg-vehiculos .btn-submit:hover {
+            background-color: var(--color-acento-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 180, 216, 0.25);
+            color: #ffffff;
+        }
+/* Agregá acá más reglas para #pg-vehiculos */

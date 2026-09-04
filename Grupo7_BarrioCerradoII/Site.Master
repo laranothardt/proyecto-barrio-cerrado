@@ -70,6 +70,7 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/IniciarSesion">Iniciar Sesion</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Autorizar">Autorizar</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Administradores">Administradores</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Vehiculos">Vehiculos</a></li>
                     </ul>
                 </div>
             </div>
