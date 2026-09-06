@@ -63,14 +63,20 @@
             <h2 class="vehiculos-subtitulo">Ingrese los datos del vehículo</h2>
 
             <div class="row g-3">
+
                 <div class="col-md-6 form-group">
-                    <label class="form-label" for="IngresoPatente">Patente</label>
-                    <asp:TextBox ID="IngresoPatente" runat="server" CssClass="form-control"></asp:TextBox>
+                    <label class="form-label" for="IngresoNombreTitular">Nombre del Titular</label>
+                    <asp:TextBox ID="IngresoNombreTitular" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
 
                 <div class="col-md-6 form-group">
-                    <label class="form-label" for="IngresoTitular">Titular</label>
-                    <asp:TextBox ID="IngresoTitular" runat="server" CssClass="form-control"></asp:TextBox>
+                    <label class="form-label" for="IngresoApellidoTitular">Apellido del Titular</label>
+                    <asp:TextBox ID="IngresoApellidoTitular" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <label class="form-label" for="IngresoPatente">Patente</label>
+                    <asp:TextBox ID="IngresoPatente" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
 
                 <div class="col-md-6 form-group">
