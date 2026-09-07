@@ -12,125 +12,158 @@ namespace BIZ.Data
 {
     public class Vehiculo
     {
-        private static string GetConnectionString()
+        public static DataSet ObtenerVehiculo()
         {
-            return ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
-        }
-        public BIZ.Modelo.Vehiculo ObtenerVehiculoPatente(string patente)
-        {
-            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            DataSet ds = new DataSet();
+            string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+            string query = @"
+                SELECT 
+                    v.id_vehiculo, 
+                    v.patente, 
+                    v.seguro, 
+                    v.vencimiento_seguro,
+                    p.nombre,
+                    p.apellido
+                FROM Vehiculo v
+                LEFT JOIN Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+                LEFT JOIN Persona p ON pv.id_persona = p.id_persona";
+            try
             {
-                string query = @"
-                    SELECT 
-                        v.id_vehiculo, 
-                        v.patente, 
-                        v.seguro, 
-                        v.vencimiento_seguro,
-                        p.id_persona,
-                        p.nombre,
-                        p.apellido
-                    FROM Vehiculo v
-                    LEFT JOIN Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
-                    LEFT JOIN Persona p ON pv.id_persona = p.id_persona
-                    WHERE v.patente = @Patente";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlConnection CN = new SqlConnection(cn))
                 {
-                    cmd.Parameters.AddWithValue("@Patente", patente);
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(query, CN))
                     {
-                        BIZ.Modelo.Vehiculo vehiculo = null;
-
-                        while (reader.Read())
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                         {
-
-                            if (vehiculo == null)
-                            {
-                                vehiculo = new BIZ.Modelo.Vehiculo
-                                {
-                                    IdVehiculo = Convert.ToInt32(reader["id_vehiculo"]),
-                                    Patente = reader["patente"].ToString(),
-                                    Seguro = reader["seguro"].ToString(),
-                                    VencimientoSeguro = Convert.ToDateTime(reader["vencimiento_seguro"])
-                                };
-                            }
-
-
-                            if (reader["id_persona"] != DBNull.Value)
-                            {
-                                vehiculo.Titulares.Add(new BIZ.Modelo.Persona
-                                {
-                                    IdPersona = Convert.ToInt32(reader["id_persona"]),
-                                    Nombre = reader["nombre"].ToString(),
-                                    Apellido = reader["apellido"].ToString()
-                                });
-                            }
+                            da.Fill(ds);
                         }
-
-                        return vehiculo; // Retorna null si no se encontró la patente en la BD
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                ds = null;
+                Console.WriteLine("Error al obtener el vehículo: {0}", ex.Message);
+            }
+            return ds;
+        }
+        public static DataSet ObtenerVehiculoPatente(string patente)
+        {
+            DataSet ds = new DataSet();
+            string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+            string query = @"
+                SELECT 
+                    v.id_vehiculo, 
+                    v.patente, 
+                    v.seguro, 
+                    v.vencimiento_seguro,
+                    p.nombre,
+                    p.apellido
+                FROM Vehiculo v
+                LEFT JOIN Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+                LEFT JOIN Persona p ON pv.id_persona = p.id_persona
+                WHERE v.patente = @Patente";
+            try
+            {
+                using (SqlConnection CN = new SqlConnection(cn))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, CN))
+                    {
+                        cmd.Parameters.AddWithValue("@Patente", patente);
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(ds);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+                Console.WriteLine("Error al obtener el vehículo: {0}", ex.Message);
+            }
+            return ds;
+        }
+        public static DataSet ObtenerVehiculoTitular(string titular)
+        {
+            DataSet ds = new DataSet();
+            string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+            string query = @"
+                SELECT 
+                    v.id_vehiculo, 
+                    v.patente, 
+                    v.seguro, 
+                    v.vencimiento_seguro,
+                    p.nombre,
+                    p.apellido
+                FROM Vehiculo v
+                LEFT JOIN Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+                LEFT JOIN Persona p ON pv.id_persona = p.id_persona
+                WHERE p.nombre = @NombreTitular AND p.apellido = @ApellidoTitular";
+            try
+            {
+                using (SqlConnection CN = new SqlConnection(cn))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, CN))
+                    {
+                        cmd.Parameters.AddWithValue("@NombreTitular", titular.Split(' ')[0]);
+                        cmd.Parameters.AddWithValue("@ApellidoTitular", titular.Split(' ')[1]);
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(ds);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+                Console.WriteLine("Error al obtener el vehículo: {0}", ex.Message);
+            }
+            return ds;
         }
 
 
-        public bool AgregarVehiculo(BIZ.Modelo.Vehiculo vehiculo)
+        public static void AgregarVehiculo(BIZ.Modelo.Vehiculo vehiculo)
         {
-            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            string CN = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+
+            // 1. Inserción del vehículo
+            string queryVehiculo = "INSERT INTO Vehiculo (patente, seguro, vencimiento_seguro) " +
+                                   "VALUES (@patente, @seguro, @vencimiento); " +
+                                   "SELECT SCOPE_IDENTITY();";
+
+            // 2. Inserción de la relación en Persona_Vehiculo
+            string queryRelacion = "INSERT INTO Persona_Vehiculo (id_persona, id_vehiculo) " +
+                                   "VALUES (@id_persona, @id_vehiculo)";
+
+            using (SqlConnection con = new SqlConnection(CN))
             {
-                conn.Open();
+                // Abrimos la conexión una sola vez al principio
+                con.Open();
 
-                // Iniciamos la transacción para asegurar atomicidad
-                using (SqlTransaction transaction = conn.BeginTransaction())
+                int idVehiculoGenerado;
+
+                // Paso 1: Guardar el vehículo y obtener su ID generado
+                using (SqlCommand cmdVehiculo = new SqlCommand(queryVehiculo, con))
                 {
-                    try
-                    {
-                        // 1. Insertar el Vehículo y obtener el ID generado
-                        string queryVehiculo = @"
-                    INSERT INTO Vehiculo (Patente, Seguro, vencimiento_seguro) 
-                    VALUES (@Patente, @Seguro, @VencimientoSeguro);
-                    SELECT SCOPE_IDENTITY();"; // Retorna el ID autoincremental generado
+                    cmdVehiculo.Parameters.AddWithValue("@patente", vehiculo.Patente);
+                    cmdVehiculo.Parameters.AddWithValue("@seguro", vehiculo.Seguro);
+                    cmdVehiculo.Parameters.AddWithValue("@vencimiento", vehiculo.VencimientoSeguro);
 
-                        int idVehiculoGenerado;
+                    // ExecuteScalar ejecuta la consulta y devuelve el ID generado por SCOPE_IDENTITY()
+                    idVehiculoGenerado = Convert.ToInt32(cmdVehiculo.ExecuteScalar());
+                }
 
-                        using (SqlCommand cmdVehiculo = new SqlCommand(queryVehiculo, conn, transaction))
-                        {
-                            cmdVehiculo.Parameters.AddWithValue("@Patente", vehiculo.Patente);
-                            cmdVehiculo.Parameters.AddWithValue("@Seguro", vehiculo.Seguro);
-                            cmdVehiculo.Parameters.AddWithValue("@VencimientoSeguro", vehiculo.VencimientoSeguro);
+                // Paso 2: Guardar la relación en Persona_Vehiculo
+                using (SqlCommand cmdRelacion = new SqlCommand(queryRelacion, con))
+                {
+                    cmdRelacion.Parameters.AddWithValue("@id_persona", vehiculo.IdPersona);
+                    cmdRelacion.Parameters.AddWithValue("@id_vehiculo", idVehiculoGenerado);
 
-                            // ExecuteScalar ejecuta la consulta y devuelve la primera columna de la primera fila
-                            idVehiculoGenerado = Convert.ToInt32(cmdVehiculo.ExecuteScalar());
-                        }
-
-                        // 2. Insertar cada relación en Persona_Vehiculo usando la lista
-                        string queryRelacion = "INSERT INTO Persona_Vehiculo (id_persona, id_vehiculo) VALUES (@IdPersona, @IdVehiculo)";
-
-                        foreach (var persona in vehiculo.Titulares)
-                        {
-                            using (SqlCommand cmdRelacion = new SqlCommand(queryRelacion, conn, transaction))
-                            {
-                                cmdRelacion.Parameters.AddWithValue("@IdPersona", persona.IdPersona);
-                                cmdRelacion.Parameters.AddWithValue("@IdVehiculo", idVehiculoGenerado);
-                                cmdRelacion.ExecuteNonQuery();
-                            }
-                        }
-
-                        // Confirmamos los cambios si todo salió bien
-                        transaction.Commit();
-                        return true;
-                    }
-                    catch (Exception)
-                    {
-                        // Si algo falla en cualquier punto, revertimos todas las inserciones
-                        transaction.Rollback();
-                        throw; // O manejar la excepción según tu arquitectura
-                    }
+                    cmdRelacion.ExecuteNonQuery();
                 }
             }
         }
     }
 }
-

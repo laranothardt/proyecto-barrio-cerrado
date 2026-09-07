@@ -12,6 +12,8 @@ namespace BIZ.Modelo
         public string Patente { get; set; }
         public string Seguro { get; set; }
         public DateTime VencimientoSeguro { get; set; }
-        public List<Persona> Titulares { get; set; } = new List<Persona>();
+        public int IdPersona { get; set; }
+        public string NombreTitular { get; set; }
+        public string ApellidoTitular { get; set; }
     }
 }

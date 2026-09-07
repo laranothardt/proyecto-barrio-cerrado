@@ -8,6 +8,7 @@
 
             <asp:Button ID="Bt_Movimientos" runat="server" Text="Registrar Movimientos" OnClick="Bt_Movimientos_Click" CssClass="btn-custom btn-primary-custom" />
             <asp:Button ID="Bt_Reportes" runat="server" Text="Reportes" OnClick="Bt_Reportes_Click" CssClass="btn-custom btn-primary-custom" />
+            <asp:Button ID="Bt_Vehiculos" runat="server" Text="Consultar Vehiculos" OnClick="Bt_Vehiculos_Click" CssClass="btn-custom btn-primary-custom" />
         </div>
     </div>
 

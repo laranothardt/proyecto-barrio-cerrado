@@ -114,6 +114,24 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.Panel Agregar;
 
         /// <summary>
+        /// Control IngresoNombreTitular.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox IngresoNombreTitular;
+
+        /// <summary>
+        /// Control IngresoApellidoTitular.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox IngresoApellidoTitular;
+
+        /// <summary>
         /// Control IngresoPatente.
         /// </summary>
         /// <remarks>
@@ -121,15 +139,6 @@ namespace Grupo7_BarrioCerradoII
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox IngresoPatente;
-
-        /// <summary>
-        /// Control IngresoTitular.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox IngresoTitular;
 
         /// <summary>
         /// Control IngresoSeguro.
