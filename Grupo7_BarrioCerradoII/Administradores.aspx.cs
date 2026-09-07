@@ -38,5 +38,10 @@ namespace Grupo7_BarrioCerradoII
         {
             Response.Redirect("Movimientos.aspx");
         }
+
+        protected void Bt_Vehiculos_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Vehiculos.aspx");
+        }
     }
 }
