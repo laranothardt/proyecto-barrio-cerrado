@@ -23,7 +23,7 @@ namespace BIZ.Modelo
         public DateTime FechaHora { get; set; }
         public string MetodoValidacion { get; set; }
         public string Resultado { get; set; }
-        public string MotivoDenegacion { get; set; }
+        public string Detalle { get; set; }
         public string FotoCapturada { get; set; }
         public int? IdOperador { get; set; }
         public UsuarioSistema Operador { get; set; }

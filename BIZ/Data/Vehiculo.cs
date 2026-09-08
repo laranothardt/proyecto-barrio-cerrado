@@ -129,6 +129,7 @@ namespace BIZ.Data
         public static void AgregarVehiculo(BIZ.Modelo.Vehiculo vehiculo)
         {
             string CN = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+
             string queryVehiculo = "INSERT INTO Vehiculo (patente, seguro, vencimiento_seguro) " +
                                    "VALUES (@patente, @seguro, @vencimiento); " +
                                    "SELECT SCOPE_IDENTITY();";
