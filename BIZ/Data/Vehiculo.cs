@@ -16,111 +16,92 @@ namespace BIZ.Data
         {
             DataSet ds = new DataSet();
             string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+
             string query = @"
                 SELECT 
                     v.id_vehiculo, 
-                    v.patente, 
-                    v.seguro, 
+                    v.Patente, 
+                    v.Seguro, 
                     v.vencimiento_seguro,
-                    p.nombre,
-                    p.apellido
-                FROM Vehiculo v
-                LEFT JOIN Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
-                LEFT JOIN Persona p ON pv.id_persona = p.id_persona";
-            try
+                    ISNULL(p.Nombre, 'Sin Titular') AS Nombre,
+                    ISNULL(p.Apellido, '') AS Apellido
+                FROM dbo.Vehiculo v
+                LEFT JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+                LEFT JOIN dbo.Persona p ON pv.IDPersona = p.IDPersona";
+
+            using (SqlConnection CN = new SqlConnection(cn))
             {
-                using (SqlConnection CN = new SqlConnection(cn))
+                using (SqlCommand cmd = new SqlCommand(query, CN))
                 {
-                    using (SqlCommand cmd = new SqlCommand(query, CN))
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(ds);
-                        }
+                        da.Fill(ds);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                ds = null;
-                Console.WriteLine("Error al obtener el vehículo: {0}", ex.Message);
-            }
             return ds;
         }
+
         public static DataSet ObtenerVehiculoPatente(string patente)
         {
             DataSet ds = new DataSet();
             string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+
             string query = @"
                 SELECT 
                     v.id_vehiculo, 
-                    v.patente, 
-                    v.seguro, 
+                    v.Patente, 
+                    v.Seguro, 
                     v.vencimiento_seguro,
-                    p.nombre,
-                    p.apellido,
-                    m.FechaHora
-                FROM Vehiculo v
-                LEFT JOIN Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
-                LEFT JOIN Persona p ON pv.id_persona = p.id_persona
-                LEFT JOIN Movimiento m ON v.id_vehiculo = m.id_vehiculo
-                WHERE v.patente = @Patente";
-            try
+                    ISNULL(p.Nombre, 'Sin Titular') AS Nombre,
+                    ISNULL(p.Apellido, '') AS Apellido
+                FROM dbo.Vehiculo v
+                LEFT JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+                LEFT JOIN dbo.Persona p ON pv.IDPersona = p.IDPersona
+                WHERE v.Patente LIKE @Patente + '%'";
+
+            using (SqlConnection CN = new SqlConnection(cn))
             {
-                using (SqlConnection CN = new SqlConnection(cn))
+                using (SqlCommand cmd = new SqlCommand(query, CN))
                 {
-                    using (SqlCommand cmd = new SqlCommand(query, CN))
+                    cmd.Parameters.AddWithValue("@Patente", patente.Trim());
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        cmd.Parameters.AddWithValue("@Patente", patente);
-                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(ds);
-                        }
+                        da.Fill(ds);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                ds = null;
-                Console.WriteLine("Error al obtener el vehículo: {0}", ex.Message);
-            }
             return ds;
         }
+
         public static DataSet ObtenerVehiculoTitular(string titular)
         {
             DataSet ds = new DataSet();
             string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+
             string query = @"
                 SELECT 
                     v.id_vehiculo, 
-                    v.patente, 
-                    v.seguro, 
+                    v.Patente, 
+                    v.Seguro, 
                     v.vencimiento_seguro,
-                    p.nombre,
-                    p.apellido
-                FROM Vehiculo v
-                LEFT JOIN Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
-                LEFT JOIN Persona p ON pv.id_persona = p.id_persona
-                WHERE p.nombre = @NombreTitular AND p.apellido = @ApellidoTitular";
-            try
+                    ISNULL(p.Nombre, 'Sin Titular') AS Nombre,
+                    ISNULL(p.Apellido, '') AS Apellido
+                FROM dbo.Vehiculo v
+                LEFT JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+                LEFT JOIN dbo.Persona p ON pv.IDPersona = p.IDPersona
+                WHERE p.Nombre LIKE '%' + @Titular + '%' OR p.Apellido LIKE '%' + @Titular + '%'";
+
+            using (SqlConnection CN = new SqlConnection(cn))
             {
-                using (SqlConnection CN = new SqlConnection(cn))
+                using (SqlCommand cmd = new SqlCommand(query, CN))
                 {
-                    using (SqlCommand cmd = new SqlCommand(query, CN))
+                    cmd.Parameters.AddWithValue("@Titular", titular.Trim());
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        cmd.Parameters.AddWithValue("@NombreTitular", titular.Split(' ')[0]);
-                        cmd.Parameters.AddWithValue("@ApellidoTitular", titular.Split(' ')[1]);
-                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                        {
-                            da.Fill(ds);
-                        }
+                        da.Fill(ds);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                ds = null;
-                Console.WriteLine("Error al obtener el vehículo: {0}", ex.Message);
             }
             return ds;
         }
@@ -160,6 +141,29 @@ namespace BIZ.Data
                     cmdRelacion.ExecuteNonQuery();
                 }
             }
+        }
+        public static int ObtenerIdPersona(string nombre, string apellido)
+        {
+            int idPersona = 0;
+            string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+            string query = "SELECT IDPersona FROM dbo.Persona WHERE Nombre = @Nombre AND Apellido = @Apellido";
+
+            using (SqlConnection con = new SqlConnection(cn))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Nombre", nombre);
+                    cmd.Parameters.AddWithValue("@Apellido", apellido);
+                    con.Open();
+
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        idPersona = Convert.ToInt32(result);
+                    }
+                }
+            }
+            return idPersona;
         }
     }
 }
