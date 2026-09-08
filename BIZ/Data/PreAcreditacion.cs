@@ -54,7 +54,6 @@ namespace BIZ.Data
 
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
-                // Agregamos LEFT JOIN CategoriaPersona cat ON p.FK_IDCategoria = cat.IDCategoria
                 string query = @"SELECT 
                             p.IDPreacreditacion, p.DNI, p.Nombre, p.Apellido, 
                             p.FK_IDCategoria, p.FK_IDLote, p.FK_IDResidenteAutoriza, 
