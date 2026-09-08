@@ -16,7 +16,6 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
-                // Si en Session guardas el DNI del usuario logueado, lo precargamos
                 if (Session["Dni"] != null)
                 {
                     txtResidenteAutoriza.Text = Session["Dni"].ToString();
@@ -90,7 +89,6 @@ namespace Grupo7_BarrioCerradoII
         {
             try
             {
-                // 1. Intentamos obtener el DNI de la Session o del TextBox
                 string dniResidente = Session["Dni"] != null ? Session["Dni"].ToString() : txtResidenteAutoriza.Text.Trim();
 
                 BIZ.Data.PreAcreditacion data = new BIZ.Data.PreAcreditacion();
@@ -100,12 +98,10 @@ namespace Grupo7_BarrioCerradoII
                     BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
                     int idResidente = dataPersona.ObtenerOCrearPersonaResidente(dniResidente, "Residente " + dniResidente);
 
-                    // Carga solo las del residente logueado
                     gvPreacreditaciones.DataSource = data.ObtenerVigentesPorResidente(idResidente);
                 }
                 else
                 {
-                    // Si no hay DNI en sesión aún, obtiene todas las vigentes para no dejar la grilla vacía
                     gvPreacreditaciones.DataSource = data.ObtenerTodasVigentes();
                 }
 
