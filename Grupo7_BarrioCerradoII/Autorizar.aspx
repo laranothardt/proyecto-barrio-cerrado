@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="<%= txtLote.ClientID %>" class="form-label">Lote destino</label>
-                    <asp:TextBox ID="txtLote" runat="server" placeholder="Ej: 40" CssClass="form-select" AppendDataBoundItems="true">
+                    <asp:TextBox ID="txtLote" runat="server" placeholder="Máx. 50" CssClass="form-select" AppendDataBoundItems="true">
                     </asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvLote" runat="server" ControlToValidate="txtLote" InitialValue="" ErrorMessage="Elegi el lote destino." CssClass="text-danger" Display="Dynamic" />
                 </div>
