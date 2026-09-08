@@ -17,6 +17,7 @@ namespace BIZ.Data
             DataSet ds = new DataSet();
             string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
 
+            // Query directa y limpia. Ajustamos 'ISNULL' para asegurar columnas sin NULLs
             string query = @"
                 SELECT 
                     v.id_vehiculo, 
@@ -106,42 +107,6 @@ namespace BIZ.Data
             return ds;
         }
 
-
-        public static void AgregarVehiculo(BIZ.Modelo.Vehiculo vehiculo)
-        {
-            string CN = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
-
-            string queryVehiculo = "INSERT INTO Vehiculo (patente, seguro, vencimiento_seguro) " +
-                                   "VALUES (@patente, @seguro, @vencimiento); " +
-                                   "SELECT SCOPE_IDENTITY();";
-
-            string queryRelacion = "INSERT INTO Persona_Vehiculo (id_persona, id_vehiculo) " +
-                                   "VALUES (@id_persona, @id_vehiculo)";
-
-            using (SqlConnection con = new SqlConnection(CN))
-            {
-                con.Open();
-
-                int idVehiculoGenerado;
-
-                using (SqlCommand cmdVehiculo = new SqlCommand(queryVehiculo, con))
-                {
-                    cmdVehiculo.Parameters.AddWithValue("@patente", vehiculo.Patente);
-                    cmdVehiculo.Parameters.AddWithValue("@seguro", vehiculo.Seguro);
-                    cmdVehiculo.Parameters.AddWithValue("@vencimiento", vehiculo.VencimientoSeguro);
-
-                    idVehiculoGenerado = Convert.ToInt32(cmdVehiculo.ExecuteScalar());
-                }
-
-                using (SqlCommand cmdRelacion = new SqlCommand(queryRelacion, con))
-                {
-                    cmdRelacion.Parameters.AddWithValue("@id_persona", vehiculo.IdPersona);
-                    cmdRelacion.Parameters.AddWithValue("@id_vehiculo", idVehiculoGenerado);
-
-                    cmdRelacion.ExecuteNonQuery();
-                }
-            }
-        }
         public static int ObtenerIdPersona(string nombre, string apellido)
         {
             int idPersona = 0;
@@ -164,6 +129,44 @@ namespace BIZ.Data
                 }
             }
             return idPersona;
+        }
+
+
+        public static void AgregarVehiculo(BIZ.Modelo.Vehiculo vehiculo)
+        {
+            string CN = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+
+            string queryVehiculo = "INSERT INTO Vehiculo (patente, seguro, vencimiento_seguro) " +
+                                   "VALUES (@patente, @seguro, @vencimiento); " +
+                                   "SELECT SCOPE_IDENTITY();";
+
+            string queryRelacion = "INSERT INTO Persona_Vehiculo (id_persona, id_vehiculo) " +
+                                   "VALUES (@id_persona, @id_vehiculo)";
+
+            using (SqlConnection con = new SqlConnection(CN))
+            {
+
+                con.Open();
+
+                int idVehiculoGenerado;
+
+                using (SqlCommand cmdVehiculo = new SqlCommand(queryVehiculo, con))
+                {
+                    cmdVehiculo.Parameters.AddWithValue("@patente", vehiculo.Patente);
+                    cmdVehiculo.Parameters.AddWithValue("@seguro", vehiculo.Seguro);
+                    cmdVehiculo.Parameters.AddWithValue("@vencimiento", vehiculo.VencimientoSeguro);
+
+                    idVehiculoGenerado = Convert.ToInt32(cmdVehiculo.ExecuteScalar());
+                }
+
+                using (SqlCommand cmdRelacion = new SqlCommand(queryRelacion, con))
+                {
+                    cmdRelacion.Parameters.AddWithValue("@id_persona", vehiculo.IdPersona);
+                    cmdRelacion.Parameters.AddWithValue("@id_vehiculo", idVehiculoGenerado);
+
+                    cmdRelacion.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

@@ -49,22 +49,14 @@ namespace Grupo7_BarrioCerradoII
 
         protected void txPatente_TextChanged(object sender, EventArgs e)
         {
-            var ds = BIZ.Data.Vehiculo.ObtenerVehiculoPatente(txPatente.Text);
-            if (ds != null && ds.Tables.Count > 0)
-            {
-                RpVehiculos.DataSource = ds.Tables[0];
-                RpVehiculos.DataBind();
-            }
+            RpVehiculos.DataSource = BIZ.Data.Vehiculo.ObtenerVehiculoPatente(txPatente.Text);
+            RpVehiculos.DataBind();
         }
 
         protected void txTitular_TextChanged(object sender, EventArgs e)
         {
-            var ds = BIZ.Data.Vehiculo.ObtenerVehiculoTitular(txTitular.Text);
-            if (ds != null && ds.Tables.Count > 0)
-            {
-                RpVehiculos.DataSource = ds.Tables[0];
-                RpVehiculos.DataBind();
-            }
+            RpVehiculos.DataSource = BIZ.Data.Vehiculo.ObtenerVehiculoTitular(txTitular.Text);
+            RpVehiculos.DataBind();
         }
 
         protected void BtGuardar_Click(object sender, EventArgs e)
@@ -85,7 +77,7 @@ namespace Grupo7_BarrioCerradoII
             nuevoVehiculo.Patente = IngresoPatente.Text.Trim();
             nuevoVehiculo.Seguro = IngresoSeguro.Text.Trim();
             nuevoVehiculo.VencimientoSeguro = DateTime.Parse(IngresoVencimiento.Text);
-            nuevoVehiculo.IdPersona = idPersona;
+            nuevoVehiculo.IdPersona = idPersona; 
 
             BIZ.Data.Vehiculo.AgregarVehiculo(nuevoVehiculo);
 
