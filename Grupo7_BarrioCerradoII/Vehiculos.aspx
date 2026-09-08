@@ -38,7 +38,8 @@
             <div class="vehiculos-tabla">
                 <div class="row vehiculos-tabla-header">
                     <div class="col-md-2">Patente</div>
-                    <div class="col-md-2">Titular</div>
+                    <div class="col-md-2">Nombre Titular</div>
+                    <div class="col-md-2">Apellido Titular</div>
                     <div class="col-md-2">Seguro</div>
                     <div class="col-md-2">Fecha de vencimiento</div>
                     <div class="col-md-2">Último Ingreso</div>
