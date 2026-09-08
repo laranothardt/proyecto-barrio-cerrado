@@ -47,11 +47,12 @@
                 <asp:Repeater ID="RpVehiculos" runat="server">
                     <ItemTemplate>
                         <div class="row vehiculos-tabla-fila">
-                            <div class="col-md-2"><%# Eval("patente")%></div>
-                            <div class="col-md-2"><%# Eval("titular")%></div>
-                            <div class="col-md-2"><%# Eval("seguro")%></div>
-                            <div class="col-md-2"><%# Eval("fecha_vencimiento")%></div>
-                            <div class="col-md-2"><%# Eval("FechaHora")%></div>
+                            <div class="col-md-2"><%# Eval("Patente") %></div>
+                            <div class="col-md-2"><%# Eval("Nombre") %></div>
+                            <div class="col-md-2"><%# Eval("Apellido") %></div>
+                            <div class="col-md-2"><%# Eval("Seguro") %></div>
+                            <div class="col-md-2"><%# Eval("vencimiento_seguro") != DBNull.Value ? Convert.ToDateTime(Eval("vencimiento_seguro")).ToString("dd/MM/yyyy") : "-" %></div>
+                            <div class="col-md-2">-</div>
                         </div>
                     </ItemTemplate>
                 </asp:Repeater>

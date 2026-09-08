@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -22,9 +23,22 @@ namespace Grupo7_BarrioCerradoII
         {
             Buscar.Visible = true;
             Agregar.Visible = false;
-            RpVehiculos.DataSource = BIZ.Data.Vehiculo.ObtenerVehiculo();
-            RpVehiculos.DataBind();
+            DataSet ds = BIZ.Data.Vehiculo.ObtenerVehiculo();
 
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                RpVehiculos.DataSource = ds.Tables[0];
+                RpVehiculos.DataBind();
+                pnlMensaje.Visible = false;
+            }
+            else
+            {
+                RpVehiculos.DataSource = null;
+                RpVehiculos.DataBind();
+
+                pnlMensaje.Visible = true;
+                litMensaje.Text = "No se encontraron vehículos registrados en la base de datos.";
+            }
         }
 
         protected void BtRegistrar_Click(object sender, EventArgs e)
@@ -47,18 +61,28 @@ namespace Grupo7_BarrioCerradoII
 
         protected void BtGuardar_Click(object sender, EventArgs e)
         {
+            string nombre = IngresoNombreTitular.Text.Trim();
+            string apellido = IngresoApellidoTitular.Text.Trim();
+
+            int idPersona = BIZ.Data.Vehiculo.ObtenerIdPersona(nombre, apellido);
+
+            if (idPersona == 0)
+            {
+                pnlMensaje.Visible = true;
+                litMensaje.Text = "La persona ingresada no existe en el sistema. Registre la persona primero.";
+                return;
+            }
+
             BIZ.Modelo.Vehiculo nuevoVehiculo = new BIZ.Modelo.Vehiculo();
-
-            // 2. Mapeamos los datos (convirtiendo los tipos que correspondan)
-            nuevoVehiculo.Patente = IngresoPatente.Text;
-            nuevoVehiculo.Seguro = IngresoSeguro.Text;
+            nuevoVehiculo.Patente = IngresoPatente.Text.Trim();
+            nuevoVehiculo.Seguro = IngresoSeguro.Text.Trim();
             nuevoVehiculo.VencimientoSeguro = DateTime.Parse(IngresoVencimiento.Text);
-            nuevoVehiculo.NombreTitular = IngresoNombreTitular.Text;
-            nuevoVehiculo.ApellidoTitular = IngresoApellidoTitular.Text;
+            nuevoVehiculo.IdPersona = idPersona; 
 
-            // 3. Llamamos al método que inserta en la base de datos
             BIZ.Data.Vehiculo.AgregarVehiculo(nuevoVehiculo);
-                    
+
+            pnlMensaje.Visible = true;
+            litMensaje.Text = "Vehículo registrado correctamente.";
         }
     }
 }
