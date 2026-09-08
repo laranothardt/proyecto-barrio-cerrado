@@ -58,10 +58,12 @@ namespace BIZ.Data
                     v.seguro, 
                     v.vencimiento_seguro,
                     p.nombre,
-                    p.apellido
+                    p.apellido,
+                    m.FechaHora
                 FROM Vehiculo v
                 LEFT JOIN Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
                 LEFT JOIN Persona p ON pv.id_persona = p.id_persona
+                LEFT JOIN Movimiento m ON v.id_vehiculo = m.id_vehiculo
                 WHERE v.patente = @Patente";
             try
             {
@@ -140,6 +142,7 @@ namespace BIZ.Data
                 con.Open();
 
                 int idVehiculoGenerado;
+
                 using (SqlCommand cmdVehiculo = new SqlCommand(queryVehiculo, con))
                 {
                     cmdVehiculo.Parameters.AddWithValue("@patente", vehiculo.Patente);

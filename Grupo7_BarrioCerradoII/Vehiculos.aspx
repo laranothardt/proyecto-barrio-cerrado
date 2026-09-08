@@ -37,19 +37,21 @@
 
             <div class="vehiculos-tabla">
                 <div class="row vehiculos-tabla-header">
-                    <div class="col-md-3">Patente</div>
-                    <div class="col-md-3">Titular</div>
-                    <div class="col-md-3">Seguro</div>
-                    <div class="col-md-3">Fecha de vencimiento</div>
+                    <div class="col-md-2">Patente</div>
+                    <div class="col-md-2">Titular</div>
+                    <div class="col-md-2">Seguro</div>
+                    <div class="col-md-2">Fecha de vencimiento</div>
+                    <div class="col-md-2">Último Ingreso</div>
                 </div>
 
                 <asp:Repeater ID="RpVehiculos" runat="server">
                     <ItemTemplate>
                         <div class="row vehiculos-tabla-fila">
-                            <div class="col-md-3"><%# Eval("patente")%></div>
-                            <div class="col-md-3"><%# Eval("titular")%></div>
-                            <div class="col-md-3"><%# Eval("seguro")%></div>
-                            <div class="col-md-3"><%# Eval("fecha_vencimiento")%></div>
+                            <div class="col-md-2"><%# Eval("patente")%></div>
+                            <div class="col-md-2"><%# Eval("titular")%></div>
+                            <div class="col-md-2"><%# Eval("seguro")%></div>
+                            <div class="col-md-2"><%# Eval("fecha_vencimiento")%></div>
+                            <div class="col-md-2"><%# Eval("FechaHora")%></div>
                         </div>
                     </ItemTemplate>
                 </asp:Repeater>
