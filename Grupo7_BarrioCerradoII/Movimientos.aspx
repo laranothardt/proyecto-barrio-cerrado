@@ -3,7 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <div id="pg-movimientos" class="container my-5">
-        <h2 class="mb-4 fw-bold text-center movimiento-titulo-registro">Registrar Movimientos</h2>
+        <h2 class="mb-4 fw-bold movimiento-titulo-registro">Registrar Movimientos</h2>
+            <p class="text-muted">Registre y guarde los movimientos de la persona.</p>
 
         <div class="card shadow-sm border-0">
             <div class="card-body p-4">
@@ -12,17 +13,17 @@
                     <%-- Panel DNI  --%>
 
                     <div class="col-md-4">
-                        <label class="form-label fw-bold text-secondary">DNI del Usuario</label>
+                        <label class="form-label">DNI del Usuario</label>
                         <div class="input-group">
                             <asp:TextBox ID="Tx_Dni" runat="server" CssClass="form-control" placeholder="40123456"></asp:TextBox>
-                            <asp:Button ID="Bt_BuscarDNI" runat="server" Text="Buscar" CssClass="btn btn-custom btn-primary-custom" OnClick="Bt_BuscarDNI_Click" />
+                            <asp:Button ID="Bt_BuscarDNI" runat="server" Text="Buscar" CssClass="btn-dni-movimientos" OnClick="Bt_BuscarDNI_Click" />
                         </div>
                         <asp:Label ID="LbNombre" runat="server" CssClass="text-success small mt-1"></asp:Label>
                     </div>
 
                     <%-- Tipo de Movimiento --%>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold text-secondary">Tipo de Movimiento</label>
+                        <label class="form-label">Tipo de Movimiento</label>
                         <asp:DropDownList ID="DDLTipoMovimiento" runat="server" CssClass="form-select">
                             <asp:ListItem Text="Ingreso" Value="Ingreso" />
                             <asp:ListItem Text="Egreso" Value="Egreso" />
@@ -31,7 +32,7 @@
 
                     <%-- Panel Punto de Acceso --%>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold text-secondary">Punto de Acceso</label>
+                        <label class="form-label">Punto de Acceso</label>
                         <asp:DropDownList ID="DDLPuntoAcceso" runat="server" CssClass="form-select">
                             <asp:ListItem Text="Guardia Principal" Value="1" />
                             <asp:ListItem Text="Acceso Proveedores" Value="2" />
@@ -40,19 +41,19 @@
 
                     <%-- Lote Destino --%>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold text-secondary">Lote Destino (Opcional)</label>
+                        <label class="form-label">Lote Destino (Opcional)</label>
                         <asp:TextBox ID="TxLote" runat="server" CssClass="form-control" placeholder="Lote 180"></asp:TextBox>
                     </div>
 
                     <%-- Patente --%>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold text-secondary">Patente (Opcional)</label>
+                        <label class="form-label">Patente (Opcional)</label>
                         <asp:TextBox ID="txtPatente" runat="server" CssClass="form-control" placeholder="AA691BD"></asp:TextBox>
                     </div>
 
                     <%-- Detalles u Observaciones --%>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold text-secondary">Detalles/Observaciones</label>
+                        <label class="form-label">Detalles/Observaciones</label>
                         <asp:TextBox ID="txtDetalle" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="2" placeholder="Ingresa con material de construcción..."></asp:TextBox>
                     </div>
 
