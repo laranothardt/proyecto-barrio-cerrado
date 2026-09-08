@@ -15,5 +15,6 @@ namespace BIZ.Modelo
         public int IdPersona { get; set; }
         public string NombreTitular { get; set; }
         public string ApellidoTitular { get; set; }
+        public DateTime UltimoIngreso { get; set; }
     }
 }
