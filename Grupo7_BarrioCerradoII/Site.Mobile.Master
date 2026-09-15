@@ -1,23 +1,103 @@
-<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Mobile.master.cs" Inherits="Grupo7_BarrioCerradoII.Site_Mobile" %>
-<%@ Register Src="~/ViewSwitcher.ascx" TagPrefix="friendlyUrls" TagName="ViewSwitcher" %>
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Mobile.master.cs" Inherits="Grupo7_BarrioCerradoII.SiteMobileMaster" %>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="es">
 <head runat="server">
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title><%: Page.Title %> - Barrio Cerrado El Burro</title>
+
+    <link rel="stylesheet" href="<%: ResolveUrl("~/Content/bootstrap.css") %>" />
+    <link rel="stylesheet" href="<%: ResolveUrl("~/Content/Site.css") %>" />
+    <link rel="stylesheet" href="<%: ResolveUrl("~/Content/Site.Mobile.css") %>" />
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+
+    <link rel="shortcut icon" href="<%: ResolveUrl("~/Images/burro.jpg") %>" type="image/jpeg" />
+    <link rel="icon" href="<%: ResolveUrl("~/Images/burro.jpg") %>" type="image/jpeg" />
 </head>
 <body>
-    <form id="form1" runat="server">
-    <div>
-        <h1>Mobile Master Page</h1>
-        <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
-        <section class="content-wrapper main-content clear-fix">
-            <asp:ContentPlaceHolder runat="server" ID="MainContent" />
-        </section>
-        <friendlyUrls:ViewSwitcher runat="server" />
-    </div>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+            </Scripts>
+        </asp:ScriptManager>
+
+        <header class="g7-topbar">
+            <button type="button" class="g7-burger" id="btnAbrirMenu" aria-label="Abrir menú" aria-controls="menuLateral" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <a class="navbar-brand" runat="server" href="~/">
+                <img src='<%= ResolveUrl("~/Images/burro.jpg") %>' alt="Burro" class="logo-navbar" />
+                <span>Grupo07</span>
+            </a>
+        </header>
+
+        <nav class="g7-sidebar" id="menuLateral" aria-label="Menú principal">
+            <div class="g7-sidebar-header">
+                <strong>Menú</strong>
+                <button type="button" class="g7-close" id="btnCerrarMenu" aria-label="Cerrar menú">&times;</button>
+            </div>
+            <a class="nav-link" runat="server" href="~/">Inicio</a>
+            <a class="nav-link" runat="server" href="~/IniciarSesion">Iniciar Sesion</a>
+            <a class="nav-link" runat="server" href="~/Autorizar">Autorizar</a>
+            <a class="nav-link" runat="server" href="~/Administradores">Administradores</a>
+        </nav>
+
+        <div class="g7-backdrop" id="fondoMenu"></div>
+
+        <div class="container-fluid body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - Grupo07</p>
+            </footer>
+        </div>
     </form>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
+    </asp:PlaceHolder>
+
+    <script type="text/javascript">
+        (function () {
+            var panel = document.getElementById('menuLateral');
+            var fondo = document.getElementById('fondoMenu');
+            var abrir = document.getElementById('btnAbrirMenu');
+            var cerrar = document.getElementById('btnCerrarMenu');
+
+            function setMenu(abierto) {
+                panel.classList.toggle('g7-open', abierto);
+                fondo.classList.toggle('g7-open', abierto);
+                document.body.classList.toggle('g7-no-scroll', abierto);
+                abrir.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+            }
+
+            abrir.addEventListener('click', function () { setMenu(true); });
+            cerrar.addEventListener('click', function () { setMenu(false); });
+            fondo.addEventListener('click', function () { setMenu(false); });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') { setMenu(false); }
+            });
+        })();
+    </script>
 </body>
 </html>

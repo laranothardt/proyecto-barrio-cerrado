@@ -7,11 +7,10 @@ using System.Web.UI.WebControls;
 
 namespace Grupo7_BarrioCerradoII
 {
-    public partial class Site_Mobile : System.Web.UI.MasterPage
+    public partial class SiteMobileMaster : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
     }
 }
