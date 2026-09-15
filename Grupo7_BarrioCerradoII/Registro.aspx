@@ -22,6 +22,9 @@
             <div class="col-md-6 form-group">
                 <label class="form-label" for="dni">DNI</label>
                 <asp:TextBox ID="tx_dni" runat="server" class="form-control" placeholder="Ej: 30123456"></asp:TextBox>
+                <button type="button" id="btnEscanearDni" class="btn btn-outline-secondary btn-sm mt-2">
+                    📷 Escanear DNI con cámara
+                </button>
             </div>
 
             <%--Foto Identificatoria--%>
@@ -58,6 +61,13 @@
             </div>
                 </div>
 
+            <%-- Panel de escaneo de DNI por cámara (oculto hasta que se presiona "Escanear DNI") --%>
+            <div id="panelScanner" style="display:none; margin-top:15px; margin-bottom:15px; text-align:center;">
+                <video id="videoDni" style="width:100%; max-width:400px; border:1px solid #ccc; border-radius:8px;" autoplay muted playsinline></video>
+                <div id="scanStatus" style="margin-top:8px; font-size:0.9rem;"></div>
+                <button type="button" id="btnCancelarScan" class="btn btn-outline-danger btn-sm mt-2">Cancelar</button>
+            </div>
+
             <%--Boton--%>
             <asp:Button ID="bt_registrarse" runat="server" Text="Registrarse" CssClass="btn-submit" OnClick="bt_registrarse_Click" />
 
@@ -69,4 +79,80 @@
 
         </div>
     </main>
+
+    <%-- Librería para leer códigos de barras PDF417 (formato del DNI argentino) desde la cámara --%>
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.20.0/umd/index.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var codeReader = null;
+
+            // El código de barras del DNI argentino trae los datos separados por "@":
+            // NroTramite@Apellido@Nombre@Sexo@DNI@Ejemplar@FechaNacimiento@FechaEmision@CUIL
+            function parseCodigoDni(texto) {
+                var campos = texto.split('@');
+                if (campos.length < 8) {
+                    return null;
+                }
+                return {
+                    nroTramite: campos[0],
+                    apellido: campos[1],
+                    nombre: campos[2],
+                    sexo: campos[3],
+                    dni: campos[4],
+                    ejemplar: campos[5],
+                    fechaNacimiento: campos[6],
+                    fechaEmision: campos[7],
+                    cuil: campos.length > 8 ? campos[8] : null
+                };
+            }
+
+            function detenerScanner() {
+                if (codeReader) {
+                    codeReader.reset();
+                }
+                document.getElementById('panelScanner').style.display = 'none';
+            }
+
+            function iniciarScanner() {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    alert('Este navegador no soporta acceso a la cámara. Probá con Chrome o Edge actualizados.');
+                    return;
+                }
+
+                document.getElementById('panelScanner').style.display = 'block';
+                document.getElementById('scanStatus').textContent = 'Apuntá la cámara al código de barras del DNI...';
+
+                codeReader = new ZXing.BrowserPDF417Reader();
+
+                codeReader.decodeOnceFromVideoDevice(undefined, 'videoDni').then(function (resultado) {
+                    var datos = parseCodigoDni(resultado.getText());
+
+                    if (datos) {
+                        document.getElementById('<%= tx_dni.ClientID %>').value = datos.dni;
+                        document.getElementById('<%= tx_nombre.ClientID %>').value = datos.nombre + ' ' + datos.apellido;
+                        document.getElementById('scanStatus').textContent = 'DNI leído correctamente: ' + datos.apellido + ', ' + datos.nombre;
+                    } else {
+                        document.getElementById('scanStatus').textContent = 'No se pudo interpretar el código leído. Cargá los datos manualmente.';
+                    }
+
+                    detenerScanner();
+                }).catch(function (err) {
+                    console.error(err);
+                    var msg = 'No se pudo acceder a la cámara.';
+                    if (err && err.name === 'NotAllowedError') {
+                        msg = 'Permiso de cámara denegado. Habilitalo en el navegador e intentá de nuevo.';
+                    } else if (err && err.name === 'NotFoundError') {
+                        msg = 'No se encontró ninguna cámara en este dispositivo.';
+                    }
+                    document.getElementById('scanStatus').textContent = msg;
+                    detenerScanner();
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('btnEscanearDni').addEventListener('click', iniciarScanner);
+                document.getElementById('btnCancelarScan').addEventListener('click', detenerScanner);
+            });
+        })();
+    </script>
 </asp:Content>
