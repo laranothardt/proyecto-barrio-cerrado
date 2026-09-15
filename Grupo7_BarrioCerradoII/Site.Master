@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - Barrio Cerrado El Burro</title>
 
-    <link href="Content/Site.css" rel="stylesheet" />
-    
+    <link rel="stylesheet" href="<%: ResolveUrl("~/Content/bootstrap.css") %>" />
+    <link rel="stylesheet" href="<%: ResolveUrl("~/Content/Site.css") %>" />
+
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
