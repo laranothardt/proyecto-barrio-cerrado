@@ -86,6 +86,25 @@ namespace BIZ.Data
                     {
                         if (reader.Read())
                         {
+                            byte[] fotoBytes = null;
+                            if (reader["Foto"] != DBNull.Value)
+                            {
+                                string fotoStr = reader["Foto"].ToString();
+                                if (!string.IsNullOrEmpty(fotoStr))
+                                {
+                                    try
+                                    {
+                                        // Intentar interpretar como Base64
+                                        fotoBytes = Convert.FromBase64String(fotoStr);
+                                    }
+                                    catch
+                                    {
+                                        // Si no era Base64, convertir los caracteres directamente
+                                        fotoBytes = Encoding.UTF8.GetBytes(fotoStr);
+                                    }
+                                }
+                            }
+
                             return new BIZ.Modelo.UsuarioSistema
                             {
                                 IdUsuario = Convert.ToInt32(reader["IdUsuario"]),
@@ -94,7 +113,7 @@ namespace BIZ.Data
                                 NombreCompleto = reader["NombreCompleto"].ToString(),
                                 FK_Rol = reader["FK_Rol"].ToString(),
                                 Dni = reader["Dni"] != DBNull.Value ? reader["Dni"].ToString() : null,
-                                Foto = reader["Foto"] != DBNull.Value ? (byte[])reader["Foto"] : null
+                                Foto = fotoBytes
                             };
                         }
                     }
