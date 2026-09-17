@@ -10,11 +10,10 @@ namespace Grupo7_BarrioCerradoII
 {
     public partial class Olvido : System.Web.UI.Page
     {
-        // Configuración de Servidor de Correo (Ejemplo con Gmail)
         private const string SMTP_HOST = "smtp.gmail.com";
         private const int SMTP_PORT = 587;
-        private const string SMTP_USER = "laranothardt@gmail.com";
-        private const string SMTP_PASS = "xmnl udyw mwpp xvrt";
+        private string SMTP_USER => System.Configuration.ConfigurationManager.AppSettings["SmtpUser"] ?? "laranothardt@gmail.com";
+        private string SMTP_PASS => System.Configuration.ConfigurationManager.AppSettings["SmtpPass"] ?? string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,7 +21,6 @@ namespace Grupo7_BarrioCerradoII
             {
                 pnlMensaje.Visible = false;
 
-                // Verificar si la URL trae un token de verificación
                 string token = Request.QueryString["token"];
 
                 if (!string.IsNullOrEmpty(token))
@@ -47,7 +45,6 @@ namespace Grupo7_BarrioCerradoII
             }
         }
 
-        // PASO 1: Enviar correo con el Link
         protected void bt_solicitar_Click(object sender, EventArgs e)
         {
             string email = tx_email.Text.Trim();
@@ -69,15 +66,12 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
-                // Generar token único y guardarlo en la sesión con expiración
                 string token = Guid.NewGuid().ToString();
                 Session["ResetToken_" + token] = email;
-                Session["ResetToken_Expira_" + token] = DateTime.Now.AddMinutes(30); // Válido por 30 minutos
+                Session["ResetToken_Expira_" + token] = DateTime.Now.AddMinutes(30);
 
-                // Construir URL de recuperación
                 string resetLink = Request.Url.GetLeftPart(UriPartial.Authority) + ResolveUrl("~/Olvido.aspx?token=" + token);
 
-                // Enviar el correo electrónico
                 EnviarEmailRecuperacion(email, resetLink);
 
                 MostrarMensaje("Se ha enviado un enlace de recuperación a tu correo electrónico. Revisa tu bandeja de entrada o SPAM.", true);
@@ -89,7 +83,6 @@ namespace Grupo7_BarrioCerradoII
             }
         }
 
-        // PASO 2: Restablecer Contraseña con el Token
         protected void bt_restablecer_Click(object sender, EventArgs e)
         {
             string token = Request.QueryString["token"];
@@ -124,7 +117,6 @@ namespace Grupo7_BarrioCerradoII
 
                 if (actualizado)
                 {
-                    // Invalidar el token para que no se reutlice
                     Session.Remove("ResetToken_" + token);
                     Session.Remove("ResetToken_Expira_" + token);
 
