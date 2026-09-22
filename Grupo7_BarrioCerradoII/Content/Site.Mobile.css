@@ -1,0 +1,175 @@
+﻿/* =========================================================
+   SITE.MOBILE.CSS — Barrio Cerrado El Burro
+   Se carga DESPUÉS de Site.css. Solo contiene:
+     1) Componentes que no existen en desktop (topbar, panel
+        lateral, backdrop).
+     2) Overrides puntuales donde el comportamiento táctil
+        necesita algo distinto al de escritorio.
+   Nada de lo que ya esté definido en Site.css se repite acá.
+   ========================================================= */
+
+/* =========================================================
+   1) BARRA SUPERIOR FIJA
+   Reemplaza al <nav class="navbar"> de Site.Master.
+   Usa las mismas variables de color que Site.css.
+   ========================================================= */
+.g7-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background-color: var(--color-primario-oscuro);
+    color: #ffffff;
+}
+
+    .g7-topbar .navbar-brand {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 1.05rem;
+        margin: 0;
+    }
+
+/* =========================================================
+   2) BOTÓN HAMBURGUESA
+   ========================================================= */
+.g7-burger {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .5);
+    border-radius: var(--radio-chico);
+    padding: 10px 8px;
+    cursor: pointer;
+}
+
+    .g7-burger span {
+        display: block;
+        height: 2px;
+        background: #ffffff;
+        margin: 4px 0;
+    }
+
+/* =========================================================
+   3) PANEL LATERAL (reemplaza al menú colapsable de Bootstrap)
+   ========================================================= */
+.g7-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    max-width: 80vw;
+    background: var(--color-primario-oscuro);
+    color: #ffffff;
+    transform: translateX(-100%);
+    transition: transform .25s ease-in-out;
+    z-index: 1050;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+    .g7-sidebar.g7-open {
+        transform: translateX(0);
+    }
+
+.g7-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+}
+
+.g7-close {
+    background: transparent;
+    border: 0;
+    color: #ffffff;
+    font-size: 1.6rem;
+    line-height: 1;
+    padding: 0 6px;
+    cursor: pointer;
+}
+
+.g7-sidebar .nav-link {
+    display: block;
+    padding: 14px 16px;
+    color: rgba(255, 255, 255, .85);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+    .g7-sidebar .nav-link:active,
+    .g7-sidebar .nav-link:hover {
+        background: rgba(255, 255, 255, .1);
+        color: #ffffff;
+    }
+
+/* =========================================================
+   4) FONDO OSCURO DETRÁS DEL PANEL
+   ========================================================= */
+.g7-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s ease-in-out;
+    z-index: 1045;
+}
+
+    .g7-backdrop.g7-open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+body.g7-no-scroll {
+    overflow: hidden;
+}
+
+/* =========================================================
+   5) OVERRIDES TÁCTILES
+   Site.css define "input, select, textarea { max-width: 280px }"
+   pensado para pantallas anchas con espacio de sobra. En mobile
+   ese ancho fijo deja los campos angostos en una pantalla que
+   ya es chica, así que acá se pisa esa regla (misma especificidad,
+   pero este archivo carga después → gana).
+   ========================================================= */
+input,
+select,
+textarea {
+    max-width: 100%;
+    width: 100%;
+    font-size: 16px; /* evita el zoom automático de iOS en los inputs */
+}
+
+/* Los botones de Bootstrap/Site.css no garantizan un alto mínimo
+   cómodo para el dedo; se lo damos solo acá. */
+.btn {
+    min-height: 44px;
+}
+
+/* Utilidad para envolver tablas/GridView anchos y que scrolleen
+   en lugar de romper el layout. No existe equivalente en Site.css. */
+.table-responsive-forced {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* =========================================================
+   6) AJUSTE DE CONTENEDOR
+   Site.css usa <div class="container body-content"> con un
+   media query que saca el padding desde 768px. En mobile se
+   usa <div class="container-fluid body-content"> (sin margen
+   lateral fijo de Bootstrap), así que reforzamos el padding
+   acá para que no quede pegado a los bordes en pantallas
+   angostas donde ese media query no llega a aplicar overrides.
+   ========================================================= */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}

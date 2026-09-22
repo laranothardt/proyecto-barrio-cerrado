@@ -33,6 +33,15 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.Literal litMensaje;
 
         /// <summary>
+        /// Control pnlSolicitud.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSolicitud;
+
+        /// <summary>
         /// Control tx_email.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,24 @@ namespace Grupo7_BarrioCerradoII
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tx_email;
+
+        /// <summary>
+        /// Control bt_solicitar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bt_solicitar;
+
+        /// <summary>
+        /// Control pnlRestablecer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlRestablecer;
 
         /// <summary>
         /// Control tx_nueva_contraseña.

@@ -2,3 +2,4 @@
 bin/
 obj/
 connectionStrings.config.xml
+appSettings.config
