@@ -48,7 +48,11 @@ namespace Grupo7_BarrioCerradoII
                     MostrarMensaje("El lote ingresado no existe en la base de datos.", false);
                     return;
                 }
-
+                if (ddlCategoria.SelectedValue == "4" &&  )
+                {
+                    MostrarMensaje("El lote ingresado no existe en la base de datos.", false);
+                    return;
+                }
                 var nuevaPreAcreditacion = new BIZ.Modelo.PreAcreditacion
                 {
                     Dni = txtDni.Text.Trim(),
