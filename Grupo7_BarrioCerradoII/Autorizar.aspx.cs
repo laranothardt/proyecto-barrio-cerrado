@@ -48,7 +48,7 @@ namespace Grupo7_BarrioCerradoII
                     MostrarMensaje("El lote ingresado no existe en la base de datos.", false);
                     return;
                 }
-                if (ddlCategoria.SelectedValue == "4" &&  )
+                if (ddlCategoria.SelectedValue == "4" )
                 {
                     MostrarMensaje("El lote ingresado no existe en la base de datos.", false);
                     return;

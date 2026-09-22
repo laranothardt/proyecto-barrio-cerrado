@@ -178,5 +178,7 @@ namespace Grupo7_BarrioCerradoII
             litMensaje.Text = texto;
             pnlMensaje.CssClass = esExito ? "alert alert-success" : "alert alert-danger";
         }
+
+        
     }
 }
