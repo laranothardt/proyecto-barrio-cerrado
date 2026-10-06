@@ -15,7 +15,7 @@
                     <div class="col-md-4">
                         <label class="form-label">DNI del Usuario</label>
                         <div class="input-group">
-                            <asp:TextBox ID="Tx_Dni" runat="server" CssClass="form-control" placeholder="40123456"></asp:TextBox>
+                            <asp:TextBox ID="Tx_Dni" runat="server" CssClass="form-control" placeholder="Ej: 40123456"></asp:TextBox>
                             <asp:Button ID="Bt_BuscarDNI" runat="server" Text="Buscar" CssClass="btn-dni-movimientos" OnClick="Bt_BuscarDNI_Click" />
                         </div>
                         <asp:Label ID="LbNombre" runat="server" CssClass="text-success small mt-1"></asp:Label>
@@ -42,13 +42,13 @@
                     <%-- Lote Destino --%>
                     <div class="col-md-4">
                         <label class="form-label">Lote Destino (Opcional)</label>
-                        <asp:TextBox ID="TxLote" runat="server" CssClass="form-control" placeholder="Lote 180"></asp:TextBox>
+                        <asp:TextBox ID="TxLote" runat="server" CssClass="form-control" placeholder="Ej: 30"></asp:TextBox>
                     </div>
 
                     <%-- Patente --%>
                     <div class="col-md-4">
                         <label class="form-label">Patente (Opcional)</label>
-                        <asp:TextBox ID="txtPatente" runat="server" CssClass="form-control" placeholder="AA691BD"></asp:TextBox>
+                        <asp:TextBox ID="txtPatente" runat="server" CssClass="form-control" placeholder="Ej: AA691BD"></asp:TextBox>
                     </div>
 
                     <%-- Detalles u Observaciones --%>

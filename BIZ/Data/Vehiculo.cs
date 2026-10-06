@@ -140,8 +140,8 @@ namespace BIZ.Data
                                    "VALUES (@patente, @seguro, @vencimiento); " +
                                    "SELECT SCOPE_IDENTITY();";
 
-            string queryRelacion = "INSERT INTO Persona_Vehiculo (id_persona, id_vehiculo) " +
-                                   "VALUES (@id_persona, @id_vehiculo)";
+            string queryRelacion = "INSERT INTO Persona_Vehiculo (IDPersona, id_vehiculo) " +
+                       "VALUES (@id_persona, @id_vehiculo)";
 
             using (SqlConnection con = new SqlConnection(CN))
             {
@@ -167,6 +167,31 @@ namespace BIZ.Data
                     cmdRelacion.ExecuteNonQuery();
                 }
             }
+
+        }
+
+
+        public static int ObtenerIdVehiculoPorPatente(string patente)
+        {
+            int idVehiculo = 0;
+            string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+            string query = "SELECT id_vehiculo FROM dbo.Vehiculo WHERE Patente = @Patente";
+
+            using (SqlConnection con = new SqlConnection(cn))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Patente", patente);
+                    con.Open();
+
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        idVehiculo = Convert.ToInt32(result);
+                    }
+                }
+            }
+            return idVehiculo;
         }
     }
 }
