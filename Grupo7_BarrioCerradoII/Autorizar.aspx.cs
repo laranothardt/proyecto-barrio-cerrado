@@ -31,6 +31,7 @@ namespace Grupo7_BarrioCerradoII
 
             try
             {
+                // 1. Validar Residente
                 BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
                 int idResidente = dataPersona.ObtenerOCrearPersonaResidente(txtResidenteAutoriza.Text.Trim(), "Residente " + txtResidenteAutoriza.Text.Trim());
 
@@ -40,6 +41,7 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
+                // 2. Validar Lote
                 BIZ.Data.Lote dataLote = new BIZ.Data.Lote();
                 int idLote = dataLote.ObtenerIdLotePorNumero(txtLote.Text.Trim());
 
@@ -48,11 +50,23 @@ namespace Grupo7_BarrioCerradoII
                     MostrarMensaje("El lote ingresado no existe en la base de datos.", false);
                     return;
                 }
-                if (ddlCategoria.SelectedValue == "4" )
+
+                // 3. Parsear Fechas
+                DateTime fechaDesde = DateTime.Parse(txtFechaDesde.Text);
+                DateTime fechaHasta = DateTime.Parse(txtFechaHasta.Text);
+
+                // 4. Validar Restricción de Fin de Semana para Proveedores / Empleados (Categoría 4)
+                if (ddlCategoria.SelectedValue == "4")
                 {
-                    MostrarMensaje("El lote ingresado no existe en la base de datos.", false);
-                    return;
+                    if (fechaDesde.DayOfWeek == DayOfWeek.Saturday || fechaDesde.DayOfWeek == DayOfWeek.Sunday ||
+                        fechaHasta.DayOfWeek == DayOfWeek.Saturday || fechaHasta.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        MostrarMensaje("Los proveedores y empleados no pueden ingresar los días sábados o domingos.", false);
+                        return;
+                    }
                 }
+
+                // 5. Crear objeto PreAcreditación
                 var nuevaPreAcreditacion = new BIZ.Modelo.PreAcreditacion
                 {
                     Dni = txtDni.Text.Trim(),
@@ -61,12 +75,13 @@ namespace Grupo7_BarrioCerradoII
                     IdCategoria = string.IsNullOrEmpty(ddlCategoria.SelectedValue) ? -1 : int.Parse(ddlCategoria.SelectedValue),
                     IdLoteDestino = idLote,
                     IdResidenteAutoriza = idResidente,
-                    FechaDesde = DateTime.Parse(txtFechaDesde.Text),
-                    FechaHasta = DateTime.Parse(txtFechaHasta.Text),
+                    FechaDesde = fechaDesde,
+                    FechaHasta = fechaHasta,
                     Motivo = txtMotivo.Text.Trim(),
                     Estado = "Aceptada"
                 };
 
+                // 6. Guardar en Base de Datos
                 BIZ.Data.PreAcreditacion data = new BIZ.Data.PreAcreditacion();
                 bool creado = data.CrearPreAcreditacion(nuevaPreAcreditacion);
 
