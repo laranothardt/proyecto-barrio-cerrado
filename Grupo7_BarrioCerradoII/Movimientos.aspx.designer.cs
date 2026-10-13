@@ -96,6 +96,24 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.CheckBox chkAutorizado;
 
         /// <summary>
+        /// Control hfLatitud.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfLatitud;
+
+        /// <summary>
+        /// Control hfLongitud.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfLongitud;
+
+        /// <summary>
         /// Control LbMensaje.
         /// </summary>
         /// <remarks>

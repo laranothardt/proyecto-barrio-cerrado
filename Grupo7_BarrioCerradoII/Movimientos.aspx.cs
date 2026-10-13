@@ -11,6 +11,15 @@ namespace Grupo7_BarrioCerradoII
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                PoblarLotes();
+            }
+        }
+
+        private void PoblarLotes()
+        {
+            ddlLote.Items.Clear();
             ddlLote.Items.Add(new ListItem("-- Seleccione un lote --", ""));
 
             for (int i = 1; i <= 50; i++)
@@ -19,11 +28,11 @@ namespace Grupo7_BarrioCerradoII
             }
         }
 
-
-
         protected void Tx_Dni_TextChanged(object sender, EventArgs e)
         {
             string dni = Tx_Dni.Text.Trim();
+            if (string.IsNullOrEmpty(dni)) return;
+
             string nombre = new BIZ.Data.Persona().ObtenerNombrePorDni(dni);
 
             if (nombre == null)
@@ -55,7 +64,7 @@ namespace Grupo7_BarrioCerradoII
             // 2) Vehículo (opcional)
             int? idVehiculo = null;
             string patente = txtPatente.Text.Trim();
-            if (patente != "")
+            if (!string.IsNullOrEmpty(patente))
             {
                 int idV = BIZ.Data.Vehiculo.ObtenerIdVehiculoPorPatente(patente);
                 if (idV == 0)
@@ -66,59 +75,78 @@ namespace Grupo7_BarrioCerradoII
                 idVehiculo = idV;
             }
 
-            // 3) Lote (opcional): "Lote 180" -> "180"
+            // 3) Lote Destino (obligatorio desde el dropdown)
             int? idLote = null;
-            if (ddlLote.Text.Trim() != "")
+            if (!string.IsNullOrEmpty(ddlLote.SelectedValue))
             {
-                string loteNum = new string(ddlLote.Text.Where(char.IsDigit).ToArray());
-                if (loteNum == "")
-                {
-                    MostrarMensaje("Ingresá el número de lote (ej: 180).", false);
-                    return;
-                }
-
+                string loteNum = ddlLote.SelectedValue;
                 int idL = new BIZ.Data.Lote().ObtenerIdLotePorNumero(loteNum);
                 if (idL == 0)
                 {
-                    MostrarMensaje("El lote " + loteNum + " no existe.", false);
+                    MostrarMensaje("El lote " + loteNum + " no existe en el sistema.", false);
                     return;
                 }
                 idLote = idL;
             }
+            else
+            {
+                MostrarMensaje("Seleccioná un lote destino.", false);
+                return;
+            }
 
-            // 4) Armar el modelo
+            // 4) Detalles y Coordenadas opcionales del mapa
             string detalle = txtDetalle.Text.Trim();
+            string latitud = hfLatitud.Value;
+            string longitud = hfLongitud.Value;
+
+            if (!string.IsNullOrEmpty(latitud) && !string.IsNullOrEmpty(longitud))
+            {
+                string infoUbicacion = $" [Ubicación: {latitud}, {longitud}]";
+                if (detalle.Length + infoUbicacion.Length <= 255)
+                {
+                    detalle += infoUbicacion;
+                }
+            }
+
             if (detalle.Length > 255) detalle = detalle.Substring(0, 255);
 
+            // 5) Modelo de Movimiento
             BIZ.Modelo.Movimiento mov = new BIZ.Modelo.Movimiento
             {
                 FechaHora = DateTime.Now,
                 Tipo = DDLTipoMovimiento.SelectedValue,
                 Autorizado = chkAutorizado.Checked,
-                Detalle = detalle == "" ? null : detalle,
+                Detalle = string.IsNullOrEmpty(detalle) ? null : detalle,
                 IdPersona = idPersona,
                 IdVehiculo = idVehiculo,
                 IdLoteDestino = idLote,
                 IdAcceso = int.Parse(DDLPuntoAcceso.SelectedValue)
             };
 
-            // 5) Guardar
+            // 6) Guardar en BD
             string error;
             bool ok = new BIZ.Data.Movimiento().CrearMovimiento(mov, out error);
 
             if (ok)
             {
                 MostrarMensaje("Movimiento registrado correctamente.", true);
-                Tx_Dni.Text = "";
-                ddlLote.Text = "";
-                txtPatente.Text = "";
-                txtDetalle.Text = "";
-                LbNombre.Text = "";
+                LimpiarFormulario();
             }
             else
             {
                 MostrarMensaje(error ?? "No se pudo guardar el movimiento.", false);
             }
+        }
+
+        private void LimpiarFormulario()
+        {
+            Tx_Dni.Text = "";
+            ddlLote.SelectedIndex = 0;
+            txtPatente.Text = "";
+            txtDetalle.Text = "";
+            LbNombre.Text = "";
+            hfLatitud.Value = "";
+            hfLongitud.Value = "";
         }
 
         private void MostrarMensaje(string texto, bool exito)
