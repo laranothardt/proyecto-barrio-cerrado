@@ -61,9 +61,9 @@ namespace Grupo7_BarrioCerradoII
 
             // 3) Lote (opcional): "Lote 180" -> "180"
             int? idLote = null;
-            if (TxLote.Text.Trim() != "")
+            if (ddlLote.Text.Trim() != "")
             {
-                string loteNum = new string(TxLote.Text.Where(char.IsDigit).ToArray());
+                string loteNum = new string(ddlLote.Text.Where(char.IsDigit).ToArray());
                 if (loteNum == "")
                 {
                     MostrarMensaje("Ingresá el número de lote (ej: 180).", false);
@@ -103,7 +103,7 @@ namespace Grupo7_BarrioCerradoII
             {
                 MostrarMensaje("Movimiento registrado correctamente.", true);
                 Tx_Dni.Text = "";
-                TxLote.Text = "";
+                ddlLote.Text = "";
                 txtPatente.Text = "";
                 txtDetalle.Text = "";
                 LbNombre.Text = "";
