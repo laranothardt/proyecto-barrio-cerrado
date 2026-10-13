@@ -14,8 +14,14 @@
             <%--Nombre Completo--%>
             <div class="row g-3">
                 <div class="col-md-6 form-group">
-                <label class="form-label" for="nombre">Nombre Completo</label>
-                <asp:TextBox ID="tx_nombre" runat="server" class="form-control" placeholder="Juan Pérez"></asp:TextBox>
+                <label class="form-label" for="nombre">Nombre</label>
+                <asp:TextBox ID="tx_nombre" runat="server" class="form-control" placeholder="Juan"></asp:TextBox>
+            </div>
+
+            <%--Apellido--%>
+            <div class="col-md-6 form-group">
+                <label class="form-label" for="apellido">Apellido</label>
+                <asp:TextBox ID="tx_apellido" runat="server" class="form-control" placeholder="Pérez"></asp:TextBox>
             </div>
 
             <%--DNI--%>
@@ -139,7 +145,8 @@
 
                    if (datos) {
                        document.getElementById('<%= tx_dni.ClientID %>').value = datos.dni;
-                    document.getElementById('<%= tx_nombre.ClientID %>').value = datos.nombre + ' ' + datos.apellido;
+                    document.getElementById('<%= tx_nombre.ClientID %>').value = datos.nombre;
+                    document.getElementById('<%= tx_apellido.ClientID %>').value = datos.apellido;
                     document.getElementById('scanStatus').textContent = 'DNI leído correctamente: ' + datos.apellido + ', ' + datos.nombre;
                 } else {
                     document.getElementById('scanStatus').textContent = 'No se pudo interpretar el código leído. Cargá los datos manualmente.';
