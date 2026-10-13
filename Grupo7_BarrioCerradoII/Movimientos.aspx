@@ -15,8 +15,7 @@
                     <div class="col-md-4">
                         <label class="form-label">DNI del Usuario</label>
                         <div class="input-group">
-                            <asp:TextBox ID="Tx_Dni" runat="server" CssClass="form-control" placeholder="Ej: 40123456"></asp:TextBox>
-                            <asp:Button ID="Bt_BuscarDNI" runat="server" Text="Buscar" CssClass="btn-dni-movimientos" OnClick="Bt_BuscarDNI_Click" />
+                            <asp:TextBox ID="Tx_Dni" runat="server" CssClass="form-control" placeholder="Ej: 40123456" OnTextChanged="Tx_Dni_TextChanged" AutoPostBack="true"></asp:TextBox>
                         </div>
                         <asp:Label ID="LbNombre" runat="server" CssClass="text-success small mt-1"></asp:Label>
                         <button type="button" id="btnEscanearDni" class="btn btn-outline-secondary btn-sm mt-2">

@@ -24,15 +24,6 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.TextBox Tx_Dni;
 
         /// <summary>
-        /// Control Bt_BuscarDNI.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Bt_BuscarDNI;
-
-        /// <summary>
         /// Control LbNombre.
         /// </summary>
         /// <remarks>
