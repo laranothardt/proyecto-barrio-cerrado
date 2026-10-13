@@ -27,5 +27,6 @@ namespace BIZ.Modelo
         public string FotoCapturada { get; set; }
         public int? IdOperador { get; set; }
         public UsuarioSistema Operador { get; set; }
+        public bool Autorizado { get; set; }
     }
 }

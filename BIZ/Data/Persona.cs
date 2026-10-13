@@ -67,5 +67,19 @@ namespace BIZ.Data
                 }
             }
         }
+        public string ObtenerNombrePorDni(string dni)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string query = "SELECT Nombre + ' ' + Apellido FROM Persona WHERE DNI = @DNI";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@DNI", dni);
+                    conn.Open();
+                    object result = cmd.ExecuteScalar();
+                    return result != null && result != DBNull.Value ? result.ToString() : null;
+                }
+            }
+        }
     }
 }
