@@ -11,9 +11,11 @@ namespace Grupo7_BarrioCerradoII
     {
         protected void Page_Load(object sender, EventArgs e) { }
 
-        protected void Bt_BuscarDNI_Click(object sender, EventArgs e)
+
+        protected void Tx_Dni_TextChanged(object sender, EventArgs e)
         {
-            string nombre = new BIZ.Data.Persona().ObtenerNombrePorDni(Tx_Dni.Text.Trim());
+            string dni = Tx_Dni.Text.Trim();
+            string nombre = new BIZ.Data.Persona().ObtenerNombrePorDni(dni);
 
             if (nombre == null)
             {
@@ -22,8 +24,13 @@ namespace Grupo7_BarrioCerradoII
                 return;
             }
 
+            int idPersona = new BIZ.Data.Persona().ObtenerIdPersonaPorDni(dni);
+            string proximoTipo = new BIZ.Data.Movimiento().ObtenerProximoTipoMovimiento(idPersona);
+
+            DDLTipoMovimiento.SelectedValue = proximoTipo;
+
             LbNombre.CssClass = "text-success small mt-1";
-            LbNombre.Text = nombre;
+            LbNombre.Text = nombre + " — se registrará un " + proximoTipo;
         }
 
         protected void Bt_RegistrarMovimiento_Click(object sender, EventArgs e)

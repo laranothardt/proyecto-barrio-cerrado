@@ -55,5 +55,39 @@ namespace BIZ.Data
                 }
             }
         }
+
+        public string ObtenerProximoTipoMovimiento(int idPersona)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string query = @"SELECT TOP 1 TipoMovimiento
+                         FROM Movimiento
+                         WHERE FK_IDPersona = @FK_IDPersona
+                           AND Autorizado = 1
+                         ORDER BY FechaHora DESC, IDMovimiento DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@FK_IDPersona", idPersona);
+
+                    try
+                    {
+                        conn.Open();
+                        object resultado = cmd.ExecuteScalar();
+
+                        // Sin historial: el primer movimiento es un ingreso
+                        if (resultado == null || resultado == DBNull.Value)
+                            return "Ingreso";
+
+                        return resultado.ToString() == "Ingreso" ? "Egreso" : "Ingreso";
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Trace.TraceError("Error al obtener último movimiento: {0}", ex);
+                        return "Ingreso";
+                    }
+                }
+            }
+        }
     }
 }
