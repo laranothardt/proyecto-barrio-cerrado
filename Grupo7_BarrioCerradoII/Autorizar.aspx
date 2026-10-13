@@ -1,7 +1,8 @@
 <%@ Page Title="Autorizaciones y preautorizaciones" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Autorizar.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Autorizar" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div id="pg-autorizar" class="container py-3">
-        
+
         <div class="mb-4">
             <h1 class="fw-bold">Preacreditación de visitas</h1>
             <p class="text-muted">Carga los datos de la persona que va a ingresar al barrio para dejarla autorizada de antemano.</p>
@@ -51,9 +52,15 @@
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-4">
-                        <asp:Label runat="server" AssociatedControlID="txtLote" CssClass="form-label fw-bold">Lote destino</asp:Label>
-                        <asp:TextBox ID="txtLote" runat="server" placeholder="Ej: 09" CssClass="form-control" MaxLength="10" />
-                        <asp:RequiredFieldValidator ID="rfvLote" runat="server" ControlToValidate="txtLote" ErrorMessage="Elegí el lote destino." CssClass="text-danger small" Display="Dynamic" />
+                        <asp:Label runat="server" AssociatedControlID="ddlLote" CssClass="form-label fw-bold">Lote destino</asp:Label>
+                        <asp:DropDownList ID="ddlLote" runat="server" CssClass="form-select">
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="rfvLote" runat="server"
+                            ControlToValidate="ddlLote"
+                            InitialValue=""
+                            ErrorMessage="Elegí el lote destino."
+                            CssClass="text-danger small"
+                            Display="Dynamic" />
                     </div>
                     <div class="col-md-4">
                         <asp:Label runat="server" AssociatedControlID="txtResidenteAutoriza" CssClass="form-label fw-bold">DNI del residente que autoriza</asp:Label>
