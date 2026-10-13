@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using BIZ.Modelo;
 
 namespace Grupo7_BarrioCerradoII
@@ -10,6 +11,13 @@ namespace Grupo7_BarrioCerradoII
         {
             if (!IsPostBack)
             {
+                ddlLote.Items.Add(new ListItem("-- Seleccione un lote --", ""));
+
+                for (int i = 1; i <= 50; i++)
+                {
+                    ddlLote.Items.Add(new ListItem($"Lote {i}", i.ToString()));
+                }
+
                 if (Session["Rol"] == null)
                 {
                     Response.Redirect("~/IniciarSesion.aspx");
@@ -43,7 +51,7 @@ namespace Grupo7_BarrioCerradoII
 
                 // 2. Validar Lote
                 BIZ.Data.Lote dataLote = new BIZ.Data.Lote();
-                int idLote = dataLote.ObtenerIdLotePorNumero(txtLote.Text.Trim());
+                int idLote = dataLote.ObtenerIdLotePorNumero(ddlLote.SelectedValue);
 
                 if (idLote == 0)
                 {
@@ -137,7 +145,7 @@ namespace Grupo7_BarrioCerradoII
             txtApellido.Text = string.Empty;
             txtNombre.Text = string.Empty;
             ddlCategoria.SelectedIndex = 0;
-            txtLote.Text = string.Empty;
+            ddlLote.SelectedIndex = 0;
 
             if (Session["Dni"] != null)
                 txtResidenteAutoriza.Text = Session["Dni"].ToString();

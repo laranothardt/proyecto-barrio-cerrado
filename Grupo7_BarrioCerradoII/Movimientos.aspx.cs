@@ -11,7 +11,12 @@ namespace Grupo7_BarrioCerradoII
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ddlLote.Items.Add(new ListItem("-- Seleccione un lote --", ""));
 
+            for (int i = 1; i <= 50; i++)
+            {
+                ddlLote.Items.Add(new ListItem($"Lote {i}", i.ToString()));
+            }
         }
 
 

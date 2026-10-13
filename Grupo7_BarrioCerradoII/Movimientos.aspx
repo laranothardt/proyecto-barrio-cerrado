@@ -44,8 +44,15 @@
 
                     <%-- Lote Destino --%>
                     <div class="col-md-4">
-                        <label class="form-label">Lote Destino (Opcional)</label>
-                        <asp:TextBox ID="TxLote" runat="server" CssClass="form-control" placeholder="Lote 180"></asp:TextBox>
+                        <asp:Label runat="server" AssociatedControlID="ddlLote" CssClass="form-label fw-bold">Lote destino</asp:Label>
+                        <asp:DropDownList ID="ddlLote" runat="server" CssClass="form-select">
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="rfvLote" runat="server"
+                            ControlToValidate="ddlLote"
+                            InitialValue=""
+                            ErrorMessage="Elegí el lote destino."
+                            CssClass="text-danger small"
+                            Display="Dynamic" />
                     </div>
 
                     <%-- Patente --%>
@@ -157,13 +164,13 @@
                     document.getElementById('scanStatus').textContent = msg;
                     detenerScanner();
                 });
-            }
+    }
 
-            document.addEventListener('DOMContentLoaded', function () {
-                document.getElementById('btnEscanearDni').addEventListener('click', iniciarScanner);
-                document.getElementById('btnCancelarScan').addEventListener('click', detenerScanner);
-            });
-        })();
-    </script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('btnEscanearDni').addEventListener('click', iniciarScanner);
+        document.getElementById('btnCancelarScan').addEventListener('click', detenerScanner);
+    });
+})();
+</script>
 
 </asp:Content>
