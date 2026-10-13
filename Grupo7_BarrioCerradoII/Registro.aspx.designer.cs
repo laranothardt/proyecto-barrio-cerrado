@@ -42,6 +42,15 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.TextBox tx_nombre;
 
         /// <summary>
+        /// tx_apellido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tx_apellido;
+
+        /// <summary>
         /// tx_dni control.
         /// </summary>
         /// <remarks>
