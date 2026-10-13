@@ -1,6 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Movimientos.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Movimientos" %>
+﻿<%@ Page Title="Movimientos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Movimientos.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Movimientos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    <%-- CSS de Leaflet --%>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <div id="pg-movimientos" class="container my-5">
         <h2 class="mb-4 fw-bold movimiento-titulo-registro">Registrar Movimientos</h2>
@@ -10,8 +13,7 @@
             <div class="card-body p-4">
                 <div class="row g-4">
 
-                    <%-- Panel DNI  --%>
-
+                    <%-- Panel DNI --%>
                     <div class="col-md-4">
                         <label class="form-label">DNI del Usuario</label>
                         <div class="input-group">
@@ -70,9 +72,23 @@
                     <div class="col-12 d-flex align-items-center mt-2">
                         <asp:CheckBox ID="chkAutorizado" runat="server" Checked="true" Text="Acceso Autorizado" CssClass="custom-checkbox fw-bold text-dark ms-2" />
                     </div>
+
+                    <%-- HiddenFields para Coordenadas --%>
+                    <asp:HiddenField ID="hfLatitud" runat="server" />
+                    <asp:HiddenField ID="hfLongitud" runat="server" />
+
+                    <%-- Mapa de Ubicación del Lote --%>
+                    <div class="col-12 mt-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <label class="form-label fw-bold mb-0">Ubicación del Lote en Mapa</label>
+                            <span id="lblCoordenadas" class="text-muted small">Seleccioná un lote para ver su ubicación.</span>
+                        </div>
+                        <div id="mapaLote" style="height: 320px; width: 100%; border-radius: 8px; border: 1px solid #ccc;"></div>
+                    </div>
+
                 </div>
 
-                <%-- Panel de escaneo de DNI por cámara (oculto hasta que se presiona "Escanear DNI") --%>
+                <%-- Panel de escaneo de DNI por cámara --%>
                 <div id="panelScanner" style="display: none; margin-top: 15px; margin-bottom: 15px; text-align: center;">
                     <video id="videoDni" style="width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 8px;" autoplay muted playsinline></video>
                     <div id="scanStatus" style="margin-top: 8px; font-size: 0.9rem;"></div>
@@ -87,19 +103,18 @@
         </div>
     </div>
 
-    <%-- Librería para leer códigos de barras PDF417 (formato del DNI argentino) desde la cámara --%>
+    <%-- Librerías JS: ZXing (Lectura de DNI) y Leaflet (Mapa) --%>
     <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.20.0/umd/index.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script type="text/javascript">
+        // 1. ESCÁNER DE DNI (ZXing - PDF417)
         (function () {
             var codeReader = null;
 
-            // El código de barras del DNI argentino trae los datos separados por "@":
-            // NroTramite@Apellido@Nombre@Sexo@DNI@Ejemplar@FechaNacimiento@FechaEmision@CUIL
             function parseCodigoDni(texto) {
                 var campos = texto.split('@');
-                if (campos.length < 8) {
-                    return null;
-                }
+                if (campos.length < 8) return null;
                 return {
                     nroTramite: campos[0],
                     apellido: campos[1],
@@ -114,9 +129,7 @@
             }
 
             function detenerScanner() {
-                if (codeReader) {
-                    codeReader.reset();
-                }
+                if (codeReader) codeReader.reset();
                 document.getElementById('panelScanner').style.display = 'none';
             }
 
@@ -130,46 +143,114 @@
                 document.getElementById('scanStatus').textContent = 'Apuntá la cámara al código de barras del DNI...';
 
                 codeReader = new ZXing.BrowserPDF417Reader();
-
-                var constraints = {
-                    video: {
-                        facingMode: 'environment',
-                        width: { ideal: 1920 },
-                        height: { ideal: 1080 }
-                    }
-                };
+                var constraints = { video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } } };
 
                 codeReader.decodeOnceFromConstraints(constraints, 'videoDni').then(function (resultado) {
                     var datos = parseCodigoDni(resultado.getText());
-
                     if (datos) {
                         document.getElementById('<%= Tx_Dni.ClientID %>').value = datos.dni;
-                        document.getElementById('scanStatus').textContent = 'DNI leído correctamente: ' + datos.dni + '. Presioná "Buscar" para completar el nombre.';
+                        document.getElementById('scanStatus').textContent = 'DNI leído correctamente: ' + datos.dni + '.';
                     } else {
                         document.getElementById('scanStatus').textContent = 'No se pudo interpretar el código leído. Cargá el DNI manualmente.';
                     }
-
                     detenerScanner();
                 }).catch(function (err) {
                     console.error(err);
-                    var msg = 'No se pudo acceder a la cámara.';
-                    if (err && err.name === 'NotAllowedError') {
-                        msg = 'Permiso de cámara denegado. Habilitalo en el navegador e intentá de nuevo.';
-                    } else if (err && err.name === 'NotFoundError') {
-                        msg = 'No se encontró ninguna cámara en este dispositivo.';
-                    } else if (err && err.name === 'OverconstrainedError') {
-                        msg = 'La cámara no soporta la resolución pedida. Probá sin restricción de resolución.';
-                    }
-                    document.getElementById('scanStatus').textContent = msg;
+                    document.getElementById('scanStatus').textContent = 'Error al acceder a la cámara.';
                     detenerScanner();
                 });
-    }
+            }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('btnEscanearDni').addEventListener('click', iniciarScanner);
-        document.getElementById('btnCancelarScan').addEventListener('click', detenerScanner);
-    });
-})();
-</script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var btnScan = document.getElementById('btnEscanearDni');
+                var btnCancel = document.getElementById('btnCancelarScan');
+                if (btnScan) btnScan.addEventListener('click', iniciarScanner);
+                if (btnCancel) btnCancel.addEventListener('click', detenerScanner);
+            });
+        })();
 
+        // -------------------------------------------------------------
+        // 2. MAPA LEAFLET Y COORDENADAS POR LOTE
+        // -------------------------------------------------------------
+        var mapa = null;
+        var marcador = null;
+        var ubicacionesLotes = {};
+
+        // Coordenadas base dentro de Mapuche C.C. (Pilar / La Lonja)
+        var latBase = -34.4620;
+        var lngBase = -58.8520;
+
+        function generarUbicaciones() {
+            var id = 1;
+            for (var fila = 0; fila < 10; fila++) {
+                for (var col = 0; col < 5; col++) {
+                    if (id > 50) break;
+                    var lat = latBase - (fila * 0.0006);
+                    var lng = lngBase + (col * 0.0008);
+                    ubicacionesLotes[id] = { lat: lat, lng: lng };
+                    id++;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            generarUbicaciones();
+
+            // Inicialización de mapa
+            mapa = L.map('mapaLote').setView([latBase, lngBase], 16);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(mapa);
+
+            var ddl = document.getElementById('<%= ddlLote.ClientID %>');
+            if (ddl) {
+                // Evento al cambiar selección de lote
+                ddl.addEventListener('change', actualizarMapaPorLote);
+
+                // Si ya viene un lote seleccionado desde antes
+                if (ddl.value) {
+                    actualizarMapaPorLote();
+                }
+            }
+        });
+
+function actualizarMapaPorLote() {
+    var ddl = document.getElementById('<%= ddlLote.ClientID %>');
+            var loteSeleccionado = ddl ? ddl.value : '';
+
+            if (loteSeleccionado && ubicacionesLotes[loteSeleccionado]) {
+                var coords = ubicacionesLotes[loteSeleccionado];
+                mostrarLoteEnMapa(loteSeleccionado, coords.lat, coords.lng);
+            } else {
+                limpiarMapa();
+            }
+        }
+
+        function mostrarLoteEnMapa(numeroLote, lat, lng) {
+            if (marcador) mapa.removeLayer(marcador);
+
+            marcador = L.marker([lat, lng]).addTo(mapa)
+                .bindPopup("<b>Lote " + numeroLote + "</b><br>Lat: " + lat.toFixed(5) + "<br>Lng: " + lng.toFixed(5))
+                .openPopup();
+
+            mapa.flyTo([lat, lng], 17);
+
+            document.getElementById('<%= hfLatitud.ClientID %>').value = lat;
+            document.getElementById('<%= hfLongitud.ClientID %>').value = lng;
+            document.getElementById('lblCoordenadas').textContent = 'Lote ' + numeroLote + ' — Lat: ' + lat.toFixed(5) + ', Lng: ' + lng.toFixed(5);
+        }
+
+        function limpiarMapa() {
+            if (marcador) {
+                mapa.removeLayer(marcador);
+                marcador = null;
+            }
+            mapa.flyTo([latBase, lngBase], 16);
+            document.getElementById('<%= hfLatitud.ClientID %>').value = '';
+            document.getElementById('<%= hfLongitud.ClientID %>').value = '';
+            document.getElementById('lblCoordenadas').textContent = 'Seleccioná un lote para ver su ubicación.';
+        }
+    </script>
 </asp:Content>
