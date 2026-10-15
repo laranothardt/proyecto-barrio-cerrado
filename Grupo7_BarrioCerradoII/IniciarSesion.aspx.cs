@@ -55,6 +55,8 @@ namespace Grupo7_BarrioCerradoII
             string email = tx_email.Text.Trim();
             string password = tx_contraseña.Text.Trim();
 
+
+
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 pnlError.Visible = true;
@@ -66,6 +68,8 @@ namespace Grupo7_BarrioCerradoII
             {
                 BIZ.Data.UsuarioSistema data = new BIZ.Data.UsuarioSistema();
                 BIZ.Modelo.UsuarioSistema usuario = data.ObtenerUsuarioPorEmail(email);
+
+
 
                 if (usuario != null)
                 {

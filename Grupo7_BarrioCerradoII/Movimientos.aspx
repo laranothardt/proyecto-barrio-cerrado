@@ -169,14 +169,11 @@
             });
         })();
 
-        // -------------------------------------------------------------
         // 2. MAPA LEAFLET Y COORDENADAS POR LOTE
-        // -------------------------------------------------------------
         var mapa = null;
         var marcador = null;
         var ubicacionesLotes = {};
 
-        // Coordenadas base dentro de Mapuche C.C. (Pilar / La Lonja)
         var latBase = -34.4620;
         var lngBase = -58.8520;
 
