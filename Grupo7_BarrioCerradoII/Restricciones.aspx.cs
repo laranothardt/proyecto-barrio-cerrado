@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Grupo7_BarrioCerradoII
@@ -13,47 +10,65 @@ namespace Grupo7_BarrioCerradoII
         {
             if (!IsPostBack)
             {
-                // Cargar valores desde la Base de Datos o Variables de Sesión al iniciar
-                CargarConfiguracionesExistentes();
+                // Solo Administradores pueden ver esta página (Validación de seguridad)
+                string rol = Session["Rol"]?.ToString();
+                if (rol != "3" && rol != "Administrador")
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
             }
-        }
-
-        private void CargarConfiguracionesExistentes()
-        {
-            // Ejemplo: Acá se cargarían los horarios guardados en la BBDD.
-            // txtProveedorDesde.Text = "07:00";
-            // txtProveedorHasta.Text = "18:00";
         }
 
         protected void btnGuardarConfiguracion_Click(object sender, EventArgs e)
         {
             try
             {
-                // 1. Capturar Horarios
-                TimeSpan horaProveedorDesde = TimeSpan.Parse(txtProveedorDesde.Text);
-                TimeSpan horaProveedorHasta = TimeSpan.Parse(txtProveedorHasta.Text);
+                // 1. GUARDAR HORARIOS
+                Application["Prov_Desde"] = TimeSpan.Parse(txtProveedorDesde.Text);
+                Application["Prov_Hasta"] = TimeSpan.Parse(txtProveedorHasta.Text);
+                Application["Prov_Habilitado"] = chkProveedorHabilitado.Checked;
+                Application["Prov_Dias"] = ObtenerDiasSeleccionados(cblDiasProveedor);
 
-                TimeSpan horaVisitaDesde = TimeSpan.Parse(txtVisitaDesde.Text);
-                TimeSpan horaVisitaHasta = TimeSpan.Parse(txtVisitaHasta.Text);
+                Application["Visita_Desde"] = TimeSpan.Parse(txtVisitaDesde.Text);
+                Application["Visita_Hasta"] = TimeSpan.Parse(txtVisitaHasta.Text);
+                Application["Visita_Habilitado"] = chkVisitaHabilitado.Checked;
+                Application["Visita_Dias"] = ObtenerDiasSeleccionados(cblDiasVisita);
 
-                // 2. Capturar Permisos de Páginas por Rol (Guardia / Residente)
-                bool guardiaAutorizar = chkAutGuardia.Checked;
-                bool guardiaIngresoEgreso = chkIngEgGuardia.Checked;
-                bool guardiaMovimientos = chkMovGuardia.Checked;
-                bool guardiaVehiculos = chkVehGuardia.Checked;
+                // 2. GUARDAR PERMISOS DE PÁGINAS POR ROL (Propietario = ej. "2", Residente = ej. "1")
+                // Permisos Propietario
+                Application["Permiso_Propietario_Administradores"] = chkAdmProp.Checked;
+                Application["Permiso_Propietario_Autorizar"] = chkAutProp.Checked;
+                Application["Permiso_Propietario_IngresoEgreso"] = chkIngProp.Checked;
+                Application["Permiso_Propietario_Movimientos"] = chkMovProp.Checked;
 
-                bool residenteAutorizar = chkAutResidente.Checked;
-                bool residenteVehiculos = chkVehResidente.Checked;
+                // Permisos Residente
+                Application["Permiso_Residente_Administradores"] = chkAdmRes.Checked;
+                Application["Permiso_Residente_Autorizar"] = chkAutRes.Checked;
+                Application["Permiso_Residente_IngresoEgreso"] = chkIngRes.Checked;
+                Application["Permiso_Residente_Movimientos"] = chkMovRes.Checked;
 
-                // 3. Persistir en Base de Datos / Capa BIZ
-                // new BIZ.Data.Configuracion().GuardarRestricciones(...);
-
-                MostrarMensaje("La configuración de páginas y horarios se guardó correctamente.", true);
+                MostrarMensaje("Configuración actualizada correctamente y aplicada en tiempo real.", true);
             }
             catch (Exception ex)
             {
-                MostrarMensaje("Error al guardar la configuración: " + ex.Message, false);
+                MostrarMensaje("Error al guardar: " + ex.Message, false);
             }
+        }
+
+        private List<string> ObtenerDiasSeleccionados(CheckBoxList cbl)
+        {
+            List<string> dias = new List<string>();
+            foreach (ListItem item in cbl.Items)
+            {
+                if (item.Selected) dias.Add(item.Value); // Ej: "Monday", "Tuesday"
+            }
+            return dias;
+        }
+
+        private void MostrarMensaje(string texto, bool exito)
+        {
+            lblMensaje.CssClass = "fw-bold mb-3 d-block " + (exito ? "text-success" : "text-danger");
+            lblMensaje.Text = texto;
         }
     }
 }

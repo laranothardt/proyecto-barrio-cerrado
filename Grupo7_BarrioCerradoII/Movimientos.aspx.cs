@@ -61,7 +61,69 @@ namespace Grupo7_BarrioCerradoII
                 return;
             }
 
-            // 2) Vehículo (opcional)
+            // 2) Validar Restricciones Horarias y de Días
+            string puntoAcceso = DDLPuntoAcceso.SelectedValue; // "1" = Guardia Principal, "2" = Acceso Proveedores
+            string detalleTexto = txtDetalle.Text.Trim().ToLower();
+
+            TimeSpan horaActual = DateTime.Now.TimeOfDay;
+            string diaActual = DateTime.Now.DayOfWeek.ToString(); // Ej: "Monday", "Tuesday", etc.
+
+            // Evaluar si es Proveedor
+            bool esProveedor = puntoAcceso == "2" || detalleTexto.Contains("proveedor") || detalleTexto.Contains("obra");
+
+            if (esProveedor)
+            {
+                bool habilitado = Application["Prov_Habilitado"] == null || (bool)Application["Prov_Habilitado"];
+                TimeSpan desde = Application["Prov_Desde"] != null ? (TimeSpan)Application["Prov_Desde"] : new TimeSpan(7, 0, 0);
+                TimeSpan hasta = Application["Prov_Hasta"] != null ? (TimeSpan)Application["Prov_Hasta"] : new TimeSpan(18, 0, 0);
+                List<string> diasPermitidos = Application["Prov_Dias"] as List<string>;
+
+                if (!habilitado)
+                {
+                    MostrarMensaje("El ingreso de proveedores se encuentra deshabilitado.", false);
+                    return;
+                }
+
+                if (diasPermitidos != null && !diasPermitidos.Contains(diaActual))
+                {
+                    MostrarMensaje("Los proveedores no tienen permitido ingresar los días " + TraducirDia(diaActual) + ".", false);
+                    return;
+                }
+
+                if (horaActual < desde || horaActual > hasta)
+                {
+                    MostrarMensaje($"Ingreso rechazado: el horario permitido de proveedores es de {desde:hh\\:mm} a {hasta:hh\\:mm} hs.", false);
+                    return;
+                }
+            }
+            else
+            {
+                // Para visitas en general
+                bool habilitado = Application["Visita_Habilitado"] == null || (bool)Application["Visita_Habilitado"];
+                TimeSpan desde = Application["Visita_Desde"] != null ? (TimeSpan)Application["Visita_Desde"] : new TimeSpan(8, 0, 0);
+                TimeSpan hasta = Application["Visita_Hasta"] != null ? (TimeSpan)Application["Visita_Hasta"] : new TimeSpan(22, 0, 0);
+                List<string> diasPermitidos = Application["Visita_Dias"] as List<string>;
+
+                if (!habilitado)
+                {
+                    MostrarMensaje("El ingreso de visitas está deshabilitado.", false);
+                    return;
+                }
+
+                if (diasPermitidos != null && !diasPermitidos.Contains(diaActual))
+                {
+                    MostrarMensaje("Las visitas no tienen permitido ingresar los días " + TraducirDia(diaActual) + ".", false);
+                    return;
+                }
+
+                if (horaActual < desde || horaActual > hasta)
+                {
+                    MostrarMensaje($"Ingreso rechazado: el horario de visitas es de {desde:hh\\:mm} a {hasta:hh\\:mm} hs.", false);
+                    return;
+                }
+            }
+
+            // 3) Vehículo (opcional)
             int? idVehiculo = null;
             string patente = txtPatente.Text.Trim();
             if (!string.IsNullOrEmpty(patente))
@@ -75,7 +137,7 @@ namespace Grupo7_BarrioCerradoII
                 idVehiculo = idV;
             }
 
-            // 3) Lote Destino (obligatorio desde el dropdown)
+            // 4) Lote Destino (obligatorio)
             int? idLote = null;
             if (!string.IsNullOrEmpty(ddlLote.SelectedValue))
             {
@@ -94,7 +156,7 @@ namespace Grupo7_BarrioCerradoII
                 return;
             }
 
-            // 4) Detalles y Coordenadas opcionales del mapa
+            // 5) Detalles y Coordenadas opcionales del mapa
             string detalle = txtDetalle.Text.Trim();
             string latitud = hfLatitud.Value;
             string longitud = hfLongitud.Value;
@@ -110,7 +172,7 @@ namespace Grupo7_BarrioCerradoII
 
             if (detalle.Length > 255) detalle = detalle.Substring(0, 255);
 
-            // 5) Modelo de Movimiento
+            // 6) Modelo de Movimiento
             BIZ.Modelo.Movimiento mov = new BIZ.Modelo.Movimiento
             {
                 FechaHora = DateTime.Now,
@@ -123,7 +185,7 @@ namespace Grupo7_BarrioCerradoII
                 IdAcceso = int.Parse(DDLPuntoAcceso.SelectedValue)
             };
 
-            // 6) Guardar en BD
+            // 7) Guardar en BD
             string error;
             bool ok = new BIZ.Data.Movimiento().CrearMovimiento(mov, out error);
 
@@ -135,6 +197,21 @@ namespace Grupo7_BarrioCerradoII
             else
             {
                 MostrarMensaje(error ?? "No se pudo guardar el movimiento.", false);
+            }
+        }
+
+        private string TraducirDia(string diaIngles)
+        {
+            switch (diaIngles)
+            {
+                case "Monday": return "Lunes";
+                case "Tuesday": return "Martes";
+                case "Wednesday": return "Miércoles";
+                case "Thursday": return "Jueves";
+                case "Friday": return "Viernes";
+                case "Saturday": return "Sábado";
+                case "Sunday": return "Domingo";
+                default: return diaIngles;
             }
         }
 

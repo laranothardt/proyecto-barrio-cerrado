@@ -9,6 +9,17 @@ namespace Grupo7_BarrioCerradoII
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string rol = Session["Rol"]?.ToString();
+
+            if (rol == "Propietario")
+            {
+                bool tienePermiso = Application["Permiso_Propietario_Autorizar"] != null && (bool)Application["Permiso_Propietario_Autorizar"];
+                if (!tienePermiso)
+                {
+                    Response.Redirect("~/Default.aspx"); // Rebota al inicio
+                }
+            }
+
             if (!IsPostBack)
             {
                 ddlLote.Items.Add(new ListItem("-- Seleccione un lote --", ""));
