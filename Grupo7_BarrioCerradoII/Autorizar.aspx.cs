@@ -26,7 +26,7 @@ namespace Grupo7_BarrioCerradoII
 
                 if (Session["Dni"] != null)
                 {
-                    txtResidenteAutoriza.Text = Session["Dni"].ToString();
+                    txtResidenteAutoriza.Text = Session["Dni"].ToString().Trim();
                 }
 
                 CargarPreAcreditaciones();
