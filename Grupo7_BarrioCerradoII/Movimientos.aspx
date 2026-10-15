@@ -59,7 +59,8 @@
                     <%-- Patente --%>
                     <div class="col-md-4">
                         <label class="form-label">Patente (Opcional)</label>
-                        <asp:TextBox ID="txtPatente" runat="server" CssClass="form-control" placeholder="Ej: AA691BD"></asp:TextBox>
+                        <asp:DropDownList ID="DDLPatente" runat="server" CssClass="form-select"></asp:DropDownList>
+                        <asp:TextBox ID="txtPatente" runat="server" CssClass="form-control" placeholder="Ej: AA691BD" Visible="false"></asp:TextBox>
                     </div>
 
                     <%-- Detalles u Observaciones --%>

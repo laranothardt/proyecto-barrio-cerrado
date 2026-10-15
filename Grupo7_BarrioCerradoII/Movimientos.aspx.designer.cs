@@ -69,6 +69,15 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLote;
 
         /// <summary>
+        /// Control DDLPatente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLPatente;
+
+        /// <summary>
         /// Control txtPatente.
         /// </summary>
         /// <remarks>
