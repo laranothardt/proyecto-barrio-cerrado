@@ -87,7 +87,8 @@ namespace BIZ.Data
                     return Convert.ToInt32(newId);
                 }
             }
-        }        public int ObtenerIdPersonaPorDni(string dni)
+        }        
+        public int ObtenerIdPersonaPorDni(string dni)
         {
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {

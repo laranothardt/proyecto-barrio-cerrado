@@ -51,6 +51,15 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.TextBox txtResidenteHasta;
 
         /// <summary>
+        /// Control cblDiasResidente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList cblDiasResidente;
+
+        /// <summary>
         /// Control chkVisitaHabilitado.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace Grupo7_BarrioCerradoII
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtVisitaHasta;
+
+        /// <summary>
+        /// Control cblDiasVisita.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList cblDiasVisita;
 
         /// <summary>
         /// Control chkProveedorHabilitado.
@@ -105,6 +123,15 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.TextBox txtProveedorHasta;
 
         /// <summary>
+        /// Control cblDiasProveedor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList cblDiasProveedor;
+
+        /// <summary>
         /// Control chkAdmAdmin.
         /// </summary>
         /// <remarks>
@@ -114,22 +141,22 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.CheckBox chkAdmAdmin;
 
         /// <summary>
-        /// Control chkAdmGuardia.
+        /// Control chkAdmProp.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAdmGuardia;
+        protected global::System.Web.UI.WebControls.CheckBox chkAdmProp;
 
         /// <summary>
-        /// Control chkAdmResidente.
+        /// Control chkAdmRes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAdmResidente;
+        protected global::System.Web.UI.WebControls.CheckBox chkAdmRes;
 
         /// <summary>
         /// Control chkAutAdmin.
@@ -141,49 +168,49 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.CheckBox chkAutAdmin;
 
         /// <summary>
-        /// Control chkAutGuardia.
+        /// Control chkAutProp.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAutGuardia;
+        protected global::System.Web.UI.WebControls.CheckBox chkAutProp;
 
         /// <summary>
-        /// Control chkAutResidente.
+        /// Control chkAutRes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAutResidente;
+        protected global::System.Web.UI.WebControls.CheckBox chkAutRes;
 
         /// <summary>
-        /// Control chkIngEgAdmin.
+        /// Control chkIngAdmin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkIngEgAdmin;
+        protected global::System.Web.UI.WebControls.CheckBox chkIngAdmin;
 
         /// <summary>
-        /// Control chkIngEgGuardia.
+        /// Control chkIngProp.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkIngEgGuardia;
+        protected global::System.Web.UI.WebControls.CheckBox chkIngProp;
 
         /// <summary>
-        /// Control chkIngEgResidente.
+        /// Control chkIngRes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkIngEgResidente;
+        protected global::System.Web.UI.WebControls.CheckBox chkIngRes;
 
         /// <summary>
         /// Control chkMovAdmin.
@@ -195,103 +222,22 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.CheckBox chkMovAdmin;
 
         /// <summary>
-        /// Control chkMovGuardia.
+        /// Control chkMovProp.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkMovGuardia;
+        protected global::System.Web.UI.WebControls.CheckBox chkMovProp;
 
         /// <summary>
-        /// Control chkMovResidente.
+        /// Control chkMovRes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkMovResidente;
-
-        /// <summary>
-        /// Control chkRepAdmin.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkRepAdmin;
-
-        /// <summary>
-        /// Control chkRepGuardia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkRepGuardia;
-
-        /// <summary>
-        /// Control chkRepResidente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkRepResidente;
-
-        /// <summary>
-        /// Control chkResAdmin.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkResAdmin;
-
-        /// <summary>
-        /// Control chkResGuardia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkResGuardia;
-
-        /// <summary>
-        /// Control chkResResidente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkResResidente;
-
-        /// <summary>
-        /// Control chkVehAdmin.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkVehAdmin;
-
-        /// <summary>
-        /// Control chkVehGuardia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkVehGuardia;
-
-        /// <summary>
-        /// Control chkVehResidente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkVehResidente;
+        protected global::System.Web.UI.WebControls.CheckBox chkMovRes;
 
         /// <summary>
         /// Control btnGuardarConfiguracion.
