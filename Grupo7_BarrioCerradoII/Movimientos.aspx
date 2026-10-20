@@ -91,7 +91,7 @@
 
                 <%-- Panel de escaneo de DNI por cámara --%>
                 <div id="panelScanner" style="display: none; margin-top: 15px; margin-bottom: 15px; text-align: center;">
-                    <video id="videoDni" style="width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 8px;" autoplay muted playsinline></video>
+                    <video id="videoDni" style="width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 8px;" autoplay="autoplay" muted="muted" playsinline="playsinline"></video>
                     <div id="scanStatus" style="margin-top: 8px; font-size: 0.9rem;"></div>
                     <button type="button" id="btnCancelarScan" class="btn btn-outline-danger btn-sm mt-2">Cancelar</button>
                 </div>
@@ -109,6 +109,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script type="text/javascript">
+        // @ts-nocheck
+
         // 1. ESCÁNER DE DNI (ZXing - PDF417)
         (function () {
             var codeReader = null;
@@ -204,10 +206,8 @@
 
             var ddl = document.getElementById('<%= ddlLote.ClientID %>');
             if (ddl) {
-                // Evento al cambiar selección de lote
                 ddl.addEventListener('change', actualizarMapaPorLote);
 
-                // Si ya viene un lote seleccionado desde antes
                 if (ddl.value) {
                     actualizarMapaPorLote();
                 }
