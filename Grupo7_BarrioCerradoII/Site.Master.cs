@@ -16,17 +16,17 @@ namespace Grupo7_BarrioCerradoII
                     // Aplicar visibilidad segun variables guardadas
                     linkAdministradores.Visible = Application["Permiso_Propietario_Administradores"] != null && (bool)Application["Permiso_Propietario_Administradores"];
                     linkAutorizar.Visible = Application["Permiso_Propietario_Autorizar"] == null || (bool)Application["Permiso_Propietario_Autorizar"];
-                    linkIngresoEgreso.Visible = Application["Permiso_Propietario_IngresoEgreso"] != null && (bool)Application["Permiso_Propietario_IngresoEgreso"];
-                    linkMovimientos.Visible = Application["Permiso_Propietario_Movimientos"] != null && (bool)Application["Permiso_Propietario_Movimientos"];
-                    linkRestricciones.Visible = false;
+                    //linkIngresoEgreso.Visible = Application["Permiso_Propietario_IngresoEgreso"] != null && (bool)Application["Permiso_Propietario_IngresoEgreso"];
+                    //linkMovimientos.Visible = Application["Permiso_Propietario_Movimientos"] != null && (bool)Application["Permiso_Propietario_Movimientos"];
+                    //linkRestricciones.Visible = false;
                 }
                 else if (rol == "1" || rol == "Residente")
                 {
                     linkAdministradores.Visible = Application["Permiso_Residente_Administradores"] != null && (bool)Application["Permiso_Residente_Administradores"];
                     linkAutorizar.Visible = Application["Permiso_Residente_Autorizar"] == null || (bool)Application["Permiso_Residente_Autorizar"];
-                    linkIngresoEgreso.Visible = Application["Permiso_Residente_IngresoEgreso"] != null && (bool)Application["Permiso_Residente_IngresoEgreso"];
-                    linkMovimientos.Visible = Application["Permiso_Residente_Movimientos"] != null && (bool)Application["Permiso_Residente_Movimientos"];
-                    linkRestricciones.Visible = false;
+                    //linkIngresoEgreso.Visible = Application["Permiso_Residente_IngresoEgreso"] != null && (bool)Application["Permiso_Residente_IngresoEgreso"];
+                    //linkMovimientos.Visible = Application["Permiso_Residente_Movimientos"] != null && (bool)Application["Permiso_Residente_Movimientos"];
+                    //linkRestricciones.Visible = false;
                 }
             }
         }
