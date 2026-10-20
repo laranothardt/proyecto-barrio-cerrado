@@ -9,6 +9,17 @@ namespace Grupo7_BarrioCerradoII
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string rol = Session["Rol"]?.ToString();
+
+            if (rol == "Propietario")
+            {
+                bool tienePermiso = Application["Permiso_Propietario_Autorizar"] != null && (bool)Application["Permiso_Propietario_Autorizar"];
+                if (!tienePermiso)
+                {
+                    Response.Redirect("~/Default.aspx"); // Rebota al inicio
+                }
+            }
+
             if (!IsPostBack)
             {
                 ddlLote.Items.Add(new ListItem("-- Seleccione un lote --", ""));
@@ -40,8 +51,7 @@ namespace Grupo7_BarrioCerradoII
             try
             {
                 // 1. Validar Residente
-                BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
-                int idResidente = dataPersona.ObtenerOCrearPersonaResidente(txtResidenteAutoriza.Text.Trim(), "Residente " + txtResidenteAutoriza.Text.Trim());
+                int idResidente = ObtenerIdResidente(txtResidenteAutoriza.Text.Trim());
 
                 if (idResidente == 0)
                 {
@@ -122,8 +132,9 @@ namespace Grupo7_BarrioCerradoII
 
                 if (!string.IsNullOrEmpty(dniResidente))
                 {
+                    // Solo lectura: cargar la lista no debe crear personas
                     BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
-                    int idResidente = dataPersona.ObtenerOCrearPersonaResidente(dniResidente, "Residente " + dniResidente);
+                    int idResidente = dataPersona.ObtenerIdPersonaPorDni(dniResidente);
 
                     gvPreacreditaciones.DataSource = data.ObtenerVigentesPorResidente(idResidente);
                 }
@@ -137,6 +148,30 @@ namespace Grupo7_BarrioCerradoII
             catch
             {
             }
+        }
+
+        // Devuelve el IdPersona del residente que autoriza, o 0 si no esta registrado.
+        // No inventa personas: solo crea/corrige la Persona del usuario logueado con los datos de su sesion.
+        private int ObtenerIdResidente(string dni)
+        {
+            BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
+
+            bool esUsuarioLogueado = Session["Dni"] != null && Session["Dni"].ToString() == dni;
+            string nombreCompleto = Session["NombreCompleto"] as string;
+
+            if (esUsuarioLogueado && !string.IsNullOrWhiteSpace(nombreCompleto))
+            {
+                string[] partes = nombreCompleto.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (partes.Length > 1)
+                {
+                    // Aproximacion para cuentas viejas: primera palabra = nombre, resto = apellido
+                    string nombre = partes[0];
+                    string apellido = string.Join(" ", partes, 1, partes.Length - 1);
+                    return dataPersona.ObtenerOCrearPersona(dni, nombre, apellido, 2);
+                }
+            }
+
+            return dataPersona.ObtenerIdPersonaPorDni(dni);
         }
 
         private void LimpiarFormulario()

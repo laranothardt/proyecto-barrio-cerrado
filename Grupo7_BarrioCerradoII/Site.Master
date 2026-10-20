@@ -67,10 +67,33 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/IniciarSesion">Iniciar Sesion</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Autorizar">Autorizar</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Administradores">Administradores</a></li>
+                        <li class="nav-item" id="linkInicio" runat="server">
+                            <a class="nav-link" runat="server" href="~/">Inicio</a>
+                        </li>
+                        <li class="nav-item" id="linkIniciarSesion" runat="server">
+                            <a class="nav-link" runat="server" href="~/IniciarSesion">Iniciar Sesion</a>
+                        </li>
+                        <li class="nav-item" id="linkAutorizar" runat="server">
+                            <a class="nav-link" runat="server" href="~/Autorizar">Autorizar</a>
+                        </li>
+                        <li class="nav-item" id="linkIngresoEgreso" runat="server">
+                            <a class="nav-link" runat="server" href="~/IngresoEgreso">Ingreso/Egreso</a>
+                        </li>
+                        <li class="nav-item" id="linkMovimientos" runat="server">
+                            <a class="nav-link" runat="server" href="~/Movimientos">Movimientos</a>
+                        </li>
+                        <li class="nav-item" id="linkVehiculos" runat="server">
+                            <a class="nav-link" runat="server" href="~/Vehiculos">Vehículos</a>
+                        </li>
+                        <li class="nav-item" id="linkReportes" runat="server">
+                            <a class="nav-link" runat="server" href="~/Reportes">Reportes</a>
+                        </li>
+                        <li class="nav-item" id="linkAdministradores" runat="server">
+                            <a class="nav-link" runat="server" href="~/Administradores">Administradores</a>
+                        </li>
+                        <li class="nav-item" id="linkRestricciones" runat="server">
+                            <a class="nav-link" runat="server" href="~/Restricciones">Restricciones</a>
+                        </li>
                     </ul>
                 </div>
             </div>

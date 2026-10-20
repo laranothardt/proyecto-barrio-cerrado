@@ -25,11 +25,11 @@
             <div class="row g-3">
                 <div class="col-md-6 form-group">
                     <asp:Label ID="lbPatente" runat="server" CssClass="form-label" Text="Patente:"></asp:Label>
-                    <asp:TextBox ID="txPatente" runat="server" CssClass="form-control" OnTextChanged="txPatente_TextChanged"></asp:TextBox>
+                    <asp:TextBox ID="txPatente" runat="server" CssClass="form-control" OnTextChanged="txPatente_TextChanged" AutoPostBack="true"></asp:TextBox>
                 </div>
                 <div class="col-md-6 form-group">
                     <asp:Label ID="lbTitular" runat="server" CssClass="form-label" Text="Titular:"></asp:Label>
-                    <asp:TextBox ID="txTitular" runat="server" CssClass="form-control" OnTextChanged="txTitular_TextChanged"></asp:TextBox>
+                    <asp:TextBox ID="txTitular" runat="server" CssClass="form-control" OnTextChanged="txTitular_TextChanged" AutoPostBack="true"></asp:TextBox>
                 </div>
             </div>
 
@@ -90,7 +90,7 @@
 
                 <div class="col-md-6 form-group">
                     <label class="form-label" for="IngresoVencimiento">Vencimiento Seguro</label>
-                    <asp:TextBox ID="IngresoVencimiento" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="IngresoVencimiento" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
                 </div>
             </div>
             <br />

@@ -22,13 +22,14 @@ namespace Grupo7_BarrioCerradoII
         protected void bt_registrarse_Click(object sender, EventArgs e)
         {
             string nombre = tx_nombre.Text.Trim();
+            string apellido = tx_apellido.Text.Trim();
             string dni = tx_dni.Text.Trim();
             string email = tx_email.Text.Trim();
             string password = tx_contraseña.Text.Trim();
             string confirmPassword = tx_confirmar_contraseña.Text.Trim();
             string rol = ddl_rol.SelectedValue;
 
-            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(dni) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido) || string.IsNullOrEmpty(dni) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
             {
                 MostrarMensaje("Todos los campos son obligatorios.", false);
                 return;
@@ -82,12 +83,15 @@ namespace Grupo7_BarrioCerradoII
                 {
                     Username = email,
                     PasswordHash = BIZ.Data.UsuarioSistema.HashPassword(password),
-                    NombreCompleto = nombre,
+                    NombreCompleto = nombre + " " + apellido,
                     FK_Rol = ddl_rol.SelectedValue,
                     FK_Estado = "1",
                     Dni = dni,
                     Foto = fotoBytes
                 };
+
+                // La Persona se crea aca con nombre y apellido reales (si ya existe por DNI, se reutiliza)
+                new BIZ.Data.Persona().ObtenerOCrearPersona(dni, nombre, apellido, 2);
 
                 bool creado = data.CrearUsuario(nuevoUsuario);
 
@@ -124,6 +128,7 @@ namespace Grupo7_BarrioCerradoII
         private void LimpiarFormulario()
         {
             tx_nombre.Text = string.Empty;
+            tx_apellido.Text = string.Empty;
             tx_dni.Text = string.Empty;
             tx_email.Text = string.Empty;
             tx_contraseña.Text = string.Empty;
