@@ -217,6 +217,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< Updated upstream
+=======
+    <Compile Include="IngresoEgreso.aspx.cs">
+      <DependentUpon>IngresoEgreso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IngresoEgreso.aspx.designer.cs">
+      <DependentUpon>IngresoEgreso.aspx</DependentUpon>
+    </Compile>
+>>>>>>> Stashed changes
     <Compile Include="IniciarSesion.aspx.cs">
       <DependentUpon>IniciarSesion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
