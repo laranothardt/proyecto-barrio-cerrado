@@ -76,10 +76,7 @@
                         <li class="nav-item" id="linkAutorizar" runat="server">
                             <a class="nav-link" runat="server" href="~/Autorizar">Autorizar</a>
                         </li>
-                        <li class="nav-item" id="linkIngresoEgreso" runat="server">
-                            <a class="nav-link" runat="server" href="~/IngresoEgreso">Ingreso/Egreso</a>
-                        </li>
-                        <li class="nav-item" id="linkMovimientos" runat="server">
+                        <%--<li class="nav-item" id="linkMovimientos" runat="server">
                             <a class="nav-link" runat="server" href="~/Movimientos">Movimientos</a>
                         </li>
                         <li class="nav-item" id="linkVehiculos" runat="server">
@@ -87,13 +84,13 @@
                         </li>
                         <li class="nav-item" id="linkReportes" runat="server">
                             <a class="nav-link" runat="server" href="~/Reportes">Reportes</a>
-                        </li>
+                        </li>--%>
                         <li class="nav-item" id="linkAdministradores" runat="server">
                             <a class="nav-link" runat="server" href="~/Administradores">Administradores</a>
                         </li>
-                        <li class="nav-item" id="linkRestricciones" runat="server">
+<%--                        <li class="nav-item" id="linkRestricciones" runat="server">
                             <a class="nav-link" runat="server" href="~/Restricciones">Restricciones</a>
-                        </li>
+                        </li>--%>
                     </ul>
                 </div>
             </div>
