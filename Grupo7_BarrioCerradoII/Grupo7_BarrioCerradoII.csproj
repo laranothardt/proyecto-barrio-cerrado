@@ -118,7 +118,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\burro.jpg" />
-    <Content Include="IngresoEgreso.aspx" />
     <Content Include="IniciarSesion.aspx" />
     <Content Include="Movimientos.aspx" />
     <Content Include="Olvido.aspx" />
@@ -213,12 +212,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="IngresoEgreso.aspx.cs">
-      <DependentUpon>IngresoEgreso.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="IngresoEgreso.aspx.designer.cs">
-      <DependentUpon>IngresoEgreso.aspx</DependentUpon>
     </Compile>
     <Compile Include="IniciarSesion.aspx.cs">
       <DependentUpon>IniciarSesion.aspx</DependentUpon>
