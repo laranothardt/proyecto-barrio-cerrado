@@ -56,15 +56,18 @@ namespace BIZ.Data
             }
         }
 
-        public string ObtenerProximoTipoMovimiento(int idPersona)
+        public void ObtenerUltimoMovimiento(int idPersona, out string proximoTipo, out string idLotePrevio)
         {
+            proximoTipo = "Ingreso";
+            idLotePrevio = null;
+
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
-                string query = @"SELECT TOP 1 TipoMovimiento
-                         FROM Movimiento
-                         WHERE FK_IDPersona = @FK_IDPersona
-                           AND Autorizado = 1
-                         ORDER BY FechaHora DESC, IDMovimiento DESC";
+                string query = @"SELECT TOP 1 TipoMovimiento, FK_IDLote
+                                 FROM Movimiento
+                                 WHERE FK_IDPersona = @FK_IDPersona
+                                   AND Autorizado = 1
+                                 ORDER BY FechaHora DESC, IDMovimiento DESC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -73,18 +76,25 @@ namespace BIZ.Data
                     try
                     {
                         conn.Open();
-                        object resultado = cmd.ExecuteScalar();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                string ultimoTipo = reader["TipoMovimiento"] != DBNull.Value ? reader["TipoMovimiento"].ToString() : "";
 
-                        // Sin historial: el primer movimiento es un ingreso
-                        if (resultado == null || resultado == DBNull.Value)
-                            return "Ingreso";
+                                // Alterna el tipo
+                                proximoTipo = string.Equals(ultimoTipo, "Ingreso", StringComparison.OrdinalIgnoreCase) ? "Egreso" : "Ingreso";
 
-                        return resultado.ToString() == "Ingreso" ? "Egreso" : "Ingreso";
+                                if (reader["FK_IDLote"] != DBNull.Value)
+                                {
+                                    idLotePrevio = reader["FK_IDLote"].ToString();
+                                }
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Trace.TraceError("Error al obtener último movimiento: {0}", ex);
-                        return "Ingreso";
+                        System.Diagnostics.Trace.TraceError("Error al consultar el último movimiento: {0}", ex);
                     }
                 }
             }

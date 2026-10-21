@@ -91,7 +91,13 @@ namespace Grupo7_BarrioCerradoII
                 };
 
                 // La Persona se crea aca con nombre y apellido reales (si ya existe por DNI, se reutiliza)
-                new BIZ.Data.Persona().ObtenerOCrearPersona(dni, nombre, apellido, 2);
+                // Se guarda la Persona con su nombre y apellido reales ingresados en el formulario
+                BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
+                int idPersona = dataPersona.ObtenerPersonaPorDni(dni, out _);
+                if (idPersona == 0)
+                {
+                    dataPersona.CrearPersona(dni, nombre, apellido);
+                }
 
                 bool creado = data.CrearUsuario(nuevoUsuario);
 

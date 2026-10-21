@@ -132,9 +132,7 @@ namespace Grupo7_BarrioCerradoII
 
                 if (!string.IsNullOrEmpty(dniResidente))
                 {
-                    // Solo lectura: cargar la lista no debe crear personas
-                    BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
-                    int idResidente = dataPersona.ObtenerIdPersonaPorDni(dniResidente);
+                    int idResidente = new BIZ.Data.Persona().ObtenerPersonaPorDni(dniResidente, out _);
 
                     gvPreacreditaciones.DataSource = data.ObtenerVigentesPorResidente(idResidente);
                 }
@@ -154,25 +152,16 @@ namespace Grupo7_BarrioCerradoII
         // No inventa personas: solo crea/corrige la Persona del usuario logueado con los datos de su sesion.
         private int ObtenerIdResidente(string dni)
         {
+            if (string.IsNullOrWhiteSpace(dni)) return 0;
             BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
-
-            bool esUsuarioLogueado = Session["Dni"] != null && Session["Dni"].ToString() == dni;
-            string nombreCompleto = Session["NombreCompleto"] as string;
-
-            if (esUsuarioLogueado && !string.IsNullOrWhiteSpace(nombreCompleto))
+            int id = dataPersona.ObtenerPersonaPorDni(dni, out _);
+            if (id == 0)
             {
-                string[] partes = nombreCompleto.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                if (partes.Length > 1)
-                {
-                    // Aproximacion para cuentas viejas: primera palabra = nombre, resto = apellido
-                    string nombre = partes[0];
-                    string apellido = string.Join(" ", partes, 1, partes.Length - 1);
-                    return dataPersona.ObtenerOCrearPersona(dni, nombre, apellido, 2);
-                }
+                id = dataPersona.CrearPersona(dni, "Residente", "Autorizante");
             }
-
-            return dataPersona.ObtenerIdPersonaPorDni(dni);
+            return id;
         }
+        
 
         private void LimpiarFormulario()
         {

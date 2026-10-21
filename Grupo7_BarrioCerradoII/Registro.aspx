@@ -88,12 +88,12 @@
 
     <%-- Librería para leer códigos de barras PDF417 (formato del DNI argentino) desde la cámara --%>
     <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.20.0/umd/index.min.js"></script>
-   <script type="text/javascript">
+    <script type="text/javascript">
+       // @ts-nocheck
+
        (function () {
            var codeReader = null;
 
-           // El código de barras del DNI argentino trae los datos separados por "@":
-           // NroTramite@Apellido@Nombre@Sexo@DNI@Ejemplar@FechaNacimiento@FechaEmision@CUIL
            function parseCodigoDni(texto) {
                var campos = texto.split('@');
                if (campos.length < 8) {
@@ -116,7 +116,8 @@
                if (codeReader) {
                    codeReader.reset();
                }
-               document.getElementById('panelScanner').style.display = 'none';
+               var panel = document.getElementById('panelScanner');
+               if (panel) panel.style.display = 'none';
            }
 
            function iniciarScanner() {
@@ -125,13 +126,13 @@
                    return;
                }
 
-               document.getElementById('panelScanner').style.display = 'block';
-               document.getElementById('scanStatus').textContent = 'Apuntá la cámara al código de barras del DNI...';
+               var panel = document.getElementById('panelScanner');
+               var status = document.getElementById('scanStatus');
+               if (panel) panel.style.display = 'block';
+               if (status) status.textContent = 'Apuntá la cámara al código de barras del DNI...';
 
                codeReader = new ZXing.BrowserPDF417Reader();
 
-               // Pedimos mayor resolución a la cámara: el PDF417 es mucho más denso que un QR
-               // y con la resolución por defecto del navegador puede no distinguir bien las líneas.
                var constraints = {
                    video: {
                        facingMode: 'environment',
@@ -144,34 +145,41 @@
                    var datos = parseCodigoDni(resultado.getText());
 
                    if (datos) {
-                       document.getElementById('<%= tx_dni.ClientID %>').value = datos.dni;
-                    document.getElementById('<%= tx_nombre.ClientID %>').value = datos.nombre;
-                    document.getElementById('<%= tx_apellido.ClientID %>').value = datos.apellido;
-                    document.getElementById('scanStatus').textContent = 'DNI leído correctamente: ' + datos.apellido + ', ' + datos.nombre;
-                } else {
-                    document.getElementById('scanStatus').textContent = 'No se pudo interpretar el código leído. Cargá los datos manualmente.';
-                }
+                       var inputDni = document.getElementById('<%= tx_dni.ClientID %>');
+                       var inputNom = document.getElementById('<%= tx_nombre.ClientID %>');
+                       var inputApe = document.getElementById('<%= tx_apellido.ClientID %>');
 
-                detenerScanner();
-            }).catch(function (err) {
-                console.error(err);
-                var msg = 'No se pudo acceder a la cámara.';
-                if (err && err.name === 'NotAllowedError') {
-                    msg = 'Permiso de cámara denegado. Habilitalo en el navegador e intentá de nuevo.';
-                } else if (err && err.name === 'NotFoundError') {
-                    msg = 'No se encontró ninguna cámara en este dispositivo.';
-                } else if (err && err.name === 'OverconstrainedError') {
-                    msg = 'La cámara no soporta la resolución pedida. Probá sin restricción de resolución.';
-                }
-                document.getElementById('scanStatus').textContent = msg;
-                detenerScanner();
-            });
+                       if (inputDni) inputDni.value = datos.dni;
+                       if (inputNom) inputNom.value = datos.nombre;
+                       if (inputApe) inputApe.value = datos.apellido;
+
+                       if (status) status.textContent = 'DNI leído correctamente: ' + datos.apellido + ', ' + datos.nombre;
+                   } else {
+                       if (status) status.textContent = 'No se pudo interpretar el código leído. Cargá los datos manualmente.';
+                   }
+
+                   detenerScanner();
+               }).catch(function (err) {
+                   console.error(err);
+                   var msg = 'No se pudo acceder a la cámara.';
+                   if (err && err.name === 'NotAllowedError') {
+                       msg = 'Permiso de cámara denegado. Habilitalo en el navegador e intentá de nuevo.';
+                   } else if (err && err.name === 'NotFoundError') {
+                       msg = 'No se encontró ninguna cámara en este dispositivo.';
+                   } else if (err && err.name === 'OverconstrainedError') {
+                       msg = 'La cámara no soporta la resolución pedida. Probá sin restricción de resolución.';
+                   }
+                   if (status) status.textContent = msg;
+                   detenerScanner();
+               });
            }
 
            document.addEventListener('DOMContentLoaded', function () {
-               document.getElementById('btnEscanearDni').addEventListener('click', iniciarScanner);
-               document.getElementById('btnCancelarScan').addEventListener('click', detenerScanner);
+               var btnScan = document.getElementById('btnEscanearDni');
+               var btnCancel = document.getElementById('btnCancelarScan');
+               if (btnScan) btnScan.addEventListener('click', iniciarScanner);
+               if (btnCancel) btnCancel.addEventListener('click', detenerScanner);
            });
        })();
-   </script>
+    </script>
 </asp:Content>

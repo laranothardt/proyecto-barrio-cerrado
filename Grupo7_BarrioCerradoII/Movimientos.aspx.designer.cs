@@ -24,6 +24,15 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.TextBox Tx_Dni;
 
         /// <summary>
+        /// Control Label1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
         /// Control LbNombre.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,33 @@ namespace Grupo7_BarrioCerradoII
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LbNombre;
+
+        /// <summary>
+        /// Control pnlDatosNuevaPersona.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlDatosNuevaPersona;
+
+        /// <summary>
+        /// Control txtNombrePersona.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNombrePersona;
+
+        /// <summary>
+        /// Control txtApellidoPersona.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtApellidoPersona;
 
         /// <summary>
         /// Control DDLTipoMovimiento.
