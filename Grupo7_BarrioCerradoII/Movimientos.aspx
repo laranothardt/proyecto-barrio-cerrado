@@ -18,12 +18,27 @@
                         <label class="form-label">DNI del Usuario</label>
                         <div class="input-group">
                             <asp:TextBox ID="Tx_Dni" runat="server" CssClass="form-control" placeholder="Ej: 40123456" OnTextChanged="Tx_Dni_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            <asp:Label ID="Label1" runat="server" CssClass="text-success small mt-1"></asp:Label>
                         </div>
                         <asp:Label ID="LbNombre" runat="server" CssClass="text-success small mt-1"></asp:Label>
                         <button type="button" id="btnEscanearDni" class="btn btn-outline-secondary btn-sm mt-2">
                             📷 Escanear DNI con cámara
                         </button>
                     </div>
+
+                    <%-- Panel para solicitar Nombre y Apellido (Solo si la persona es NUEVA) --%>
+                    <asp:Panel ID="pnlDatosNuevaPersona" runat="server" Visible="false" CssClass="col-md-8">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre</label>
+                                <asp:TextBox ID="txtNombrePersona" runat="server" CssClass="form-control" placeholder="Ej: Juan"></asp:TextBox>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Apellido</label>
+                                <asp:TextBox ID="txtApellidoPersona" runat="server" CssClass="form-control" placeholder="Ej: Pérez"></asp:TextBox>
+                            </div>
+                        </div>
+                    </asp:Panel>
 
                     <%-- Tipo de Movimiento --%>
                     <div class="col-md-4">
@@ -145,23 +160,32 @@
                 document.getElementById('panelScanner').style.display = 'block';
                 document.getElementById('scanStatus').textContent = 'Apuntá la cámara al código de barras del DNI...';
 
-                codeReader = new ZXing.BrowserPDF417Reader();
-                var constraints = { video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } } };
-
                 codeReader.decodeOnceFromConstraints(constraints, 'videoDni').then(function (resultado) {
                     var datos = parseCodigoDni(resultado.getText());
-                    if (datos) {
-                        document.getElementById('<%= Tx_Dni.ClientID %>').value = datos.dni;
-                        document.getElementById('scanStatus').textContent = 'DNI leído correctamente: ' + datos.dni + '.';
+                     if (datos) {
+                            // 1. Asignar DNI
+                             document.getElementById('<%= Tx_Dni.ClientID %>').value = datos.dni;
+        
+                            // 2. Asignar Nombre y Apellido desde los datos escaneados
+                            var txtNom = document.getElementById('<%= txtNombrePersona.ClientID %>');
+                            var txtApe = document.getElementById('<%= txtApellidoPersona.ClientID %>');
+        
+                            if (txtNom) txtNom.value = datos.nombre;
+                            if (txtApe) txtApe.value = datos.apellido;
+
+                            document.getElementById('scanStatus').textContent = 'DNI leído correctamente: ' + datos.dni + '.';
+
+                            // 3. Disparar el evento OnTextChanged del servidor
+                            __doPostBack('<%= Tx_Dni.UniqueID %>', '');
                     } else {
-                        document.getElementById('scanStatus').textContent = 'No se pudo interpretar el código leído. Cargá el DNI manualmente.';
+                        document.getElementById('scanStatus').textContent = 'No se pudo interpretar el código leído. Cargá los datos manualmente.';
                     }
                     detenerScanner();
-                }).catch(function (err) {
+                    }).catch(function (err) {
                     console.error(err);
                     document.getElementById('scanStatus').textContent = 'Error al acceder a la cámara.';
                     detenerScanner();
-                });
+                    });
             }
 
             document.addEventListener('DOMContentLoaded', function () {
