@@ -49,10 +49,19 @@ namespace Grupo7_BarrioCerradoII
 
                 if (proximoTipo == "Egreso" && !string.IsNullOrEmpty(idLotePrevio))
                 {
-                    ListItem item = ddlLote.Items.FindByValue(idLotePrevio);
+                    // Convertimos el IDLote recuperado de la BD al NumeroLote real
+                    int idL = int.Parse(idLotePrevio);
+                    string numeroLoteReal = new BIZ.Data.Lote().ObtenerNumeroLotePorId(idL);
+
+                    if (string.IsNullOrEmpty(numeroLoteReal))
+                    {
+                        numeroLoteReal = idLotePrevio; // Fallback de seguridad
+                    }
+
+                    ListItem item = ddlLote.Items.FindByValue(numeroLoteReal);
                     if (item != null)
                     {
-                        ddlLote.SelectedValue = idLotePrevio;
+                        ddlLote.SelectedValue = numeroLoteReal;
                         ScriptManager.RegisterStartupScript(this, GetType(), "ActualizarMapa", "if(typeof actualizarMapaPorLote === 'function') { actualizarMapaPorLote(); }", true);
                     }
                 }
@@ -62,12 +71,42 @@ namespace Grupo7_BarrioCerradoII
             }
             else
             {
-                // NO EXISTE: Mostrar panel para cargar Nombre y Apellido
-                pnlDatosNuevaPersona.Visible = true;
-                DDLTipoMovimiento.SelectedValue = "Ingreso";
+                BIZ.Data.PreAcreditacion dataPre = new BIZ.Data.PreAcreditacion();
+                var preacreditaciones = dataPre.ObtenerVigentePorDni(dni);
 
-                LbNombre.CssClass = "text-warning small mt-1";
-                LbNombre.Text = "Persona no registrada. Ingrese Nombre y Apellido para continuar.";
+                if (preacreditaciones != null)
+                {
+                    // A) Crear automáticamente el registro en la tabla Persona con los datos de la preacreditación
+                    idPersona = dataPersona.CrearPersona(dni, preacreditaciones.Nombre, preacreditaciones.Apellido);
+
+                    // B) Ocultar el panel de pedir nombre/apellido
+                    pnlDatosNuevaPersona.Visible = false;
+
+                    // C) Autocompletar con Ingreso y seleccionar Lote destino preacreditado
+                    DDLTipoMovimiento.SelectedValue = "Ingreso";
+                    if (!string.IsNullOrEmpty(preacreditaciones.NumeroLote))
+                    {
+                        ListItem item = ddlLote.Items.FindByValue(preacreditaciones.NumeroLote);
+                        if (item != null)
+                        {
+                            ddlLote.SelectedValue = preacreditaciones.NumeroLote;
+                            ScriptManager.RegisterStartupScript(this, GetType(), "ActualizarMapa", "if(typeof actualizarMapaPorLote === 'function') { actualizarMapaPorLote(); }", true);
+                        }
+                    }
+
+                    // D) Mostrar mensaje de autorización
+                    LbNombre.CssClass = "text-success small mt-1";
+                    LbNombre.Text = $"✅ {preacreditaciones.Nombre} {preacreditaciones.Apellido} — Autorizado por Preacreditación (Ingreso)";
+                }
+                else
+                {
+                    // NO EXISTE EN PERSONA NI EN PREACREDITACIÓN: Mostrar panel para cargar datos manualmente
+                    pnlDatosNuevaPersona.Visible = true;
+                    DDLTipoMovimiento.SelectedValue = "Ingreso";
+
+                    LbNombre.CssClass = "text-warning small mt-1";
+                    LbNombre.Text = "Persona no registrada. Ingrese Nombre y Apellido para continuar.";
+                }
             }
         }
 

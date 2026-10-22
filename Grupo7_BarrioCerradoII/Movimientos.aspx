@@ -58,9 +58,9 @@
                         </asp:DropDownList>
                     </div>
 
-                    <%-- Lote Destino --%>
+                    <%-- Lote --%>
                     <div class="col-md-4">
-                        <asp:Label runat="server" AssociatedControlID="ddlLote" CssClass="form-label fw-bold">Lote destino</asp:Label>
+                        <asp:Label runat="server" AssociatedControlID="ddlLote" CssClass="form-label fw-bold">Lote</asp:Label>
                         <asp:DropDownList ID="ddlLote" runat="server" CssClass="form-select">
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="rfvLote" runat="server"

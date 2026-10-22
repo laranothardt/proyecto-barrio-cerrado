@@ -33,6 +33,20 @@ namespace BIZ.Data
                 }
             }
         }
+        public string ObtenerNumeroLotePorId(int idLote)
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string query = "SELECT LoteNum FROM Lote WHERE IDLote = @IDLote";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@IDLote", idLote);
+                    conn.Open();
+                    object result = cmd.ExecuteScalar();
+                    return result != null ? result.ToString() : string.Empty;
+                }
+            }
+        }
     }
 }
     
