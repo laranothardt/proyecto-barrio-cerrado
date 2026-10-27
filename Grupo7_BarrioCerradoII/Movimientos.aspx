@@ -58,6 +58,16 @@
                         </asp:DropDownList>
                     </div>
 
+                    <%-- Categoría (NUEVO CONTROL) --%>
+                    <div class="col-md-4">
+                        <asp:Label runat="server" AssociatedControlID="ddlCategoria" CssClass="form-label fw-bold">Categoría <span class="text-muted fw-normal">(opcional)</span></asp:Label>
+                        <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
+                            <asp:ListItem Text="Sin categoría específica" Value="" />
+                            <asp:ListItem Text="Visita" Value="2" />
+                            <asp:ListItem Text="Proveedor / Empleado" Value="3" />
+                        </asp:DropDownList>
+                    </div>
+
                     <%-- Lote --%>
                     <div class="col-md-4">
                         <asp:Label runat="server" AssociatedControlID="ddlLote" CssClass="form-label fw-bold">Lote</asp:Label>
@@ -75,10 +85,11 @@
                     <div class="col-md-4">
                         <label class="form-label">Patente (Opcional)</label>
                         <asp:DropDownList ID="DDLPatente" runat="server" CssClass="form-select"
-                            AutoPostBack="true" OnSelectedIndexChanged="DDLPatente_SelectedIndexChanged"></asp:DropDownList>
+                            AutoPostBack="true" OnSelectedIndexChanged="DDLPatente_SelectedIndexChanged">
+                        </asp:DropDownList>
                     </div>
 
-                    <%-- Panel para cargar un vehículo nuevo (Solo si se elige "Otro vehículo") --%>
+                    <%-- Panel para cargar un vehículo  --%>
                     <asp:Panel ID="pnlNuevoVehiculo" runat="server" Visible="false" CssClass="col-md-8">
                         <div class="row g-4">
                             <div class="col-md-4">
@@ -278,17 +289,17 @@ function actualizarMapaPorLote() {
             mapa.flyTo([lat, lng], 17);
 
             document.getElementById('<%= hfLatitud.ClientID %>').value = lat;
-            document.getElementById('<%= hfLongitud.ClientID %>').value = lng;
-            document.getElementById('lblCoordenadas').textContent = 'Lote ' + numeroLote + ' — Lat: ' + lat.toFixed(5) + ', Lng: ' + lng.toFixed(5);
-        }
+    document.getElementById('<%= hfLongitud.ClientID %>').value = lng;
+    document.getElementById('lblCoordenadas').textContent = 'Lote ' + numeroLote + ' — Lat: ' + lat.toFixed(5) + ', Lng: ' + lng.toFixed(5);
+}
 
-        function limpiarMapa() {
-            if (marcador) {
-                mapa.removeLayer(marcador);
-                marcador = null;
-            }
-            mapa.flyTo([latBase, lngBase], 16);
-            document.getElementById('<%= hfLatitud.ClientID %>').value = '';
+function limpiarMapa() {
+    if (marcador) {
+        mapa.removeLayer(marcador);
+        marcador = null;
+    }
+    mapa.flyTo([latBase, lngBase], 16);
+    document.getElementById('<%= hfLatitud.ClientID %>').value = '';
             document.getElementById('<%= hfLongitud.ClientID %>').value = '';
             document.getElementById('lblCoordenadas').textContent = 'Seleccioná un lote para ver su ubicación.';
         }
