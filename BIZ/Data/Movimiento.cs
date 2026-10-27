@@ -99,5 +99,39 @@ namespace BIZ.Data
                 }
             }
         }
+
+        public static DataSet ObtenerMovimientos()
+        {
+            DataSet ds = new DataSet();
+            string query = @"
+        SELECT 
+            m.IDMovimiento,
+            ISNULL(m.TipoMovimiento, 'Ingreso') AS TipoMovimiento,
+            m.FechaHora AS Fecha,
+            m.FechaHora AS Hora,
+            ISNULL(CAST(l.LoteNum AS VARCHAR), '-') AS Lote,
+            ISNULL(p.DNI, '-') AS DNI,
+            ISNULL(p.Nombre + ' ' + p.Apellido, 'Sin Registrar') AS NombreCompleto,
+            ISNULL(cp.Descripcion, 'Sin Categoría') AS TipoIngreso,
+            ISNULL(v.Patente, '-') AS Patente
+        FROM dbo.Movimiento m
+        LEFT JOIN dbo.Persona p ON m.FK_IDPersona = p.IDPersona
+        LEFT JOIN dbo.CategoriaPersona cp ON p.FK_IDCategoria = cp.IDCategoria
+        LEFT JOIN dbo.Lote l ON m.FK_IDLote = l.IDLote
+        LEFT JOIN dbo.Vehiculo v ON m.FK_IDVehiculo = v.id_vehiculo
+        ORDER BY m.FechaHora DESC";
+
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(ds);
+                    }
+                }
+            }
+            return ds;
+        }
     }
 }

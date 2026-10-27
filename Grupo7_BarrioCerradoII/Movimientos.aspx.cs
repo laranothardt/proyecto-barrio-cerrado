@@ -187,11 +187,12 @@ namespace Grupo7_BarrioCerradoII
             // 2) Validaciones Horarias y Días
             string puntoAcceso = DDLPuntoAcceso.SelectedValue;
             string detalleTexto = txtDetalle.Text.Trim().ToLower();
+            string categoriaSeleccionada = ddlCategoria.SelectedValue;
 
             TimeSpan horaActual = DateTime.Now.TimeOfDay;
             string diaActual = DateTime.Now.DayOfWeek.ToString();
 
-            bool esProveedor = puntoAcceso == "2" || detalleTexto.Contains("proveedor") || detalleTexto.Contains("obra");
+            bool esProveedor = categoriaSeleccionada == "4" || puntoAcceso == "2" || detalleTexto.Contains("proveedor") || detalleTexto.Contains("obra");
 
             if (esProveedor)
             {
@@ -372,6 +373,7 @@ namespace Grupo7_BarrioCerradoII
             Tx_Dni.Text = "";
             txtNombrePersona.Text = "";
             txtApellidoPersona.Text = "";
+            ddlCategoria.SelectedIndex = 0;
             ddlLote.SelectedIndex = 0;
             PoblarPatentes(0);
             txtPatente.Text = "";
