@@ -325,6 +325,7 @@ namespace Grupo7_BarrioCerradoII
             if (detalle.Length > 255) detalle = detalle.Substring(0, 255);
 
             // 6) Crear modelo de movimiento
+            int? idCategoria = string.IsNullOrEmpty(ddlCategoria.SelectedValue)? (int?)null: int.Parse(ddlCategoria.SelectedValue);
             BIZ.Modelo.Movimiento mov = new BIZ.Modelo.Movimiento
             {
                 FechaHora = DateTime.Now,
@@ -334,7 +335,8 @@ namespace Grupo7_BarrioCerradoII
                 IdPersona = idPersona,
                 IdVehiculo = idVehiculo,
                 IdLoteDestino = idLote,
-                IdAcceso = int.Parse(DDLPuntoAcceso.SelectedValue)
+                IdAcceso = int.Parse(DDLPuntoAcceso.SelectedValue),
+                IdCategoria = idCategoria
             };
 
             // 7) Guardar movimiento

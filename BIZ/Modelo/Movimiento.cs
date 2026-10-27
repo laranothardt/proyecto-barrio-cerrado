@@ -13,6 +13,7 @@ namespace BIZ.Modelo
         public Persona Persona { get; set; }
         public int? IdVehiculo { get; set; }
         public Vehiculo Vehiculo { get; set; }
+        public int? IdCategoria { get; set; }
         public int? IdLoteDestino { get; set; }
         public Lote LoteDestino { get; set; }
         public int IdAcceso { get; set; }
