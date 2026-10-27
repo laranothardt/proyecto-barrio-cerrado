@@ -1,17 +1,16 @@
 ﻿/* =========================================================
    SITE.MOBILE.CSS — Barrio Cerrado El Burro
-   Se carga DESPUÉS de Site.css. Solo contiene:
+   Se carga DESPUÉS de Site.css. Usa las mismas variables
+   (paleta carbón / plata / malva). Solo contiene:
      1) Componentes que no existen en desktop (topbar, panel
         lateral, backdrop).
      2) Overrides puntuales donde el comportamiento táctil
-        necesita algo distinto al de escritorio.
-   Nada de lo que ya esté definido en Site.css se repite acá.
+        o el ancho de pantalla necesitan algo distinto.
    ========================================================= */
 
 /* =========================================================
    1) BARRA SUPERIOR FIJA
    Reemplaza al <nav class="navbar"> de Site.Master.
-   Usa las mismas variables de color que Site.css.
    ========================================================= */
 .g7-topbar {
     position: sticky;
@@ -21,16 +20,25 @@
     align-items: center;
     gap: 10px;
     padding: 8px 12px;
+    padding-top: calc(8px + env(safe-area-inset-top, 0px));
     background-color: var(--color-primario-oscuro);
-    color: #ffffff;
+    color: var(--color-plata);
+    border-bottom: 3px solid var(--color-acento);
+    box-shadow: var(--sombra-suave);
 }
 
     .g7-topbar .navbar-brand {
-        color: #ffffff;
+        color: var(--color-plata);
         text-decoration: none;
         font-size: 1.05rem;
+        font-weight: 600;
         margin: 0;
     }
+
+        .g7-topbar .navbar-brand:hover,
+        .g7-topbar .navbar-brand:focus {
+            color: var(--color-acento-claro);
+        }
 
 /* =========================================================
    2) BOTÓN HAMBURGUESA
@@ -40,17 +48,26 @@
     height: 44px;
     flex: 0 0 44px;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, .5);
+    border: 1px solid rgba(217, 218, 223, 0.45);
     border-radius: var(--radio-chico);
     padding: 10px 8px;
     cursor: pointer;
+    transition: var(--transicion);
 }
+
+    .g7-burger:active,
+    .g7-burger:focus {
+        border-color: var(--color-acento-claro);
+        background: rgba(138, 97, 144, 0.25);
+        outline: none;
+    }
 
     .g7-burger span {
         display: block;
         height: 2px;
-        background: #ffffff;
+        background: var(--color-plata);
         margin: 4px 0;
+        border-radius: 2px;
     }
 
 /* =========================================================
@@ -64,7 +81,9 @@
     width: 260px;
     max-width: 80vw;
     background: var(--color-primario-oscuro);
-    color: #ffffff;
+    color: var(--color-plata);
+    border-right: 3px solid var(--color-acento);
+    box-shadow: 6px 0 24px rgba(0, 0, 0, 0.45);
     transform: translateX(-100%);
     transition: transform .25s ease-in-out;
     z-index: 1050;
@@ -81,30 +100,46 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, .15);
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+    background: var(--color-primario);
+    border-bottom: 1px solid rgba(217, 218, 223, 0.15);
 }
+
+    .g7-sidebar-header .navbar-brand {
+        color: var(--color-plata);
+        text-decoration: none;
+        font-weight: 600;
+    }
 
 .g7-close {
     background: transparent;
     border: 0;
-    color: #ffffff;
+    color: var(--color-plata);
     font-size: 1.6rem;
     line-height: 1;
     padding: 0 6px;
     cursor: pointer;
 }
 
+    .g7-close:hover,
+    .g7-close:active {
+        color: var(--color-acento-claro);
+    }
+
 .g7-sidebar .nav-link {
     display: block;
     padding: 14px 16px;
-    color: rgba(255, 255, 255, .85);
+    color: rgba(217, 218, 223, 0.85);
     text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, .08);
+    border-bottom: 1px solid rgba(217, 218, 223, 0.08);
+    border-left: 4px solid transparent;
+    transition: var(--transicion);
 }
 
     .g7-sidebar .nav-link:active,
     .g7-sidebar .nav-link:hover {
-        background: rgba(255, 255, 255, .1);
+        background: rgba(138, 97, 144, 0.22);
+        border-left-color: var(--color-acento);
         color: #ffffff;
     }
 
@@ -114,7 +149,7 @@
 .g7-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, .5);
+    background: rgba(20, 21, 26, 0.6);
     opacity: 0;
     visibility: hidden;
     transition: opacity .25s ease-in-out;
@@ -132,13 +167,11 @@ body.g7-no-scroll {
 
 /* =========================================================
    5) OVERRIDES TÁCTILES
-   Site.css define "input, select, textarea { max-width: 280px }"
-   pensado para pantallas anchas con espacio de sobra. En mobile
-   ese ancho fijo deja los campos angostos en una pantalla que
-   ya es chica, así que acá se pisa esa regla (misma especificidad,
-   pero este archivo carga después → gana).
+   Site.css define "input, select, textarea { max-width: 280px }".
+   En mobile esos campos ocupan todo el ancho disponible.
+   Se excluyen checkbox, radio y botones para no deformarlos.
    ========================================================= */
-input,
+input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]),
 select,
 textarea {
     max-width: 100%;
@@ -146,30 +179,168 @@ textarea {
     font-size: 16px; /* evita el zoom automático de iOS en los inputs */
 }
 
-/* Los botones de Bootstrap/Site.css no garantizan un alto mínimo
-   cómodo para el dedo; se lo damos solo acá. */
-.btn {
+/* Alto mínimo cómodo para el dedo */
+.btn,
+.btn-custom,
+.btn-dni-movimientos,
+.btn-submit {
     min-height: 44px;
 }
 
-/* Utilidad para envolver tablas/GridView anchos y que scrolleen
-   en lugar de romper el layout. No existe equivalente en Site.css. */
+/* Envoltorio para tablas/GridView anchos: scrollean en vez de romper el layout */
 .table-responsive-forced {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
+/* En pantallas táctiles no hay hover real: se evitan los "saltos" de las tarjetas */
+@media (hover: none) {
+    .auth-card .login-container:hover {
+        transform: none;
+        box-shadow: var(--sombra-tarjeta);
+    }
+
+    .btn-primary-custom:hover,
+    .btn-outline-custom:hover,
+    .auth-card .btn-submit:hover,
+    #pg-vehiculos .btn-submit:hover {
+        transform: none;
+    }
+}
+
 /* =========================================================
    6) AJUSTE DE CONTENEDOR
-   Site.css usa <div class="container body-content"> con un
-   media query que saca el padding desde 768px. En mobile se
-   usa <div class="container-fluid body-content"> (sin margen
-   lateral fijo de Bootstrap), así que reforzamos el padding
-   acá para que no quede pegado a los bordes en pantallas
-   angostas donde ese media query no llega a aplicar overrides.
+   En mobile se usa <div class="container-fluid body-content">
+   (sin margen lateral fijo de Bootstrap), así que se refuerza
+   el padding para que no quede pegado a los bordes.
    ========================================================= */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+}
+
+/* =========================================================
+   7) AJUSTES POR PÁGINA (tamaños y espacios para pantalla chica)
+   Mismos selectores que Site.css, así este archivo los pisa.
+   ========================================================= */
+
+/* --- Inicio --- */
+#pg-inicio .hero-banner {
+    padding: 40px 16px;
+    margin-top: 12px;
+}
+
+#pg-inicio .hero-title {
+    font-size: 1.9rem;
+}
+
+#pg-inicio .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 22px;
+}
+
+#pg-inicio .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+}
+
+    #pg-inicio .action-buttons .btn-custom {
+        width: 100%;
+        text-align: center;
+    }
+
+/* --- Administradores --- */
+#pg-admin.admin-wrapper {
+    padding: 28px 16px;
+    margin: 16px auto;
+}
+
+#pg-admin .admin-titulo {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+#pg-admin .admin-accion {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+    #pg-admin .admin-accion .btn-custom {
+        width: 100%;
+        text-align: center;
+    }
+
+#pg-admin .btn-custom {
+    font-size: 1rem;
+    padding: 12px 20px;
+}
+
+/* --- Autenticación (Login / Registro / Recuperar) --- */
+.auth-card {
+    min-height: auto;
+    padding: 16px 0;
+}
+
+    .auth-card .login-container {
+        padding: 28px 20px;
+    }
+
+    .auth-card .login-title {
+        font-size: 1.7rem;
+        margin-bottom: 18px;
+    }
+
+#pg-registro .login-container {
+    padding: 22px 18px;
+}
+
+#pg-registro .login-title {
+    font-size: 1.5rem;
+}
+
+/* --- Movimientos --- */
+.action-footer-right {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.mensaje-estado {
+    margin-right: 0;
+    text-align: center;
+}
+
+.btn-dni-movimientos {
+    padding: 10px 20px;
+}
+
+/* --- Vehículos --- */
+#pg-vehiculos {
+    margin: 16px auto;
+    padding: 0 4px;
+}
+
+    #pg-vehiculos .vehiculos-panel {
+        padding: 20px 16px;
+    }
+
+    #pg-vehiculos .vehiculos-subtitulo {
+        font-size: 1.2rem;
+    }
+
+    #pg-vehiculos .vehiculos-tabla-header,
+    #pg-vehiculos .vehiculos-tabla-fila {
+        font-size: 0.85rem;
+        padding: 8px 4px;
+    }
+
+/* --- Autorizar --- */
+#pg-autorizar h1 {
+    font-size: 1.6rem;
+}
+
+#pg-autorizar .table {
+    font-size: 0.9rem;
 }

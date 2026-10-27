@@ -10,30 +10,53 @@
 
 /* =========================================================
    1) VARIABLES GLOBALES (paleta y valores compartidos)
+   Paleta sacada de la foto: negro carbón del fondo, grises
+   plateados del pelaje, malva del hocico y borravino de los ojos.
    Cambiá esto una sola vez y se actualiza todo el sitio.
    ========================================================= */
 :root {
-    --color-primario: #1e3c72;
-    --color-primario-oscuro: #16264a;
-    --color-secundario: #2a5298;
-    --color-acento: #00b4d8;
-    --color-acento-hover: #0096c7;
-    --color-texto: #1e293b;
-    --color-texto-suave: #64748b;
-    --color-borde: #cbd5e1;
-    --color-fondo-input: #f8fafc;
+    --color-primario: #2b2d33;
+    --color-primario-oscuro: #14151a;
+    --color-secundario: #5a5d68;
+    --color-acento: #8a6190;
+    --color-acento-hover: #6f4a75;
+    --color-acento-claro: #c9b3cd;
+    --color-detalle: #7a4a52;
+    --color-plata: #d9dadf;
+    --color-fondo-pagina: #ececef;
+    --color-texto: #1f2025;
+    --color-texto-suave: #6b6e78;
+    --color-borde: #c8c9d0;
+    --color-fondo-input: #f5f5f7;
     --radio-chico: 8px;
     --radio-mediano: 10px;
     --radio-grande: 16px;
-    --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.1);
-    --sombra-tarjeta: 0 10px 30px rgba(30, 60, 114, 0.08);
-    --sombra-tarjeta-hover: 0 15px 35px rgba(30, 60, 114, 0.12);
+    --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.18);
+    --sombra-tarjeta: 0 10px 30px rgba(20, 21, 26, 0.12);
+    --sombra-tarjeta-hover: 0 15px 35px rgba(20, 21, 26, 0.20);
+    --sombra-acento: 0 4px 12px rgba(138, 97, 144, 0.25);
+    --sombra-acento-hover: 0 6px 18px rgba(138, 97, 144, 0.40);
+    --foco-acento: 0 0 0 4px rgba(138, 97, 144, 0.22);
     --transicion: all 0.3s ease;
 }
 
 /* =========================================================
    2) BASE / RESET GENERAL (aplica a todo el sitio)
    ========================================================= */
+body {
+    background-color: var(--color-fondo-pagina);
+    color: var(--color-texto);
+}
+
+a {
+    color: var(--color-acento);
+}
+
+    a:hover,
+    a:focus {
+        color: var(--color-acento-hover);
+    }
+
 .body-content {
     margin-top: 15px;
     padding-left: 15px;
@@ -52,6 +75,31 @@ textarea {
     }
 }
 
+/* Navbar (Site.Master) en carbón con borde malva */
+.navbar,
+.navbar-inverse,
+.navbar-dark {
+    background-color: var(--color-primario-oscuro) !important;
+    border-color: transparent !important;
+    border-bottom: 3px solid var(--color-acento) !important;
+}
+
+    .navbar .navbar-brand,
+    .navbar .nav > li > a,
+    .navbar .nav-link,
+    .navbar-inverse .navbar-nav > li > a {
+        color: var(--color-plata) !important;
+        transition: color 0.2s ease;
+    }
+
+        .navbar .navbar-brand:hover,
+        .navbar .nav > li > a:hover,
+        .navbar .nav-link:hover,
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: var(--color-acento-claro) !important;
+            background-color: transparent !important;
+        }
+
 /* Logo / marca en el navbar (Site.Master, se usa en todas las páginas) */
 .navbar-brand {
     display: flex;
@@ -64,6 +112,7 @@ textarea {
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
+    border: 2px solid var(--color-acento);
 }
 
 /* =========================================================
@@ -95,7 +144,7 @@ textarea {
         background-color: var(--color-acento-hover);
         color: #ffffff;
         transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0, 180, 216, 0.3);
+        box-shadow: var(--sombra-acento);
     }
 
 .btn-outline-custom {
@@ -126,7 +175,8 @@ textarea {
         box-shadow: var(--sombra-tarjeta);
         width: 100%;
         max-width: 460px;
-        border: 1px solid rgba(30, 60, 114, 0.06);
+        border: 1px solid rgba(20, 21, 26, 0.08);
+        border-top: 4px solid var(--color-acento);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -151,7 +201,7 @@ textarea {
 
     .auth-card .form-label {
         font-weight: 600;
-        color: #334155;
+        color: #3a3c45;
         margin-bottom: 8px;
         display: block;
         font-size: 0.95rem;
@@ -175,7 +225,7 @@ textarea {
         .auth-card select.form-select:focus {
             background-color: #ffffff;
             border-color: var(--color-acento);
-            box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.15);
+            box-shadow: var(--foco-acento);
             outline: none;
         }
 
@@ -193,13 +243,13 @@ textarea {
         transition: var(--transicion);
         margin-top: 15px;
         display: block;
-        box-shadow: 0 4px 12px rgba(0, 180, 216, 0.15);
+        box-shadow: var(--sombra-acento);
     }
 
         .auth-card .btn-submit:hover {
             background-color: var(--color-acento-hover);
             transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0, 180, 216, 0.25);
+            box-shadow: var(--sombra-acento-hover);
             color: #ffffff;
         }
 
@@ -212,7 +262,7 @@ textarea {
         margin-top: 25px;
         font-size: 0.95rem;
         color: var(--color-texto-suave);
-        border-top: 1px solid #f1f5f9;
+        border-top: 1px solid #ebebef;
         padding-top: 20px;
     }
 
@@ -237,24 +287,26 @@ textarea {
    4) #pg-inicio — Página de Inicio (Default.aspx)
    ========================================================= */
 #pg-inicio .hero-banner {
-    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+    background: radial-gradient(circle at 50% 0%, var(--color-secundario) 0%, var(--color-primario) 45%, var(--color-primario-oscuro) 100%);
     color: #ffffff;
     padding: 60px 20px;
     border-radius: 12px;
     margin-top: 20px;
     text-align: center;
     box-shadow: var(--sombra-suave);
+    border-bottom: 4px solid var(--color-acento);
 }
 
 #pg-inicio .hero-title {
     font-size: 2.8rem;
     font-weight: 700;
     margin-bottom: 15px;
+    color: #ffffff;
 }
 
 #pg-inicio .hero-subtitle {
     font-size: 1.2rem;
-    opacity: 0.9;
+    color: var(--color-plata);
     max-width: 600px;
     margin: 0 auto 30px auto;
     line-height: 1.6;
@@ -283,7 +335,8 @@ textarea {
     max-width: 650px;
     margin: 40px auto;
     border-radius: var(--radio-grande);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--sombra-tarjeta);
+    border-top: 4px solid var(--color-acento);
 }
 
 #pg-admin .admin-titulo {
@@ -302,6 +355,23 @@ textarea {
 }
 /* Agregá acá nuevas reglas para #pg-admin */
 
+#pg-admin .ia-titulo {
+    color: var(--color-acento);
+}
+
+#pg-admin textarea.form-control {
+    max-width: 100%;
+    border-radius: var(--radio-mediano);
+    border: 1px solid var(--color-borde);
+    background-color: var(--color-fondo-input);
+}
+
+    #pg-admin textarea.form-control:focus {
+        background-color: #ffffff;
+        border-color: var(--color-acento);
+        box-shadow: var(--foco-acento);
+        outline: none;
+    }
 
 /* =========================================================
    6) #pg-autorizar — Autorizaciones y preautorizaciones
@@ -320,7 +390,18 @@ textarea {
 
 #pg-autorizar .card {
     border-radius: var(--radio-mediano);
-    border: 1px solid rgba(30, 60, 114, 0.08);
+    border: 1px solid rgba(20, 21, 26, 0.10);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+#pg-autorizar .table thead th {
+    background-color: var(--color-primario);
+    color: #ffffff;
+    border-color: var(--color-primario);
+}
+
+#pg-autorizar .table-hover tbody tr:hover {
+    background-color: rgba(138, 97, 144, 0.10);
 }
 /* Agregá acá nuevas reglas para #pg-autorizar */
 
@@ -345,7 +426,7 @@ textarea {
     #pg-login .custom-checkbox label {
         margin-bottom: 0;
         cursor: pointer;
-        color: #475569;
+        color: #4a4c56;
         font-size: 0.95rem;
         font-weight: 500;
         user-select: none;
@@ -353,7 +434,7 @@ textarea {
 /* Agregá acá nuevas reglas para #pg-login */
 
 /* =========================================================
-   MOVIMIENTOS
+   8) #pg-movimientos — Movimientos
    ========================================================= */
 /* Botón DNI en Movimientos */
 .btn-dni-movimientos {
@@ -365,9 +446,12 @@ textarea {
     border-radius: var(--radio-chico);
     border: none;
     cursor: pointer;
+    transition: var(--transicion);
 }
+
     .btn-dni-movimientos:hover {
         background-color: var(--color-acento-hover);
+        box-shadow: var(--sombra-acento);
     }
 
 #pg-movimientos h2 {
@@ -376,6 +460,8 @@ textarea {
 
 #pg-movimientos .card {
     border-radius: var(--radio-mediano);
+    border: 1px solid rgba(20, 21, 26, 0.10);
+    box-shadow: var(--sombra-tarjeta);
 }
 /* Agregá acá nuevas reglas para #pg-movimientos */
 
@@ -429,6 +515,9 @@ textarea {
 /* #pg-registro */
 
 
+/* =========================================================
+   11) UTILIDADES VARIAS
+   ========================================================= */
 .btn-primary-custom:active {
     transform: translateY(0);
 }
@@ -446,11 +535,14 @@ textarea {
 }
 
 .movimiento-titulo-registro {
-    color: #00b4d8;
+    color: var(--color-acento);
 }
+
 /* =========================================================
    #pg-reportes — Reporte
    ========================================================= */
+/* Agregá acá nuevas reglas para #pg-reportes */
+
 
 /* =========================================================
    12) #pg-vehiculos — Registro de Vehículos
@@ -486,7 +578,8 @@ textarea {
         margin-top: 20px;
         border-radius: var(--radio-grande);
         box-shadow: var(--sombra-tarjeta);
-        border: 1px solid rgba(30, 60, 114, 0.06);
+        border: 1px solid rgba(20, 21, 26, 0.08);
+        border-top: 4px solid var(--color-acento);
     }
 
     #pg-vehiculos .form-group {
@@ -495,7 +588,7 @@ textarea {
 
     #pg-vehiculos .form-label {
         font-weight: 600;
-        color: #334155;
+        color: #3a3c45;
         margin-bottom: 8px;
         display: block;
         font-size: 0.95rem;
@@ -514,26 +607,28 @@ textarea {
         #pg-vehiculos input.form-control:focus {
             background-color: #ffffff;
             border-color: var(--color-acento);
-            box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.15);
+            box-shadow: var(--foco-acento);
             outline: none;
         }
 
     /* Tabla de listado de vehículos */
     #pg-vehiculos .vehiculos-tabla-header {
         font-weight: 700;
-        color: var(--color-primario);
-        padding: 10px 0;
-        border-bottom: 2px solid var(--color-borde);
+        color: #ffffff;
+        background-color: var(--color-primario);
+        padding: 10px 8px;
+        border-bottom: 2px solid var(--color-acento);
+        border-radius: var(--radio-chico) var(--radio-chico) 0 0;
     }
 
     #pg-vehiculos .vehiculos-tabla-fila {
-        padding: 10px 0;
-        border-bottom: 1px solid #f1f5f9;
+        padding: 10px 8px;
+        border-bottom: 1px solid #ebebef;
         color: var(--color-texto);
     }
 
         #pg-vehiculos .vehiculos-tabla-fila:hover {
-            background-color: var(--color-fondo-input);
+            background-color: rgba(138, 97, 144, 0.10);
         }
 
     /* Botones de acción principales */
@@ -548,12 +643,66 @@ textarea {
         font-weight: 700;
         cursor: pointer;
         transition: var(--transicion);
-        box-shadow: 0 4px 12px rgba(0, 180, 216, 0.15);
+        box-shadow: var(--sombra-acento);
     }
 
         #pg-vehiculos .btn-submit:hover {
             background-color: var(--color-acento-hover);
             transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0, 180, 216, 0.25);
+            box-shadow: var(--sombra-acento-hover);
             color: #ffffff;
         }
+
+
+/* =========================================================
+   #pg-restricciones — Panel de Administración / Restricciones
+   ========================================================= */
+#pg-restricciones h2 {
+    color: var(--color-primario);
+    font-weight: 700;
+}
+
+#pg-restricciones .text-muted {
+    color: var(--color-texto-suave) !important;
+}
+
+#pg-restricciones .card {
+    border-radius: var(--radio-mediano);
+    border: 1px solid rgba(20, 21, 26, 0.10);
+    border-top: 4px solid var(--color-acento);
+    box-shadow: var(--sombra-tarjeta);
+}
+
+#pg-restricciones .card-titulo {
+    color: var(--color-acento);
+}
+
+#pg-restricciones .table thead th {
+    background-color: var(--color-primario);
+    color: #ffffff;
+    border-color: var(--color-primario);
+}
+
+#pg-restricciones .table-hover tbody tr:hover {
+    background-color: rgba(138, 97, 144, 0.10);
+}
+
+#pg-restricciones code {
+    color: var(--color-detalle);
+    background-color: var(--color-fondo-input);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+#pg-restricciones input[type="checkbox"] {
+    accent-color: var(--color-acento);
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+#pg-restricciones input.form-control:focus {
+    border-color: var(--color-acento);
+    box-shadow: var(--foco-acento);
+    outline: none;
+}
