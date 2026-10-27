@@ -164,7 +164,6 @@ namespace Grupo7_BarrioCerradoII
             BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
             int idPersona = dataPersona.ObtenerPersonaPorDni(dni, out _);
 
-            // 1) Si no existe en la base de datos, lo creamos ahora exigiendo Nombre y Apellido
             if (idPersona == 0)
             {
                 string nombreInput = txtNombrePersona.Text.Trim();
@@ -193,7 +192,6 @@ namespace Grupo7_BarrioCerradoII
             string diaActual = DateTime.Now.DayOfWeek.ToString();
 
             bool esProveedor = categoriaSeleccionada == "4" || puntoAcceso == "2" || detalleTexto.Contains("proveedor") || detalleTexto.Contains("obra");
-
             if (esProveedor)
             {
                 bool habilitado = Application["Prov_Habilitado"] == null || (bool)Application["Prov_Habilitado"];
