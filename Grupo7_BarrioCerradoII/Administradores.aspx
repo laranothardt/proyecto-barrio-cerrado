@@ -13,11 +13,11 @@
         </div>
         <div class="card shadow-sm border-0 mt-4">
     <div class="card-header bg-white py-3">
-        <h5 class="mb-0 fw-bold text-primary">🤖 Asistente IA Autónomo (Consultas a Base de Datos)</h5>
+        <h5 class="mb-0 fw-bold text-primary">Asistente IA Autonomo</h5>
     </div>
     <div class="card-body">
         <div class="mb-3">
-            <label class="form-label">Escribile cualquier consulta sobre el barrio (Ej: "¿Cuántas personas hay adentro?", "¿Qué vehículos ingresaron hoy?"):</label>
+            <label class="form-label">Escribile cualquier consulta sobre el barrio (Ej: "¿Cuántas personas hay adentro?", "¿Qué vehículos estan registrados?"):</label>
             <asp:TextBox ID="txtPreguntaLibre" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="2" placeholder="Escribí tu pregunta aquí..."></asp:TextBox>
         </div>
         

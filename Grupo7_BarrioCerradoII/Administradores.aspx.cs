@@ -15,7 +15,6 @@ namespace Grupo7_BarrioCerradoII
 {
     public partial class Administradores : System.Web.UI.Page
     {
-        // Cadena de conexión obtenida de tu configuración
         private string connString = ConfigurationManager.ConnectionStrings[1].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -58,10 +57,6 @@ namespace Grupo7_BarrioCerradoII
             Response.Redirect("Restricciones.aspx");
         }
 
-        // ==========================================
-        // INTEGRACIÓN DE ASISTENTE IA (OLLAMA + BD)
-        // ==========================================
-
         protected async void btnConsultarIa_Click(object sender, EventArgs e)
         {
             string pregunta = txtPreguntaLibre.Text.Trim();
@@ -71,10 +66,8 @@ namespace Grupo7_BarrioCerradoII
 
             try
             {
-                // PASO 1: Pedirle a Ollama que convierta la pregunta en una sentencia SQL basada en tu esquema
                 string sqlQuery = await GenerarSqlDesdePreguntaAsync(pregunta);
 
-                // Limpieza de seguridad por si la IA devuelve bloques markdown tipo ```sql ... ```
                 sqlQuery = LimpiarSentenciaSql(sqlQuery);
 
                 if (string.IsNullOrEmpty(sqlQuery) || !sqlQuery.ToUpper().StartsWith("SELECT"))
@@ -83,11 +76,9 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
-                // PASO 2: Ejecutar la consulta SQL de manera segura en la Base de Datos
                 DataTable resultadosDt = EjecutarConsultaSegura(sqlQuery);
                 string datosJson = Newtonsoft.Json.JsonConvert.SerializeObject(resultadosDt);
 
-                // PASO 3: Pedirle a Ollama que explique los resultados al usuario en lenguaje natural
                 string respuestaFinal = await InterpretarDatosParaUsuarioAsync(pregunta, datosJson);
 
                 lblResultadoIa.Text = respuestaFinal;
@@ -101,11 +92,12 @@ namespace Grupo7_BarrioCerradoII
         private async Task<string> GenerarSqlDesdePreguntaAsync(string preguntaUsuario)
         {
             string esquemaBD = "Tablas de la base de datos SQL Server:\n" +
-                               "1. Persona (IDPersona, Nombre, Apellido, DNI, FK_IDCategoria)\n" +
-                               "2. CategoriaPersona (IDCategoria, Descripcion) -> Descripciones: Residente, Propietario / Inquilino, Visita, Proveedor\n" +
-                               "3. Movimiento (IDMovimiento, FechaHora, Tipo ('Ingreso' o 'Egreso'), IdPersona, IdVehiculo, IdLoteDestino, IdAcceso, Autorizado)\n" +
-                               "4. Lote (IDLote, Numero)\n" +
-                               "5. Vehiculo (IDVehiculo, Patente)";
+                               "1. Persona (IDPersona, Nombre, Apellido, DNI, FechaAlta, HabilitadoReconocimiento, FK_IDCategoria, FK_Estado, Password)[cite: 14]\n" +
+                               "2. Categoria Persona (IDCategoria, Descripcion) -> Descripciones: Residente, Propietario / Inquilino, Visita, Proveedor / Empleado, Proveedor[cite: 6, 17]\n" +
+                               "3. Movimiento (IDMovimiento, FechaHora, TipoMovimiento ('Ingreso' o 'Egreso'), Autorizado, Detalle, FK_IDPersona, FK_IDVehiculo, FK_IDLote, FK_IDPuntoAcceso)[cite: 16]\n" +
+                               "4. Lote (IDLote, LoteNum, DireccionInterna, Latitud, Longitud, Observaciones)[cite: 15]\n" +
+                               "5. Vehiculo (id_vehiculo, Patente, Seguro, vencimiento_seguro)[cite: 18]\n" +
+                               "6. PreAcreditacion (IDPreacreditacion, DNI, Nombre, Apellido, FK_IDCategoria, FK_IDLote, FK_IDResidenteAutoriza, Fecha_Desde, Fecha_Hasta, Motivo, Estado)[cite: 15]";
 
             string prompt = "Sos un experto programador de SQL Server.\n" +
                             esquemaBD + "\n\n" +
@@ -118,11 +110,13 @@ namespace Grupo7_BarrioCerradoII
 
         private async Task<string> InterpretarDatosParaUsuarioAsync(string preguntaUsuario, string datosJson)
         {
-            string prompt = "Sos el asistente virtual inteligente del barrio cerrado 'El Burro'.\n" +
+            string prompt = "Sos el asistente virtual del barrio cerrado 'El Burro'.\n" +
                             "Un administrador te hizo la siguiente consulta: '" + preguntaUsuario + "'.\n\n" +
                             "Para responderle, el sistema ejecutó una consulta en la base de datos y obtuvo estos resultados en formato JSON:\n" +
                             datosJson + "\n\n" +
-                            "Redactá una respuesta amable, profesional, clara y directa en castellano basada puramente en estos datos. Si el resultado está vacío, aclarale amablemente que no se encontraron registros.";
+                            "REGLA ESTRICTA: Respondé única y exclusivamente con el dato solicitado de forma directa, breve y al pie. " +
+                            "No saludes, no uses frases de cortesía como 'Espero que esta información...' ni te despidas con cierres formales. " +
+                            "Solo la respuesta concreta y nada más.";
 
             return await ConsultarOllamaApiAsync(prompt);
         }
@@ -131,7 +125,8 @@ namespace Grupo7_BarrioCerradoII
         {
             using (HttpClient client = new HttpClient())
             {
-                client.Timeout = TimeSpan.FromSeconds(60);
+                // Aumentamos el tiempo de espera a 2 minutos para que la IA local no sufra timeouts
+                client.Timeout = TimeSpan.FromMinutes(2);
                 string url = "http://localhost:11434/api/generate";
 
                 var payload = new
