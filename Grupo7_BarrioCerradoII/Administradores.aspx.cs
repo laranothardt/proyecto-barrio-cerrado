@@ -29,11 +29,37 @@ namespace Grupo7_BarrioCerradoII
 
                 string rol = Session["Rol"].ToString();
 
-                if (rol != "3" && rol != "Administrador")
+                // 1. Si es Administrador (Rol 3 o texto), pasa siempre
+                if (rol == "3" || rol == "Administrador")
                 {
-                    Response.Redirect("~/Default.aspx");
                     return;
                 }
+
+                // 2. Si es Propietario (Rol 2), validamos su permiso dinámico
+                if (rol == "2" || rol == "Propietario")
+                {
+                    // Si es null (porque se reinició el servidor), asumimos true (habilitado) hasta que se desmarque explícitamente
+                    bool tienePermiso = Application["Permiso_Propietario_Administradores"] == null || (bool)Application["Permiso_Propietario_Administradores"];
+                    if (!tienePermiso)
+                    {
+                        Response.Redirect("~/Default.aspx");
+                    }
+                    return;
+                }
+
+                // 3. Si es Residente (Rol 1), validamos su permiso dinámico
+                if (rol == "1" || rol == "Residente")
+                {
+                    bool tienePermiso = Application["Permiso_Residente_Administradores"] == null || (bool)Application["Permiso_Residente_Administradores"];
+                    if (!tienePermiso)
+                    {
+                        Response.Redirect("~/Default.aspx");
+                    }
+                    return;
+                }
+
+                // Si no coincide con ningún rol reconocido, rebota al inicio
+                Response.Redirect("~/Default.aspx");
             }
         }
 
@@ -93,10 +119,10 @@ namespace Grupo7_BarrioCerradoII
         {
             string esquemaBD = "Tablas de la base de datos SQL Server:\n" +
                                "1. Persona (IDPersona, Nombre, Apellido, DNI, FechaAlta, HabilitadoReconocimiento, FK_IDCategoria, FK_Estado, Password)[cite: 14]\n" +
-                               "2. Categoria Persona (IDCategoria, Descripcion) -> Descripciones: Residente, Propietario / Inquilino, Visita, Proveedor / Empleado, Proveedor[cite: 6, 17]\n" +
+                               "2. Categoria Persona (IDCategoria, Descripcion) -> Descripciones: Residente, Propietario / Inquilino, Visita, Proveedor / Empleado, Proveedor[cite: 6]\n" +
                                "3. Movimiento (IDMovimiento, FechaHora, TipoMovimiento ('Ingreso' o 'Egreso'), Autorizado, Detalle, FK_IDPersona, FK_IDVehiculo, FK_IDLote, FK_IDPuntoAcceso)[cite: 16]\n" +
                                "4. Lote (IDLote, LoteNum, DireccionInterna, Latitud, Longitud, Observaciones)[cite: 15]\n" +
-                               "5. Vehiculo (id_vehiculo, Patente, Seguro, vencimiento_seguro)[cite: 18]\n" +
+                               "5. Vehiculo (id_vehiculo, Patente, Seguro, vencimiento_seguro)\n" +
                                "6. PreAcreditacion (IDPreacreditacion, DNI, Nombre, Apellido, FK_IDCategoria, FK_IDLote, FK_IDResidenteAutoriza, Fecha_Desde, Fecha_Hasta, Motivo, Estado)[cite: 15]";
 
             string prompt = "Sos un experto programador de SQL Server.\n" +
@@ -125,13 +151,12 @@ namespace Grupo7_BarrioCerradoII
         {
             using (HttpClient client = new HttpClient())
             {
-                // Aumentamos el tiempo de espera a 2 minutos para que la IA local no sufra timeouts
                 client.Timeout = TimeSpan.FromMinutes(2);
                 string url = "http://localhost:11434/api/generate";
 
                 var payload = new
                 {
-                    model = "llama3", // O el modelo que tengas instalado (ej: phi3, mistral)
+                    model = "llama3",
                     prompt = prompt,
                     stream = false
                 };

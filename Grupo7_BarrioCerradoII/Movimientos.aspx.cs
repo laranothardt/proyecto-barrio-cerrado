@@ -45,7 +45,7 @@ namespace Grupo7_BarrioCerradoII
                 }
             }
 
-            DDLPatente.Items.Add(new ListItem("➕ Otro vehículo...", ValorNuevoVehiculo));
+            DDLPatente.Items.Add(new ListItem("+ Otro vehículo...", ValorNuevoVehiculo));
 
             // Al recargar el combo la seleccion vuelve al principio: el panel sobra
             pnlNuevoVehiculo.Visible = false;

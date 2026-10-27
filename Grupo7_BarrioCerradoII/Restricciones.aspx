@@ -115,12 +115,6 @@
                                 <td class="text-center"><asp:CheckBox ID="chkAutRes" runat="server" Checked="true" /></td>
                             </tr>
                             <tr>
-                                <td><code>/IngresoEgreso.aspx</code></td>
-                                <td class="text-center"><asp:CheckBox ID="chkIngAdmin" runat="server" Checked="true" Enabled="false" /></td>
-                                <td class="text-center"><asp:CheckBox ID="chkIngProp" runat="server" /></td>
-                                <td class="text-center"><asp:CheckBox ID="chkIngRes" runat="server" /></td>
-                            </tr>
-                            <tr>
                                 <td><code>/Movimientos.aspx</code></td>
                                 <td class="text-center"><asp:CheckBox ID="chkMovAdmin" runat="server" Checked="true" Enabled="false" /></td>
                                 <td class="text-center"><asp:CheckBox ID="chkMovProp" runat="server" /></td>

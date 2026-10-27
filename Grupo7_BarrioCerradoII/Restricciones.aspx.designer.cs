@@ -186,33 +186,6 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.CheckBox chkAutRes;
 
         /// <summary>
-        /// Control chkIngAdmin.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkIngAdmin;
-
-        /// <summary>
-        /// Control chkIngProp.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkIngProp;
-
-        /// <summary>
-        /// Control chkIngRes.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkIngRes;
-
-        /// <summary>
         /// Control chkMovAdmin.
         /// </summary>
         /// <remarks>
