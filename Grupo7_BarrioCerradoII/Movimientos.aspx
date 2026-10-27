@@ -58,13 +58,14 @@
                         </asp:DropDownList>
                     </div>
 
-                    <%-- Categoría (NUEVO CONTROL) --%>
+                    <%-- Categoría con los IDs reales de SQL --%>
                     <div class="col-md-4">
                         <asp:Label runat="server" AssociatedControlID="ddlCategoria" CssClass="form-label fw-bold">Categoría <span class="text-muted fw-normal">(opcional)</span></asp:Label>
                         <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
                             <asp:ListItem Text="Sin categoría específica" Value="" />
-                            <asp:ListItem Text="Visita" Value="2" />
-                            <asp:ListItem Text="Proveedor / Empleado" Value="3" />
+                            <asp:ListItem Text="Propietario / Inquilino" Value="2" />
+                            <asp:ListItem Text="Visita" Value="3" />
+                            <asp:ListItem Text="Proveedor / Empleado" Value="4" />
                         </asp:DropDownList>
                     </div>
 
@@ -289,7 +290,7 @@ function actualizarMapaPorLote() {
             mapa.flyTo([lat, lng], 17);
 
             document.getElementById('<%= hfLatitud.ClientID %>').value = lat;
-    document.getElementById('<%= hfLongitud.ClientID %>').value = lng;
+            document.getElementById('<%= hfLongitud.ClientID %>').value = lng;
     document.getElementById('lblCoordenadas').textContent = 'Lote ' + numeroLote + ' — Lat: ' + lat.toFixed(5) + ', Lng: ' + lng.toFixed(5);
 }
 
