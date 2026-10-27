@@ -53,7 +53,7 @@
                             <div class="col-md-2"><%# Eval("Apellido") %></div>
                             <div class="col-md-2"><%# Eval("Seguro") %></div>
                             <div class="col-md-2"><%# Eval("vencimiento_seguro") != DBNull.Value ? Convert.ToDateTime(Eval("vencimiento_seguro")).ToString("dd/MM/yyyy") : "-" %></div>
-                            <div class="col-md-2">-</div>
+                            <div class="col-md-2"><%# Eval("ultimo_ingreso") != DBNull.Value && Eval("ultimo_ingreso") != null ? Convert.ToDateTime(Eval("ultimo_ingreso")).ToString("dd/MM/yyyy HH:mm") : "-" %></div>
                         </div>
                     </ItemTemplate>
                 </asp:Repeater>
