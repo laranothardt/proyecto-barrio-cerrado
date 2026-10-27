@@ -17,18 +17,24 @@ namespace BIZ.Data
             DataSet ds = new DataSet();
             string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
 
-            // Query directa y limpia. Ajustamos 'ISNULL' para asegurar columnas sin NULLs
             string query = @"
-                SELECT 
-                    v.id_vehiculo, 
-                    v.Patente, 
-                    v.Seguro, 
-                    v.vencimiento_seguro,
-                    ISNULL(p.Nombre, 'Sin Titular') AS Nombre,
-                    ISNULL(p.Apellido, '') AS Apellido
-                FROM dbo.Vehiculo v
-                LEFT JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
-                LEFT JOIN dbo.Persona p ON pv.IDPersona = p.IDPersona";
+        SELECT 
+            v.id_vehiculo, 
+            v.Patente, 
+            v.Seguro, 
+            v.vencimiento_seguro,
+            ISNULL(p.Nombre, 'Sin Titular') AS Nombre,
+            ISNULL(p.Apellido, '') AS Apellido,
+            m.ultimo_ingreso
+        FROM dbo.Vehiculo v
+        LEFT JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+        LEFT JOIN dbo.Persona p ON pv.IDPersona = p.IDPersona
+        LEFT JOIN (
+            SELECT FK_IDVehiculo, MAX(FechaHora) AS ultimo_ingreso
+            FROM dbo.Movimiento
+            WHERE TipoMovimiento = 'Ingreso'
+            GROUP BY FK_IDVehiculo
+        ) m ON v.id_vehiculo = m.FK_IDVehiculo";
 
             using (SqlConnection CN = new SqlConnection(cn))
             {
@@ -49,17 +55,24 @@ namespace BIZ.Data
             string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
 
             string query = @"
-                SELECT 
-                    v.id_vehiculo, 
-                    v.Patente, 
-                    v.Seguro, 
-                    v.vencimiento_seguro,
-                    ISNULL(p.Nombre, 'Sin Titular') AS Nombre,
-                    ISNULL(p.Apellido, '') AS Apellido
-                FROM dbo.Vehiculo v
-                LEFT JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
-                LEFT JOIN dbo.Persona p ON pv.IDPersona = p.IDPersona
-                WHERE v.Patente LIKE @Patente + '%'";
+        SELECT 
+            v.id_vehiculo, 
+            v.Patente, 
+            v.Seguro, 
+            v.vencimiento_seguro,
+            ISNULL(p.Nombre, 'Sin Titular') AS Nombre,
+            ISNULL(p.Apellido, '') AS Apellido,
+            m.ultimo_ingreso
+        FROM dbo.Vehiculo v
+        LEFT JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+        LEFT JOIN dbo.Persona p ON pv.IDPersona = p.IDPersona
+        LEFT JOIN (
+            SELECT FK_IDVehiculo, MAX(FechaHora) AS ultimo_ingreso
+            FROM dbo.Movimiento
+            WHERE TipoMovimiento = 'Ingreso'
+            GROUP BY FK_IDVehiculo
+        ) m ON v.id_vehiculo = m.FK_IDVehiculo
+        WHERE v.Patente LIKE @Patente + '%'";
 
             using (SqlConnection CN = new SqlConnection(cn))
             {
@@ -81,17 +94,24 @@ namespace BIZ.Data
             string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
 
             string query = @"
-                SELECT 
-                    v.id_vehiculo, 
-                    v.Patente, 
-                    v.Seguro, 
-                    v.vencimiento_seguro,
-                    ISNULL(p.Nombre, 'Sin Titular') AS Nombre,
-                    ISNULL(p.Apellido, '') AS Apellido
-                FROM dbo.Vehiculo v
-                LEFT JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
-                LEFT JOIN dbo.Persona p ON pv.IDPersona = p.IDPersona
-                WHERE p.Nombre LIKE '%' + @Titular + '%' OR p.Apellido LIKE '%' + @Titular + '%'";
+        SELECT 
+            v.id_vehiculo, 
+            v.Patente, 
+            v.Seguro, 
+            v.vencimiento_seguro,
+            ISNULL(p.Nombre, 'Sin Titular') AS Nombre,
+            ISNULL(p.Apellido, '') AS Apellido,
+            m.ultimo_ingreso
+        FROM dbo.Vehiculo v
+        LEFT JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+        LEFT JOIN dbo.Persona p ON pv.IDPersona = p.IDPersona
+        LEFT JOIN (
+            SELECT FK_IDVehiculo, MAX(FechaHora) AS ultimo_ingreso
+            FROM dbo.Movimiento
+            WHERE TipoMovimiento = 'Ingreso'
+            GROUP BY FK_IDVehiculo
+        ) m ON v.id_vehiculo = m.FK_IDVehiculo
+        WHERE p.Nombre LIKE '%' + @Titular + '%' OR p.Apellido LIKE '%' + @Titular + '%'";
 
             using (SqlConnection CN = new SqlConnection(cn))
             {
@@ -106,7 +126,6 @@ namespace BIZ.Data
             }
             return ds;
         }
-
         public static int ObtenerIdPersona(string nombre, string apellido)
         {
             int idPersona = 0;
