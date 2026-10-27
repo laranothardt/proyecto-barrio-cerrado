@@ -47,7 +47,6 @@
                         <asp:Label runat="server" AssociatedControlID="ddlCategoria" CssClass="form-label fw-bold">Categoría <span class="text-muted fw-normal">(opcional)</span></asp:Label>
                         <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
                             <asp:ListItem Text="Sin categoría específica" Value="" />
-                            <asp:ListItem Text="Propietario / Inquilino" Value="2" />
                             <asp:ListItem Text="Visita" Value="3" />
                             <asp:ListItem Text="Proveedor / Empleado" Value="4" />
                         </asp:DropDownList>
