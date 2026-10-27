@@ -171,6 +171,37 @@ namespace BIZ.Data
         }
 
 
+        /// <summary>
+        /// Devuelve los vehiculos asociados a una persona, para poblar el combo de patentes.
+        /// </summary>
+        public static DataSet ObtenerVehiculosPorPersona(int idPersona)
+        {
+            DataSet ds = new DataSet();
+            string cn = ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
+
+            string query = @"
+                SELECT
+                    v.id_vehiculo,
+                    v.Patente
+                FROM dbo.Vehiculo v
+                INNER JOIN dbo.Persona_Vehiculo pv ON v.id_vehiculo = pv.id_vehiculo
+                WHERE pv.IDPersona = @IdPersona
+                ORDER BY v.Patente";
+
+            using (SqlConnection CN = new SqlConnection(cn))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, CN))
+                {
+                    cmd.Parameters.AddWithValue("@IdPersona", idPersona);
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(ds);
+                    }
+                }
+            }
+            return ds;
+        }
+
         public static int ObtenerIdVehiculoPorPatente(string patente)
         {
             int idVehiculo = 0;

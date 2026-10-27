@@ -114,6 +114,15 @@ namespace Grupo7_BarrioCerradoII
         protected global::System.Web.UI.WebControls.DropDownList DDLPatente;
 
         /// <summary>
+        /// Control pnlNuevoVehiculo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlNuevoVehiculo;
+
+        /// <summary>
         /// Control txtPatente.
         /// </summary>
         /// <remarks>
@@ -121,6 +130,24 @@ namespace Grupo7_BarrioCerradoII
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPatente;
+
+        /// <summary>
+        /// Control txtSeguro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSeguro;
+
+        /// <summary>
+        /// Control txtVencimiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtVencimiento;
 
         /// <summary>
         /// Control txtDetalle.

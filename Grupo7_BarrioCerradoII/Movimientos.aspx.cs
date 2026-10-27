@@ -14,7 +14,46 @@ namespace Grupo7_BarrioCerradoII
             if (!IsPostBack)
             {
                 PoblarLotes();
+                PoblarPatentes(0);
             }
+        }
+
+        // Valor centinela del combo: no es un id_vehiculo, despliega el panel de alta
+        private const string ValorNuevoVehiculo = "NUEVO";
+
+        /// <summary>
+        /// Carga el combo de patentes con los vehiculos de esa persona.
+        /// Con idPersona en 0 deja solo "sin vehiculo" y la opcion de cargar uno nuevo.
+        /// </summary>
+        private void PoblarPatentes(int idPersona)
+        {
+            DDLPatente.Items.Clear();
+            DDLPatente.Items.Add(new ListItem("-- Sin vehículo --", ""));
+
+            if (idPersona != 0)
+            {
+                System.Data.DataSet ds = BIZ.Data.Vehiculo.ObtenerVehiculosPorPersona(idPersona);
+
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow fila in ds.Tables[0].Rows)
+                    {
+                        DDLPatente.Items.Add(new ListItem(
+                            fila["Patente"].ToString(),
+                            fila["id_vehiculo"].ToString()));
+                    }
+                }
+            }
+
+            DDLPatente.Items.Add(new ListItem("➕ Otro vehículo...", ValorNuevoVehiculo));
+
+            // Al recargar el combo la seleccion vuelve al principio: el panel sobra
+            pnlNuevoVehiculo.Visible = false;
+        }
+
+        protected void DDLPatente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pnlNuevoVehiculo.Visible = DDLPatente.SelectedValue == ValorNuevoVehiculo;
         }
 
         private void PoblarLotes()
@@ -36,6 +75,9 @@ namespace Grupo7_BarrioCerradoII
             // 1. Consultar únicamente si existe en la base de datos (sin insertar)
             BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
             int idPersona = dataPersona.ObtenerPersonaPorDni(dni, out string nombrePersona);
+
+            // Si el DNI no corresponde a nadie, idPersona es 0 y el combo queda vacio
+            PoblarPatentes(idPersona);
 
             if (idPersona != 0)
             {
@@ -202,18 +244,50 @@ namespace Grupo7_BarrioCerradoII
                 }
             }
 
-            // 3) Vehículo (opcional)
+            // 3) Vehículo (opcional): el combo ya trae el id_vehiculo como value
             int? idVehiculo = null;
-            string patente = txtPatente.Text.Trim();
-            if (!string.IsNullOrEmpty(patente))
+            if (DDLPatente.SelectedValue == ValorNuevoVehiculo)
             {
-                int idV = BIZ.Data.Vehiculo.ObtenerIdVehiculoPorPatente(patente);
-                if (idV == 0)
+                // Alta rapida de un vehiculo que todavia no esta a nombre de esta persona
+                string patenteNueva = txtPatente.Text.Trim();
+                string seguroNuevo = txtSeguro.Text.Trim();
+
+                if (string.IsNullOrEmpty(patenteNueva) || string.IsNullOrEmpty(seguroNuevo) || string.IsNullOrEmpty(txtVencimiento.Text))
                 {
-                    MostrarMensaje("La patente " + patente + " no está registrada.", false);
+                    MostrarMensaje("Para cargar un vehículo nuevo completá patente, seguro y vencimiento.", false);
                     return;
                 }
-                idVehiculo = idV;
+
+                if (!DateTime.TryParse(txtVencimiento.Text, out DateTime vencimiento))
+                {
+                    MostrarMensaje("La fecha de vencimiento del seguro no es válida.", false);
+                    return;
+                }
+
+                BIZ.Modelo.Vehiculo nuevoVehiculo = new BIZ.Modelo.Vehiculo
+                {
+                    Patente = patenteNueva,
+                    Seguro = seguroNuevo,
+                    VencimientoSeguro = vencimiento,
+                    IdPersona = idPersona
+                };
+
+                try
+                {
+                    // Si la patente ya existe a nombre de otro, se reutiliza y se agrega el vinculo
+                    BIZ.Data.Vehiculo.AgregarVehiculo(nuevoVehiculo);
+                }
+                catch (Exception ex)
+                {
+                    MostrarMensaje("No se pudo registrar el vehículo: " + ex.Message, false);
+                    return;
+                }
+
+                idVehiculo = BIZ.Data.Vehiculo.ObtenerIdVehiculoPorPatente(patenteNueva);
+            }
+            else if (!string.IsNullOrEmpty(DDLPatente.SelectedValue))
+            {
+                idVehiculo = int.Parse(DDLPatente.SelectedValue);
             }
 
             // 4) Lote Destino (obligatorio)
@@ -299,7 +373,10 @@ namespace Grupo7_BarrioCerradoII
             txtNombrePersona.Text = "";
             txtApellidoPersona.Text = "";
             ddlLote.SelectedIndex = 0;
+            PoblarPatentes(0);
             txtPatente.Text = "";
+            txtSeguro.Text = "";
+            txtVencimiento.Text = "";
             txtDetalle.Text = "";
             LbNombre.Text = "";
             hfLatitud.Value = "";

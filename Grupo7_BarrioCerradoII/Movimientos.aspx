@@ -74,9 +74,27 @@
                     <%-- Patente --%>
                     <div class="col-md-4">
                         <label class="form-label">Patente (Opcional)</label>
-                        <asp:DropDownList ID="DDLPatente" runat="server" CssClass="form-select"></asp:DropDownList>
-                        <asp:TextBox ID="txtPatente" runat="server" CssClass="form-control" placeholder="Ej: AA691BD" Visible="false"></asp:TextBox>
+                        <asp:DropDownList ID="DDLPatente" runat="server" CssClass="form-select"
+                            AutoPostBack="true" OnSelectedIndexChanged="DDLPatente_SelectedIndexChanged"></asp:DropDownList>
                     </div>
+
+                    <%-- Panel para cargar un vehículo nuevo (Solo si se elige "Otro vehículo") --%>
+                    <asp:Panel ID="pnlNuevoVehiculo" runat="server" Visible="false" CssClass="col-md-8">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <label class="form-label">Patente</label>
+                                <asp:TextBox ID="txtPatente" runat="server" CssClass="form-control" placeholder="Ej: AA691BD"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Seguro</label>
+                                <asp:TextBox ID="txtSeguro" runat="server" CssClass="form-control" placeholder="Ej: La Caja"></asp:TextBox>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Vencimiento Seguro</label>
+                                <asp:TextBox ID="txtVencimiento" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                            </div>
+                        </div>
+                    </asp:Panel>
 
                     <%-- Detalles u Observaciones --%>
                     <div class="col-md-4">
