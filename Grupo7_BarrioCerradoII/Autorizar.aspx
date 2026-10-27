@@ -26,15 +26,16 @@
                         <asp:RegularExpressionValidator ID="revDni" runat="server" ControlToValidate="txtDni" ValidationExpression="^\d{7,8}$" ErrorMessage="El DNI debe tener 7 u 8 dígitos." CssClass="text-danger small" Display="Dynamic" />
                     </div>
                     <div class="col-md-4">
-                        <asp:Label runat="server" AssociatedControlID="txtApellido" CssClass="form-label fw-bold">Apellido</asp:Label>
-                        <asp:TextBox ID="txtApellido" runat="server" placeholder="Ej: Gómez" CssClass="form-control" MaxLength="100" />
-                        <asp:RequiredFieldValidator ID="rfvApellido" runat="server" ControlToValidate="txtApellido" ErrorMessage="El apellido es obligatorio." CssClass="text-danger small" Display="Dynamic" />
-                    </div>
-                    <div class="col-md-4">
                         <asp:Label runat="server" AssociatedControlID="txtNombre" CssClass="form-label fw-bold">Nombre</asp:Label>
                         <asp:TextBox ID="txtNombre" runat="server" placeholder="Ej: Juan" CssClass="form-control" MaxLength="100" />
                         <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ControlToValidate="txtNombre" ErrorMessage="El nombre es obligatorio." CssClass="text-danger small" Display="Dynamic" />
                     </div>
+                    <div class="col-md-4">
+                        <asp:Label runat="server" AssociatedControlID="txtApellido" CssClass="form-label fw-bold">Apellido</asp:Label>
+                        <asp:TextBox ID="txtApellido" runat="server" placeholder="Ej: Gómez" CssClass="form-control" MaxLength="100" />
+                        <asp:RequiredFieldValidator ID="rfvApellido" runat="server" ControlToValidate="txtApellido" ErrorMessage="El apellido es obligatorio." CssClass="text-danger small" Display="Dynamic" />
+                    </div>
+
                 </div>
 
                 <hr class="my-4 text-muted" />
@@ -108,7 +109,7 @@
                 <Columns>
                     <asp:BoundField DataField="Dni" HeaderText="DNI" />
                     <asp:TemplateField HeaderText="Apellido y nombre">
-                        <ItemTemplate><%# Eval("Apellido") %>, <%# Eval("Nombre") %></ItemTemplate>
+                        <ItemTemplate><%# Eval("Nombre") %> <%# Eval("Apellido") %></ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="NombreCategoria" HeaderText="Categoría" />
                     <asp:BoundField DataField="NumeroLote" HeaderText="Lote" />

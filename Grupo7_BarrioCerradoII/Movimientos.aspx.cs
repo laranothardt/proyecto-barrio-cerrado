@@ -33,42 +33,122 @@ namespace Grupo7_BarrioCerradoII
             string dni = Tx_Dni.Text.Trim();
             if (string.IsNullOrEmpty(dni)) return;
 
-            string nombre = new BIZ.Data.Persona().ObtenerNombrePorDni(dni);
+            // 1. Consultar únicamente si existe en la base de datos (sin insertar)
+            BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
+            int idPersona = dataPersona.ObtenerPersonaPorDni(dni, out string nombrePersona);
 
-            if (nombre == null)
+            if (idPersona != 0)
             {
-                LbNombre.CssClass = "text-danger small mt-1";
-                LbNombre.Text = "No se encontró una persona con ese DNI.";
-                return;
+                // SI EXISTE: Ocultar panel de datos de persona nueva
+                pnlDatosNuevaPersona.Visible = false;
+
+                // Obtener proximo movimiento y lote previo
+                new BIZ.Data.Movimiento().ObtenerUltimoMovimiento(idPersona, out string proximoTipo, out string idLotePrevio);
+
+                DDLTipoMovimiento.SelectedValue = proximoTipo;
+
+                if (proximoTipo == "Egreso" && !string.IsNullOrEmpty(idLotePrevio))
+                {
+                    // Convertimos el IDLote recuperado de la BD al NumeroLote real
+                    int idL = int.Parse(idLotePrevio);
+                    string numeroLoteReal = new BIZ.Data.Lote().ObtenerNumeroLotePorId(idL);
+
+                    if (string.IsNullOrEmpty(numeroLoteReal))
+                    {
+                        numeroLoteReal = idLotePrevio; // Fallback de seguridad
+                    }
+
+                    ListItem item = ddlLote.Items.FindByValue(numeroLoteReal);
+                    if (item != null)
+                    {
+                        ddlLote.SelectedValue = numeroLoteReal;
+                        ScriptManager.RegisterStartupScript(this, GetType(), "ActualizarMapa", "if(typeof actualizarMapaPorLote === 'function') { actualizarMapaPorLote(); }", true);
+                    }
+                }
+
+                LbNombre.CssClass = "text-success small mt-1";
+                LbNombre.Text = $"{nombrePersona} — Se registrará: {proximoTipo}";
             }
+            else
+            {
+                BIZ.Data.PreAcreditacion dataPre = new BIZ.Data.PreAcreditacion();
+                var preacreditaciones = dataPre.ObtenerVigentePorDni(dni);
 
-            int idPersona = new BIZ.Data.Persona().ObtenerIdPersonaPorDni(dni);
-            string proximoTipo = new BIZ.Data.Movimiento().ObtenerProximoTipoMovimiento(idPersona);
+                if (preacreditaciones != null)
+                {
+                    // A) Crear automáticamente el registro en la tabla Persona con los datos de la preacreditación
+                    idPersona = dataPersona.CrearPersona(dni, preacreditaciones.Nombre, preacreditaciones.Apellido);
 
-            DDLTipoMovimiento.SelectedValue = proximoTipo;
+                    // B) Ocultar el panel de pedir nombre/apellido
+                    pnlDatosNuevaPersona.Visible = false;
 
-            LbNombre.CssClass = "text-success small mt-1";
-            LbNombre.Text = nombre + " — se registrará un " + proximoTipo;
+                    // C) Autocompletar con Ingreso y seleccionar Lote destino preacreditado
+                    DDLTipoMovimiento.SelectedValue = "Ingreso";
+                    if (!string.IsNullOrEmpty(preacreditaciones.NumeroLote))
+                    {
+                        ListItem item = ddlLote.Items.FindByValue(preacreditaciones.NumeroLote);
+                        if (item != null)
+                        {
+                            ddlLote.SelectedValue = preacreditaciones.NumeroLote;
+                            ScriptManager.RegisterStartupScript(this, GetType(), "ActualizarMapa", "if(typeof actualizarMapaPorLote === 'function') { actualizarMapaPorLote(); }", true);
+                        }
+                    }
+
+                    // D) Mostrar mensaje de autorización
+                    LbNombre.CssClass = "text-success small mt-1";
+                    LbNombre.Text = $"✅ {preacreditaciones.Nombre} {preacreditaciones.Apellido} — Autorizado por Preacreditación (Ingreso)";
+                }
+                else
+                {
+                    // NO EXISTE EN PERSONA NI EN PREACREDITACIÓN: Mostrar panel para cargar datos manualmente
+                    pnlDatosNuevaPersona.Visible = true;
+                    DDLTipoMovimiento.SelectedValue = "Ingreso";
+
+                    LbNombre.CssClass = "text-warning small mt-1";
+                    LbNombre.Text = "Persona no registrada. Ingrese Nombre y Apellido para continuar.";
+                }
+            }
         }
 
         protected void Bt_RegistrarMovimiento_Click(object sender, EventArgs e)
         {
-            // 1) Persona (obligatoria)
-            int idPersona = new BIZ.Data.Persona().ObtenerIdPersonaPorDni(Tx_Dni.Text.Trim());
-            if (idPersona == 0)
+            string dni = Tx_Dni.Text.Trim();
+            if (string.IsNullOrEmpty(dni))
             {
-                MostrarMensaje("Ingresá un DNI válido y registrado.", false);
+                MostrarMensaje("Por favor, ingresá un DNI.", false);
                 return;
             }
 
-            // 2) Validar Restricciones Horarias y de Días
-            string puntoAcceso = DDLPuntoAcceso.SelectedValue; // "1" = Guardia Principal, "2" = Acceso Proveedores
+            BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
+            int idPersona = dataPersona.ObtenerPersonaPorDni(dni, out _);
+
+            // 1) Si no existe en la base de datos, lo creamos ahora exigiendo Nombre y Apellido
+            if (idPersona == 0)
+            {
+                string nombreInput = txtNombrePersona.Text.Trim();
+                string apellidoInput = txtApellidoPersona.Text.Trim();
+
+                if (string.IsNullOrEmpty(nombreInput) || string.IsNullOrEmpty(apellidoInput))
+                {
+                    MostrarMensaje("El Nombre y Apellido son obligatorios para registrar a una persona nueva.", false);
+                    return;
+                }
+
+                idPersona = dataPersona.CrearPersona(dni, nombreInput, apellidoInput);
+                if (idPersona == 0)
+                {
+                    MostrarMensaje("No se pudo dar de alta a la nueva persona.", false);
+                    return;
+                }
+            }
+
+            // 2) Validaciones Horarias y Días
+            string puntoAcceso = DDLPuntoAcceso.SelectedValue;
             string detalleTexto = txtDetalle.Text.Trim().ToLower();
 
             TimeSpan horaActual = DateTime.Now.TimeOfDay;
-            string diaActual = DateTime.Now.DayOfWeek.ToString(); // Ej: "Monday", "Tuesday", etc.
+            string diaActual = DateTime.Now.DayOfWeek.ToString();
 
-            // Evaluar si es Proveedor
             bool esProveedor = puntoAcceso == "2" || detalleTexto.Contains("proveedor") || detalleTexto.Contains("obra");
 
             if (esProveedor)
@@ -98,7 +178,6 @@ namespace Grupo7_BarrioCerradoII
             }
             else
             {
-                // Para visitas en general
                 bool habilitado = Application["Visita_Habilitado"] == null || (bool)Application["Visita_Habilitado"];
                 TimeSpan desde = Application["Visita_Desde"] != null ? (TimeSpan)Application["Visita_Desde"] : new TimeSpan(8, 0, 0);
                 TimeSpan hasta = Application["Visita_Hasta"] != null ? (TimeSpan)Application["Visita_Hasta"] : new TimeSpan(22, 0, 0);
@@ -156,7 +235,7 @@ namespace Grupo7_BarrioCerradoII
                 return;
             }
 
-            // 5) Detalles y Coordenadas opcionales del mapa
+            // 5) Ubicación y detalles
             string detalle = txtDetalle.Text.Trim();
             string latitud = hfLatitud.Value;
             string longitud = hfLongitud.Value;
@@ -172,7 +251,7 @@ namespace Grupo7_BarrioCerradoII
 
             if (detalle.Length > 255) detalle = detalle.Substring(0, 255);
 
-            // 6) Modelo de Movimiento
+            // 6) Crear modelo de movimiento
             BIZ.Modelo.Movimiento mov = new BIZ.Modelo.Movimiento
             {
                 FechaHora = DateTime.Now,
@@ -185,9 +264,8 @@ namespace Grupo7_BarrioCerradoII
                 IdAcceso = int.Parse(DDLPuntoAcceso.SelectedValue)
             };
 
-            // 7) Guardar en BD
-            string error;
-            bool ok = new BIZ.Data.Movimiento().CrearMovimiento(mov, out error);
+            // 7) Guardar movimiento
+            bool ok = new BIZ.Data.Movimiento().CrearMovimiento(mov, out string error);
 
             if (ok)
             {
@@ -218,6 +296,8 @@ namespace Grupo7_BarrioCerradoII
         private void LimpiarFormulario()
         {
             Tx_Dni.Text = "";
+            txtNombrePersona.Text = "";
+            txtApellidoPersona.Text = "";
             ddlLote.SelectedIndex = 0;
             txtPatente.Text = "";
             txtDetalle.Text = "";

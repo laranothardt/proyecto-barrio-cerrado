@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -157,6 +157,47 @@ namespace BIZ.Data
             }
 
             return lista;
+        }
+
+        public BIZ.Modelo.PreAcreditacion ObtenerVigentePorDni(string dni)
+        {
+            if (string.IsNullOrWhiteSpace(dni)) return null;
+
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string query = @"SELECT TOP 1 
+                            p.IDPreacreditacion, p.DNI, p.Nombre, p.Apellido, 
+                            p.FK_IDCategoria, p.FK_IDLote, l.LoteNum AS NumeroLote
+                         FROM Preacreditacion p
+                         LEFT JOIN Lote l ON p.FK_IDLote = l.IDLote
+                         WHERE p.DNI = @DNI
+                           AND CAST(GETDATE() AS DATE) BETWEEN CAST(p.Fecha_Desde AS DATE) AND CAST(p.Fecha_Hasta AS DATE)
+                         ORDER BY p.Fecha_Desde DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@DNI", dni.Trim());
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new BIZ.Modelo.PreAcreditacion
+                            {
+                                IdPreacreditacion = Convert.ToInt32(reader["IDPreacreditacion"]),
+                                Dni = reader["DNI"].ToString(),
+                                Nombre = reader["Nombre"].ToString(),
+                                Apellido = reader["Apellido"].ToString(),
+                                IdCategoria = reader["FK_IDCategoria"] != DBNull.Value ? Convert.ToInt32(reader["FK_IDCategoria"]) : 0,
+                                IdLoteDestino = Convert.ToInt32(reader["FK_IDLote"]),
+                                NumeroLote = reader["NumeroLote"] != DBNull.Value ? reader["NumeroLote"].ToString() : reader["FK_IDLote"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }
