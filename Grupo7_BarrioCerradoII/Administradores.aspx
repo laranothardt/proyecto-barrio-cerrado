@@ -11,9 +11,9 @@
             <asp:Button ID="Bt_Vehiculos" runat="server" Text="Consultar Vehiculos" OnClick="Bt_Vehiculos_Click" CssClass="btn-custom btn-primary-custom" />
             <asp:Button ID="Bt_Restricciones" runat="server" Text="Consultar Restricciones" OnClick="Bt_Restricciones_Click" CssClass="btn-custom btn-primary-custom" />
         </div>
-        <div class="card shadow-sm border-0 mt-4">
+        <div class="card shadow-sm border-0 mt-4 w-100 text-start">
     <div class="card-header bg-white py-3">
-        <h5 class="mb-0 fw-bold text-primary">Asistente IA Autonomo</h5>
+        <h5 class="mb-0 fw-bold ia-titulo">Asistente IA Autonomo</h5>
     </div>
     <div class="card-body">
         <div class="mb-3">
@@ -21,7 +21,7 @@
             <asp:TextBox ID="txtPreguntaLibre" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="2" placeholder="Escribí tu pregunta aquí..."></asp:TextBox>
         </div>
         
-        <asp:Button ID="btnConsultarIa" runat="server" Text="Analizar con IA y BD" CssClass="btn btn-primary px-4 fw-bold" OnClick="btnConsultarIa_Click" />
+        <asp:Button ID="btnConsultarIa" runat="server" Text="Analizar con IA y BD" CssClass="btn-custom btn-primary-custom" OnClick="btnConsultarIa_Click" />
         
         <div class="mt-4">
             <label class="form-label fw-bold text-secondary">Respuesta del Asistente:</label>

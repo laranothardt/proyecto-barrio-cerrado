@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Restricciones" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Restricciones.aspx.cs" Inherits="Grupo7_BarrioCerradoII.Restricciones" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container my-5">
+    <div id="pg-restricciones" class="container my-5">
         <h2 class="mb-2 fw-bold">Panel de Administración</h2>
         <p class="text-muted mb-4">Configuración de horarios de acceso y visibilidad de páginas del sistema.</p>
 
@@ -10,7 +10,7 @@
         <!-- 1. FRANJAS HORARIAS Y DÍAS DE INGRESO -->
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-header bg-white py-3">
-                <h5 class="mb-0 fw-bold text-primary">Restricciones Horarias de Ingreso</h5>
+                <h5 class="mb-0 fw-bold card-titulo">Restricciones Horarias de Ingreso</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -88,7 +88,7 @@
         <!-- 2. VISIBILIDAD Y ACCESIBILIDAD -->
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-header bg-white py-3">
-                <h5 class="mb-0 fw-bold text-primary">Visibilidad y Accesibilidad de Páginas Web</h5>
+                <h5 class="mb-0 fw-bold card-titulo">Visibilidad y Accesibilidad de Páginas Web</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -133,7 +133,7 @@
         </div>
 
         <div class="d-flex justify-content-end">
-            <asp:Button ID="btnGuardarConfiguracion" runat="server" Text="Guardar Configuración" CssClass="btn btn-primary btn-lg px-4 fw-bold" OnClick="btnGuardarConfiguracion_Click" />
+            <asp:Button ID="btnGuardarConfiguracion" runat="server" Text="Guardar Configuración" CssClass="btn-custom btn-primary-custom" OnClick="btnGuardarConfiguracion_Click" />
         </div>
     </div>
 </asp:Content>

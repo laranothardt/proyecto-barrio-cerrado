@@ -154,14 +154,9 @@ namespace Grupo7_BarrioCerradoII
         {
             if (string.IsNullOrWhiteSpace(dni)) return 0;
             BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
-            int id = dataPersona.ObtenerPersonaPorDni(dni, out _);
-            if (id == 0)
-            {
-                id = dataPersona.CrearPersona(dni, "Residente", "Autorizante");
-            }
-            return id;
+            return dataPersona.ObtenerPersonaPorDni(dni, out _);
         }
-        
+
 
         private void LimpiarFormulario()
         {
