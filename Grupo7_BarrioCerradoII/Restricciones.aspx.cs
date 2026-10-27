@@ -50,12 +50,10 @@ namespace Grupo7_BarrioCerradoII
                 {
                     chkAdmProp.Checked = (bool)Application["Permiso_Propietario_Administradores"];
                     chkAutProp.Checked = (bool)Application["Permiso_Propietario_Autorizar"];
-                    chkIngProp.Checked = (bool)Application["Permiso_Propietario_IngresoEgreso"];
                     chkMovProp.Checked = (bool)Application["Permiso_Propietario_Movimientos"];
 
                     chkAdmRes.Checked = (bool)Application["Permiso_Residente_Administradores"];
                     chkAutRes.Checked = (bool)Application["Permiso_Residente_Autorizar"];
-                    chkIngRes.Checked = (bool)Application["Permiso_Residente_IngresoEgreso"];
                     chkMovRes.Checked = (bool)Application["Permiso_Residente_Movimientos"];
                 }
             }
@@ -136,19 +134,16 @@ namespace Grupo7_BarrioCerradoII
                 Application["Visita_Habilitado"] = visitaHab;
                 Application["Visita_Dias"] = visitaDias;
 
-                // Permisos Propietario (Rol ID = 2)
                 Application["Permiso_Propietario_Administradores"] = chkAdmProp.Checked;
                 Application["Permiso_Propietario_Autorizar"] = chkAutProp.Checked;
-                Application["Permiso_Propietario_IngresoEgreso"] = chkIngProp.Checked;
                 Application["Permiso_Propietario_Movimientos"] = chkMovProp.Checked;
 
-                // Permisos Residente (Rol ID = 1)
+                // Residente (Rol ID = 1)
                 Application["Permiso_Residente_Administradores"] = chkAdmRes.Checked;
                 Application["Permiso_Residente_Autorizar"] = chkAutRes.Checked;
-                Application["Permiso_Residente_IngresoEgreso"] = chkIngRes.Checked;
                 Application["Permiso_Residente_Movimientos"] = chkMovRes.Checked;
 
-                MostrarMensaje("Configuración guardada en Base de Datos y aplicada con éxito.", true);
+                MostrarMensaje("Configuración guardada con éxito.", true);
             }
             catch (Exception ex)
             {

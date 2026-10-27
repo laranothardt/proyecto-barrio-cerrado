@@ -9,19 +9,10 @@ namespace Grupo7_BarrioCerradoII
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string rol = Session["Rol"]?.ToString();
-
-            if (rol == "Propietario")
-            {
-                bool tienePermiso = Application["Permiso_Propietario_Autorizar"] != null && (bool)Application["Permiso_Propietario_Autorizar"];
-                if (!tienePermiso)
-                {
-                    Response.Redirect("~/Default.aspx"); // Rebota al inicio
-                }
-            }
 
             if (!IsPostBack)
             {
+
                 ddlLote.Items.Add(new ListItem("-- Seleccione un lote --", ""));
 
                 for (int i = 1; i <= 50; i++)
@@ -35,9 +26,31 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
-                if (Session["Dni"] != null)
+                string rol = Session["Rol"].ToString();
+
+                // Los administradores (Rol 3) pasan siempre
+                if (rol == "3" || rol == "Administrador")
                 {
-                    txtResidenteAutoriza.Text = Session["Dni"].ToString().Trim();
+                    return;
+                }
+
+                // Validar si es Propietario (Rol 2)
+                if (rol == "2" || rol == "Propietario")
+                {
+                    bool tienePermiso = Application["Permiso_Propietario_Autorizar"] == null || (bool)Application["Permiso_Propietario_Autorizar"];
+                    if (!tienePermiso)
+                    {
+                        Response.Redirect("~/Default.aspx");
+                    }
+                }
+                // Validar si es Residente (Rol 1)
+                else if (rol == "1" || rol == "Residente")
+                {
+                    bool tienePermiso = Application["Permiso_Residente_Autorizar"] == null || (bool)Application["Permiso_Residente_Autorizar"];
+                    if (!tienePermiso)
+                    {
+                        Response.Redirect("~/Default.aspx");
+                    }
                 }
 
                 CargarPreAcreditaciones();

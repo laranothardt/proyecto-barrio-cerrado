@@ -22,7 +22,11 @@ namespace BIZ.Data
             error = null;
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
-                string query = "INSERT INTO Movimiento (FechaHora, TipoMovimiento, Autorizado, Detalle, FK_IDPersona, FK_IDVehiculo, FK_IDLote, FK_IDPuntoAcceso) VALUES (@FechaHora, @TipoMovimiento, @Autorizado, @Detalle, @FK_IDPersona, @FK_IDVehiculo, @FK_IDLote, @FK_IDPuntoAcceso)";
+                string query = @"INSERT INTO Movimiento 
+                    (FechaHora, TipoMovimiento, Autorizado, Detalle, FK_IDPersona, FK_IDVehiculo, FK_IDLote, FK_IDPuntoAcceso, FK_IDCategoria) 
+                    VALUES 
+                    (@FechaHora, @TipoMovimiento, @Autorizado, @Detalle, @FK_IDPersona, @FK_IDVehiculo, @FK_IDLote, @FK_IDPuntoAcceso, @FK_IDCategoria)";
+
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@FechaHora", movimiento.FechaHora);
@@ -33,6 +37,7 @@ namespace BIZ.Data
                     cmd.Parameters.AddWithValue("@FK_IDVehiculo", (object)movimiento.IdVehiculo ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@FK_IDLote", (object)movimiento.IdLoteDestino ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@FK_IDPuntoAcceso", movimiento.IdAcceso);
+                    cmd.Parameters.AddWithValue("@FK_IDCategoria", (object)movimiento.IdCategoria ?? DBNull.Value); // <-- NUEVO PARÁMETRO
 
                     try
                     {
@@ -82,7 +87,6 @@ namespace BIZ.Data
                             {
                                 string ultimoTipo = reader["TipoMovimiento"] != DBNull.Value ? reader["TipoMovimiento"].ToString() : "";
 
-                                // Alterna el tipo
                                 proximoTipo = string.Equals(ultimoTipo, "Ingreso", StringComparison.OrdinalIgnoreCase) ? "Egreso" : "Ingreso";
 
                                 if (reader["FK_IDLote"] != DBNull.Value)
@@ -98,6 +102,41 @@ namespace BIZ.Data
                     }
                 }
             }
+        }
+
+        public static DataSet ObtenerMovimientos()
+        {
+            DataSet ds = new DataSet();
+            string query = @"
+                SELECT 
+                    m.IDMovimiento,
+                    ISNULL(m.TipoMovimiento, 'Ingreso') AS TipoMovimiento,
+                    m.FechaHora AS Fecha,
+                    m.FechaHora AS Hora,
+                    ISNULL(CAST(l.LoteNum AS VARCHAR), '-') AS Lote,
+                    ISNULL(p.DNI, '-') AS DNI,
+                    ISNULL(p.Nombre + ' ' + p.Apellido, 'Sin Registrar') AS NombreCompleto,
+                    ISNULL(cp.Descripcion, 'Sin Categoría') AS TipoIngreso,
+                    ISNULL(v.Patente, '-') AS Patente
+                FROM dbo.Movimiento m
+                LEFT JOIN dbo.Persona p ON m.FK_IDPersona = p.IDPersona
+                -- Toma la categoría guardada en el movimiento; si es NULL usa la de la persona
+                LEFT JOIN dbo.CategoriaPersona cp ON ISNULL(m.FK_IDCategoria, p.FK_IDCategoria) = cp.IDCategoria
+                LEFT JOIN dbo.Lote l ON m.FK_IDLote = l.IDLote
+                LEFT JOIN dbo.Vehiculo v ON m.FK_IDVehiculo = v.id_vehiculo
+                ORDER BY m.FechaHora DESC";
+
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(ds);
+                    }
+                }
+            }
+            return ds;
         }
     }
 }

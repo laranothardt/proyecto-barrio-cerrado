@@ -45,7 +45,7 @@ namespace Grupo7_BarrioCerradoII
                 }
             }
 
-            DDLPatente.Items.Add(new ListItem("➕ Otro vehículo...", ValorNuevoVehiculo));
+            DDLPatente.Items.Add(new ListItem("+ Otro vehículo...", ValorNuevoVehiculo));
 
             // Al recargar el combo la seleccion vuelve al principio: el panel sobra
             pnlNuevoVehiculo.Visible = false;
@@ -164,7 +164,6 @@ namespace Grupo7_BarrioCerradoII
             BIZ.Data.Persona dataPersona = new BIZ.Data.Persona();
             int idPersona = dataPersona.ObtenerPersonaPorDni(dni, out _);
 
-            // 1) Si no existe en la base de datos, lo creamos ahora exigiendo Nombre y Apellido
             if (idPersona == 0)
             {
                 string nombreInput = txtNombrePersona.Text.Trim();
@@ -187,12 +186,12 @@ namespace Grupo7_BarrioCerradoII
             // 2) Validaciones Horarias y Días
             string puntoAcceso = DDLPuntoAcceso.SelectedValue;
             string detalleTexto = txtDetalle.Text.Trim().ToLower();
+            string categoriaSeleccionada = ddlCategoria.SelectedValue;
 
             TimeSpan horaActual = DateTime.Now.TimeOfDay;
             string diaActual = DateTime.Now.DayOfWeek.ToString();
 
-            bool esProveedor = puntoAcceso == "2" || detalleTexto.Contains("proveedor") || detalleTexto.Contains("obra");
-
+            bool esProveedor = categoriaSeleccionada == "4" || puntoAcceso == "2" || detalleTexto.Contains("proveedor") || detalleTexto.Contains("obra");
             if (esProveedor)
             {
                 bool habilitado = Application["Prov_Habilitado"] == null || (bool)Application["Prov_Habilitado"];
@@ -372,6 +371,7 @@ namespace Grupo7_BarrioCerradoII
             Tx_Dni.Text = "";
             txtNombrePersona.Text = "";
             txtApellidoPersona.Text = "";
+            ddlCategoria.SelectedIndex = 0;
             ddlLote.SelectedIndex = 0;
             PoblarPatentes(0);
             txtPatente.Text = "";
