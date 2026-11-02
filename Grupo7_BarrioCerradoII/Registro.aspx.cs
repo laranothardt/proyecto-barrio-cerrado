@@ -96,7 +96,8 @@ namespace Grupo7_BarrioCerradoII
                 int idPersona = dataPersona.ObtenerPersonaPorDni(dni, out _);
                 if (idPersona == 0)
                 {
-                    dataPersona.CrearPersona(dni, nombre, apellido);
+
+                    dataPersona.CrearPersona(dni, nombre, apellido, int.Parse(ddl_rol.SelectedValue));
                 }
 
                 bool creado = data.CrearUsuario(nuevoUsuario);

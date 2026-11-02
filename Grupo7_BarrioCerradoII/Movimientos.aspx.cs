@@ -18,13 +18,8 @@ namespace Grupo7_BarrioCerradoII
             }
         }
 
-        // Valor centinela del combo: no es un id_vehiculo, despliega el panel de alta
         private const string ValorNuevoVehiculo = "NUEVO";
 
-        /// <summary>
-        /// Carga el combo de patentes con los vehiculos de esa persona.
-        /// Con idPersona en 0 deja solo "sin vehiculo" y la opcion de cargar uno nuevo.
-        /// </summary>
         private void PoblarPatentes(int idPersona)
         {
             DDLPatente.Items.Clear();
@@ -47,7 +42,6 @@ namespace Grupo7_BarrioCerradoII
 
             DDLPatente.Items.Add(new ListItem("+ Otro vehículo...", ValorNuevoVehiculo));
 
-            // Al recargar el combo la seleccion vuelve al principio: el panel sobra
             pnlNuevoVehiculo.Visible = false;
         }
 
@@ -119,7 +113,11 @@ namespace Grupo7_BarrioCerradoII
                 if (preacreditaciones != null)
                 {
                     // A) Crear automáticamente el registro en la tabla Persona con los datos de la preacreditación
-                    idPersona = dataPersona.CrearPersona(dni, preacreditaciones.Nombre, preacreditaciones.Apellido);
+                    // Capturamos el ID de la categoría seleccionada en el formulario (por defecto 1 o lo que elija el usuario)
+                    int idCategoriaSeleccionada = string.IsNullOrEmpty(ddlCategoria.SelectedValue) ? 1 : int.Parse(ddlCategoria.SelectedValue);
+
+                    // Le pasamos la categoría elegida como cuarto parámetro
+                    idPersona = dataPersona.CrearPersona(dni, txtNombrePersona.Text.Trim(), txtApellidoPersona.Text.Trim(), idCategoriaSeleccionada);
 
                     // B) Ocultar el panel de pedir nombre/apellido
                     pnlDatosNuevaPersona.Visible = false;
@@ -175,11 +173,22 @@ namespace Grupo7_BarrioCerradoII
                     return;
                 }
 
-                idPersona = dataPersona.CrearPersona(dni, nombreInput, apellidoInput);
+                int idCategoriaSeleccionada = string.IsNullOrEmpty(ddlCategoria.SelectedValue) ? 1 : int.Parse(ddlCategoria.SelectedValue);
+
+                idPersona = dataPersona.CrearPersona(dni, nombreInput, apellidoInput, idCategoriaSeleccionada);
                 if (idPersona == 0)
                 {
                     MostrarMensaje("No se pudo dar de alta a la nueva persona.", false);
                     return;
+                }
+            }
+            else
+            {
+                // SI LA PERSONA YA EXISTE: Si se seleccionó una categoría en el combo, la actualizamos para que no quede desactualizada
+                if (!string.IsNullOrEmpty(ddlCategoria.SelectedValue))
+                {
+                    int idCategoriaSeleccionada = int.Parse(ddlCategoria.SelectedValue);
+                    dataPersona.ActualizarCategoriaPersona(idPersona, idCategoriaSeleccionada);
                 }
             }
 
@@ -191,7 +200,7 @@ namespace Grupo7_BarrioCerradoII
             TimeSpan horaActual = DateTime.Now.TimeOfDay;
             string diaActual = DateTime.Now.DayOfWeek.ToString();
 
-            bool esProveedor = categoriaSeleccionada == "4" || puntoAcceso == "2" || detalleTexto.Contains("proveedor") || detalleTexto.Contains("obra");
+            bool esProveedor = categoriaSeleccionada == "5" || puntoAcceso == "2" || detalleTexto.Contains("proveedor") || detalleTexto.Contains("obra");
             if (esProveedor)
             {
                 bool habilitado = Application["Prov_Habilitado"] == null || (bool)Application["Prov_Habilitado"];

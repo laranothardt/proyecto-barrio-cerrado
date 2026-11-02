@@ -10,7 +10,6 @@
             <asp:Panel ID="pnlMensaje" runat="server" Visible="false" CssClass="alert" Style="margin-bottom: 20px; font-size: 0.95rem; padding: 12px; border-radius: 8px; text-align: left;">
                 <asp:Literal ID="litMensaje" runat="server"></asp:Literal>
             </asp:Panel>
-
             <%--Nombre Completo--%>
             <div class="row g-3">
                 <div class="col-md-6 form-group">

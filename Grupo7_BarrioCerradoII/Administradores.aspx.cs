@@ -140,9 +140,7 @@ namespace Grupo7_BarrioCerradoII
                             "Un administrador te hizo la siguiente consulta: '" + preguntaUsuario + "'.\n\n" +
                             "Para responderle, el sistema ejecutó una consulta en la base de datos y obtuvo estos resultados en formato JSON:\n" +
                             datosJson + "\n\n" +
-                            "REGLA ESTRICTA: Respondé única y exclusivamente con el dato solicitado de forma directa, breve y al pie. " +
-                            "No saludes, no uses frases de cortesía como 'Espero que esta información...' ni te despidas con cierres formales. " +
-                            "Solo la respuesta concreta y nada más.";
+                            "REGLA ESTRICTA: Respondé con el dato solicitado de forma directa, breve y al pie.";
 
             return await ConsultarOllamaApiAsync(prompt);
         }

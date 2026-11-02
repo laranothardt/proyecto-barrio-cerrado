@@ -59,13 +59,16 @@
                     </div>
 
                     <%-- Categoría con los IDs reales de SQL --%>
+                    <%-- Categoría con los IDs reales y limpios de SQL --%>
                     <div class="col-md-4">
                         <asp:Label runat="server" AssociatedControlID="ddlCategoria" CssClass="form-label fw-bold">Categoría <span class="text-muted fw-normal">(opcional)</span></asp:Label>
                         <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select">
                             <asp:ListItem Text="Sin categoría específica" Value="" />
-                            <asp:ListItem Text="Propietario / Inquilino" Value="2" />
+                            <asp:ListItem Text="Propietario" Value="1" />
+                            <asp:ListItem Text="Inquilino" Value="2" />
                             <asp:ListItem Text="Visita" Value="3" />
-                            <asp:ListItem Text="Proveedor / Empleado" Value="4" />
+                            <asp:ListItem Text="Proveedor" Value="4" />
+                            <asp:ListItem Text="Empleado" Value="5" />
                         </asp:DropDownList>
                     </div>
 
@@ -197,8 +200,8 @@
                              document.getElementById('<%= Tx_Dni.ClientID %>').value = datos.dni;
         
                             // 2. Asignar Nombre y Apellido desde los datos escaneados
-                            var txtNom = document.getElementById('<%= txtNombrePersona.ClientID %>');
-                            var txtApe = document.getElementById('<%= txtApellidoPersona.ClientID %>');
+                         var txtNom = document.getElementById('<%= txtNombrePersona.ClientID %>');
+                         var txtApe = document.getElementById('<%= txtApellidoPersona.ClientID %>');
         
                             if (txtNom) txtNom.value = datos.nombre;
                             if (txtApe) txtApe.value = datos.apellido;

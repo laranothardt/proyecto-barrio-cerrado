@@ -22,10 +22,11 @@ namespace BIZ.Data
             error = null;
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
+                // Quitamos FK_IDCategoria del INSERT y de los VALUES porque ya no existe en la tabla Movimiento
                 string query = @"INSERT INTO Movimiento 
-                    (FechaHora, TipoMovimiento, Autorizado, Detalle, FK_IDPersona, FK_IDVehiculo, FK_IDLote, FK_IDPuntoAcceso, FK_IDCategoria) 
+                    (FechaHora, TipoMovimiento, Autorizado, Detalle, FK_IDPersona, FK_IDVehiculo, FK_IDLote, FK_IDPuntoAcceso) 
                     VALUES 
-                    (@FechaHora, @TipoMovimiento, @Autorizado, @Detalle, @FK_IDPersona, @FK_IDVehiculo, @FK_IDLote, @FK_IDPuntoAcceso, @FK_IDCategoria)";
+                    (@FechaHora, @TipoMovimiento, @Autorizado, @Detalle, @FK_IDPersona, @FK_IDVehiculo, @FK_IDLote, @FK_IDPuntoAcceso)";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -37,7 +38,6 @@ namespace BIZ.Data
                     cmd.Parameters.AddWithValue("@FK_IDVehiculo", (object)movimiento.IdVehiculo ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@FK_IDLote", (object)movimiento.IdLoteDestino ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@FK_IDPuntoAcceso", movimiento.IdAcceso);
-                    cmd.Parameters.AddWithValue("@FK_IDCategoria", (object)movimiento.IdCategoria ?? DBNull.Value); // <-- NUEVO PARÁMETRO
 
                     try
                     {
@@ -120,8 +120,7 @@ namespace BIZ.Data
                     ISNULL(v.Patente, '-') AS Patente
                 FROM dbo.Movimiento m
                 LEFT JOIN dbo.Persona p ON m.FK_IDPersona = p.IDPersona
-                -- Toma la categoría guardada en el movimiento; si es NULL usa la de la persona
-                LEFT JOIN dbo.CategoriaPersona cp ON ISNULL(m.FK_IDCategoria, p.FK_IDCategoria) = cp.IDCategoria
+                LEFT JOIN dbo.CategoriaPersona cp ON p.FK_IDCategoria = cp.IDCategoria
                 LEFT JOIN dbo.Lote l ON m.FK_IDLote = l.IDLote
                 LEFT JOIN dbo.Vehiculo v ON m.FK_IDVehiculo = v.id_vehiculo
                 ORDER BY m.FechaHora DESC";

@@ -15,6 +15,7 @@ namespace BIZ.Data
         {
             return ConfigurationManager.ConnectionStrings["Grupo7"].ConnectionString;
         }
+
         public int ObtenerPersonaPorDni(string dni, out string nombreCompleto)
         {
             nombreCompleto = string.Empty;
@@ -45,7 +46,7 @@ namespace BIZ.Data
             return 0; // No existe en la base de datos
         }
 
-        public int CrearPersona(string dni, string nombre, string apellido)
+        public int CrearPersona(string dni, string nombre, string apellido, int idCategoria)
         {
             if (string.IsNullOrWhiteSpace(dni)) return 0;
 
@@ -55,7 +56,7 @@ namespace BIZ.Data
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
                 string queryInsert = @"INSERT INTO Persona (Nombre, Apellido, DNI, FechaAlta, FK_IDCategoria, FK_Estado)
-                                       VALUES (@Nombre, @Apellido, @DNI, GETDATE(), 2, 1);
+                                       VALUES (@Nombre, @Apellido, @DNI, GETDATE(), @FK_IDCategoria, 1);
                                        SELECT SCOPE_IDENTITY();";
 
                 using (SqlCommand cmdInsert = new SqlCommand(queryInsert, conn))
@@ -63,10 +64,34 @@ namespace BIZ.Data
                     cmdInsert.Parameters.AddWithValue("@Nombre", nombreFinal);
                     cmdInsert.Parameters.AddWithValue("@Apellido", apellidoFinal);
                     cmdInsert.Parameters.AddWithValue("@DNI", dni.Trim());
+                    cmdInsert.Parameters.AddWithValue("@FK_IDCategoria", idCategoria);
 
                     conn.Open();
                     object newId = cmdInsert.ExecuteScalar();
                     return Convert.ToInt32(newId);
+                }
+            }
+        }
+
+        // NUEVO MÉTODO PARA ACTUALIZAR LA CATEGORÍA DE UNA PERSONA EXISTENTE
+        public bool ActualizarCategoriaPersona(int idPersona, int idCategoria)
+        {
+            if (idPersona <= 0) return false;
+
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+            {
+                string queryUpdate = @"UPDATE Persona 
+                                       SET FK_IDCategoria = @FK_IDCategoria 
+                                       WHERE IDPersona = @IDPersona";
+
+                using (SqlCommand cmdUpdate = new SqlCommand(queryUpdate, conn))
+                {
+                    cmdUpdate.Parameters.AddWithValue("@FK_IDCategoria", idCategoria);
+                    cmdUpdate.Parameters.AddWithValue("@IDPersona", idPersona);
+
+                    conn.Open();
+                    int rowsAffected = cmdUpdate.ExecuteNonQuery();
+                    return rowsAffected > 0;
                 }
             }
         }
