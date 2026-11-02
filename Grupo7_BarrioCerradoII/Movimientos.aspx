@@ -24,6 +24,13 @@
                         <button type="button" id="btnEscanearDni" class="btn btn-outline-secondary btn-sm mt-2">
                             📷 Escanear DNI con cámara
                         </button>
+
+                        <%-- Panel de escaneo de DNI por cámara (justo debajo del textbox, para no tener que bajar) --%>
+                        <div id="panelScanner" style="display: none; margin-top: 15px; margin-bottom: 15px; text-align: center;">
+                            <video id="videoDni" style="width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 8px;" autoplay="autoplay" muted="muted" playsinline="playsinline"></video>
+                            <div id="scanStatus" style="margin-top: 8px; font-size: 0.9rem;"></div>
+                            <button type="button" id="btnCancelarScan" class="btn btn-outline-danger btn-sm mt-2">Cancelar</button>
+                        </div>
                     </div>
 
                     <%-- Panel para solicitar Nombre y Apellido (Solo si la persona es NUEVA) --%>
@@ -137,12 +144,6 @@
 
                 </div>
 
-                <%-- Panel de escaneo de DNI por cámara --%>
-                <div id="panelScanner" style="display: none; margin-top: 15px; margin-bottom: 15px; text-align: center;">
-                    <video id="videoDni" style="width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 8px;" autoplay="autoplay" muted="muted" playsinline="playsinline"></video>
-                    <div id="scanStatus" style="margin-top: 8px; font-size: 0.9rem;"></div>
-                    <button type="button" id="btnCancelarScan" class="btn btn-outline-danger btn-sm mt-2">Cancelar</button>
-                </div>
             </div>
 
             <div class="action-footer-right">
@@ -192,6 +193,9 @@
 
                 document.getElementById('panelScanner').style.display = 'block';
                 document.getElementById('scanStatus').textContent = 'Apuntá la cámara al código de barras del DNI...';
+
+                codeReader = new ZXing.BrowserPDF417Reader();
+                var constraints = { video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } } };
 
                 codeReader.decodeOnceFromConstraints(constraints, 'videoDni').then(function (resultado) {
                     var datos = parseCodigoDni(resultado.getText());
