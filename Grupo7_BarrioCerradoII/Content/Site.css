@@ -394,7 +394,7 @@ textarea {
     box-shadow: var(--sombra-tarjeta);
 }
 
-#pg-autorizar .table thead th {
+#pg-autorizar .table th {
     background-color: var(--color-primario);
     color: #ffffff;
     border-color: var(--color-primario);
@@ -404,6 +404,29 @@ textarea {
     background-color: rgba(138, 97, 144, 0.10);
 }
 /* Agregá acá nuevas reglas para #pg-autorizar */
+#pg-autorizar .seccion-titulo {
+    color: var(--color-acento);
+}
+
+#pg-autorizar h2 {
+    color: var(--color-primario);
+}
+
+#pg-autorizar .form-control,
+#pg-autorizar .form-select {
+    max-width: 100%;
+    border-radius: var(--radio-mediano);
+    border: 1px solid var(--color-borde);
+    background-color: var(--color-fondo-input);
+}
+
+    #pg-autorizar .form-control:focus,
+    #pg-autorizar .form-select:focus {
+        background-color: #ffffff;
+        border-color: var(--color-acento);
+        box-shadow: var(--foco-acento);
+        outline: none;
+    }
 
 
 /* =========================================================

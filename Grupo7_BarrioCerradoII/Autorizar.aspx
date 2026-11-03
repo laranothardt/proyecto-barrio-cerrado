@@ -17,7 +17,7 @@
                 <asp:ValidationSummary ID="valSummary" runat="server" CssClass="alert alert-danger mb-4" DisplayMode="BulletList" HeaderText="Revisa los siguientes datos:" />
 
                 <!-- SECCIÓN 1: Datos del Visitante -->
-                <h5 class="text-primary fw-semibold mb-3">1. Datos del visitante</h5>
+                <h5 class="seccion-titulo fw-semibold mb-3">1. Datos del visitante</h5>
                 <div class="row g-3 mb-4">
                     <div class="col-md-4">
                         <asp:Label runat="server" AssociatedControlID="txtDni" CssClass="form-label fw-bold">DNI</asp:Label>
@@ -41,7 +41,7 @@
                 <hr class="my-4 text-muted" />
 
                 <!-- SECCIÓN 2: Destino y Autorización -->
-                <h5 class="text-primary fw-semibold mb-3">2. Destino y Autorización</h5>
+                <h5 class="seccion-titulo fw-semibold mb-3">2. Destino y Autorización</h5>
                 <div class="row g-3 mb-4">
                     <div class="col-md-4">
                         <asp:Label runat="server" AssociatedControlID="ddlCategoria" CssClass="form-label fw-bold">Categoría <span class="text-muted fw-normal">(opcional)</span></asp:Label>
@@ -73,7 +73,7 @@
                 <hr class="my-4 text-muted" />
 
                 <!-- SECCIÓN 3: Vigencia y Motivo -->
-                <h5 class="text-primary fw-semibold mb-3">3. Fechas y Motivo</h5>
+                <h5 class="seccion-titulo fw-semibold mb-3">3. Fechas y Motivo</h5>
                 <div class="row g-3 mb-4">
                     <div class="col-md-4">
                         <asp:Label runat="server" AssociatedControlID="txtFechaDesde" CssClass="form-label fw-bold">Válido desde</asp:Label>
@@ -95,7 +95,7 @@
                 <!-- Botones de Acción -->
                 <div class="d-flex justify-content-end gap-2 pt-3 border-top">
                     <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-outline-secondary px-4" CausesValidation="false" OnClick="btnLimpiar_Click" />
-                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar preacreditación" CssClass="btn btn-primary px-4" OnClick="btnGuardar_Click" />
+                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar preacreditación" CssClass="btn-custom btn-primary-custom" OnClick="btnGuardar_Click" />
                 </div>
             </div>
         </div>
